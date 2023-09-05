@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 @Composable
 fun GameRoute(
     windowWidth: WindowWidthSizeClass,
-    onCancel: Unit,
-    onNavigateUp: Boolean
+    onCancel: () -> Unit,
+    onNavigateUp: () -> Unit
 ) {
 
 }
