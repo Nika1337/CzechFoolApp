@@ -8,5 +8,8 @@ fun GameOptionsRoute(
     onNavigateToNext: () -> Unit
 ) {
 
-
+    GameOptionsScreen(
+        onNavigateUp = onNavigateUp,
+        onNavigateToNext = onNavigateToNext
+    )
 }

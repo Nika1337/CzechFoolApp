@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Czech Fool App</string>
+    <string name="back_button">Back</string>
+    <string name="next_button">Next</string>
+    <string name="number_of_players">Number of players</string>
+    <string name="losing_score">Losing Score</string>
+    <string name="more_options">More options</string>
 </resources>
