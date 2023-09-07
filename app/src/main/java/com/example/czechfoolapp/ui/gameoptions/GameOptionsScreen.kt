@@ -1,10 +1,10 @@
 package com.example.czechfoolapp.ui.gameoptions
 
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,10 +33,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.czechfoolapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,9 +48,6 @@ fun GameOptionsScreen(
     Scaffold(
         topBar = {
             GameOptionsScreenAppBar(
-                branding = {
-                           Text(text = "Czech Fool") // TODO
-                },
                 canNavigateBack = false,
                 onNavigateUp = onNavigateUp,
                 modifier = Modifier
@@ -68,13 +65,15 @@ fun GameOptionsScreen(
     }
 }
 
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameOptionsScreenAppBar(
-    branding: @Composable () -> Unit,
     canNavigateBack: Boolean,
     onNavigateUp: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    branding: @Composable () -> Unit = { Branding() }
 ) {
     CenterAlignedTopAppBar(
         title = branding,
@@ -102,6 +101,24 @@ fun GameOptionsScreenAppBar(
 //            }
         }
     )
+}
+
+@Composable
+private fun Branding(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.Bottom
+    ){
+        Text(
+            text = "Czech",
+            fontSize = 32.sp
+        )
+        Text(
+            text = "Fool",
+            fontSize = 16.sp
+        )
+    }
 }
 
 @Composable
@@ -142,7 +159,7 @@ private fun MenusColumn(
             items = listOf("2", "3", "4"),
             label = R.string.number_of_players
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(48.dp))
         TextFieldMenu(
             items = listOf("200", "300", "400"),
             label = R.string.losing_score
@@ -157,7 +174,6 @@ private fun TextFieldMenu(
     @StringRes label: Int,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf(items[0]) }
     Box(
@@ -165,10 +181,10 @@ private fun TextFieldMenu(
         contentAlignment = Alignment.Center
     ) {
         ExposedDropdownMenuBox(
-            expanded = expanded, // TODO
+            expanded = expanded,
             onExpandedChange = {
                 expanded = !expanded
-            } // TODO
+            }
         ) {
             OutlinedTextField(
                 label = { Text(stringResource(label)) } ,
@@ -192,7 +208,6 @@ private fun TextFieldMenu(
                         onClick = {
                             selectedText = item
                             expanded = false
-                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
                         },
                         modifier = Modifier.fillMaxWidth()
                     )
