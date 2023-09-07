@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.gameoptions
+package com.example.czechfoolapp.ui.gameoptions.states
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
