@@ -29,7 +29,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,6 +45,7 @@ fun GameOptionsScreen(
     onNavigateUp: () -> Unit,
     onNavigateToNext: () -> Unit
 ) {
+
     Scaffold(
         topBar = {
             GameOptionsScreenAppBar(
@@ -174,8 +175,8 @@ private fun TextFieldMenu(
     @StringRes label: Int,
     modifier: Modifier = Modifier
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf(items[0]) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    var selectedText by rememberSaveable { mutableStateOf(items[0]) }
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
