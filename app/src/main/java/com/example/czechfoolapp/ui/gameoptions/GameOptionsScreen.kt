@@ -30,14 +30,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.czechfoolapp.R
+import com.example.czechfoolapp.data.DefaultValuesSource
+import com.example.czechfoolapp.ui.gameoptions.states.ExposedDropDownMenuState
+import com.example.czechfoolapp.ui.gameoptions.states.PlayerNumberState
+import com.example.czechfoolapp.ui.gameoptions.states.PlayerNumberStateSaver
+import com.example.czechfoolapp.ui.gameoptions.states.ScoreState
+import com.example.czechfoolapp.ui.gameoptions.states.ScoreStateSaver
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -127,18 +133,27 @@ private fun MenusAndNextColumn(
     onNavigateToNext: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val playerNumberState by rememberSaveable(stateSaver = PlayerNumberStateSaver) {
+        mutableStateOf(PlayerNumberState())
+    }
+    val scoreState by rememberSaveable(stateSaver = ScoreStateSaver) {
+        mutableStateOf(ScoreState())
+    }
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MenusColumn(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            playerNumberState = playerNumberState,
+            scoreState = scoreState
         )
         Button(
-            onClick = onNavigateToNext,
+            onClick = { onNavigateToNext() },
             modifier = Modifier
                 .align(alignment = Alignment.End)
-                .width(96.dp)
+                .width(96.dp),
+            enabled = playerNumberState.isValid && scoreState.isValid
         ) {
             Text(
                text = stringResource(id = R.string.next_button)
@@ -149,7 +164,9 @@ private fun MenusAndNextColumn(
 
 @Composable
 private fun MenusColumn(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    playerNumberState: ExposedDropDownMenuState,
+    scoreState: ExposedDropDownMenuState
 ) {
     Column(
         modifier = modifier,
@@ -157,13 +174,15 @@ private fun MenusColumn(
         verticalArrangement = Arrangement.Center
     ) {
         TextFieldMenu(
-            items = listOf("2", "3", "4"),
+            state = playerNumberState,
+            items = DefaultValuesSource.numbersOfPlayers,
             label = R.string.number_of_players
         )
         Spacer(modifier = Modifier.height(48.dp))
         TextFieldMenu(
-            items = listOf("200", "300", "400"),
-            label = R.string.losing_score
+            state = scoreState,
+            items = DefaultValuesSource.scores,
+            label = R.string.losing_score,
         )
     }
 }
@@ -171,44 +190,45 @@ private fun MenusColumn(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldMenu(
+    state: ExposedDropDownMenuState,
     items: List<String>,
     @StringRes label: Int,
     modifier: Modifier = Modifier
 ) {
-    var expanded by rememberSaveable { mutableStateOf(false) }
-    var selectedText by rememberSaveable { mutableStateOf(items[0]) }
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         ExposedDropdownMenuBox(
-            expanded = expanded,
+            expanded = state.expanded,
             onExpandedChange = {
-                expanded = !expanded
+                state.expanded = !state.expanded
             }
         ) {
             OutlinedTextField(
+                value = state.text,
+                onValueChange = {
+                    state.text = it
+                    state.enableShowErrors()
+                },
+                readOnly = false,
                 label = { Text(stringResource(label)) } ,
-                value = selectedText, // TODO
-                onValueChange = {},// TODO
-                readOnly = true,// TODO
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = state.expanded) },
+                isError = state.showErrors(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .menuAnchor()
             )
-
             ExposedDropdownMenu(
-                expanded = expanded, // TODO
-                onDismissRequest = { expanded = false } // TODO
+                expanded = state.expanded,
+                onDismissRequest = { state.expanded = false }
             ) {
-                // TODO
                 items.forEach { item ->
                     DropdownMenuItem(
                         text = { Text(text = item) },
                         onClick = {
-                            selectedText = item
-                            expanded = false
+                            state.text = item
+                            state.expanded = false
                         },
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -216,10 +236,20 @@ private fun TextFieldMenu(
             }
         }
     }
+    state.getError()?.let { error -> TextFieldError(textError = error) }
 }
 
-
-
+@Composable
+private fun TextFieldError(textError: String) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = textError,
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.error
+        )
+    }
+}
 
 
 @Preview

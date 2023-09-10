@@ -10,13 +10,17 @@ open class TextFieldState(
     private val errorFor: (String) -> String = { "" }
 ) {
     var text: String by mutableStateOf("")
+    private var displayErrors: Boolean by mutableStateOf(false)
 
     open val isValid: Boolean
         get() = validator(text)
 
 
+    fun enableShowErrors() {
+        displayErrors = true
+    }
+    fun showErrors() = !isValid && displayErrors
 
-    fun showErrors() = !isValid
 
     open fun getError(): String? {
         return if (showErrors()) {
@@ -25,9 +29,11 @@ open class TextFieldState(
             null
         }
     }
+
+
 }
 
-fun textFieldStateSaver(state: TextFieldState) = listSaver<TextFieldState, Any>(
+fun textFieldStateSaver(state: TextFieldState) = listSaver(
     save = { listOf(it.text) },
     restore = {
         state.apply {
