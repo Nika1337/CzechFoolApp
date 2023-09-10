@@ -9,9 +9,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.czechfoolapp.Destinations.GAME_ROUTE
 import com.example.czechfoolapp.Destinations.NAME_INPUT_ROUTE
 import com.example.czechfoolapp.Destinations.GAME_OPTIONS_ROUTE
-import com.example.czechfoolapp.ui.gameoptions.GameOptionsRoute
+import com.example.czechfoolapp.ui.gameoptionsroute.GameOptionsRoute
 import com.example.czechfoolapp.ui.GameRoute
-import com.example.czechfoolapp.ui.NameInputRoute
+import com.example.czechfoolapp.ui.nameinputroute.NameInputRoute
 
 
 object Destinations {

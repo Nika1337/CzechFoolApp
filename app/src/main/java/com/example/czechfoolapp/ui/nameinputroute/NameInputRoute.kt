@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui
+package com.example.czechfoolapp.ui.nameinputroute
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable

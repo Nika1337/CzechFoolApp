@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.gameoptions.states
+package com.example.czechfoolapp.ui.gameoptionsroute.states
 
 import com.example.czechfoolapp.data.DefaultValuesSource
 import java.util.regex.Pattern

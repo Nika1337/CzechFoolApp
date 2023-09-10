@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.gameoptions
+package com.example.czechfoolapp.ui.gameoptionsroute
 
 import androidx.compose.runtime.Composable
 

@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.gameoptions
+package com.example.czechfoolapp.ui.gameoptionsroute
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -32,18 +32,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.czechfoolapp.R
 import com.example.czechfoolapp.data.DefaultValuesSource
-import com.example.czechfoolapp.ui.gameoptions.states.ExposedDropDownMenuState
-import com.example.czechfoolapp.ui.gameoptions.states.PlayerNumberState
-import com.example.czechfoolapp.ui.gameoptions.states.PlayerNumberStateSaver
-import com.example.czechfoolapp.ui.gameoptions.states.ScoreState
-import com.example.czechfoolapp.ui.gameoptions.states.ScoreStateSaver
+import com.example.czechfoolapp.ui.gameoptionsroute.states.ExposedDropDownMenuState
+import com.example.czechfoolapp.ui.gameoptionsroute.states.PlayerNumberState
+import com.example.czechfoolapp.ui.gameoptionsroute.states.PlayerNumberStateSaver
+import com.example.czechfoolapp.ui.gameoptionsroute.states.ScoreState
+import com.example.czechfoolapp.ui.gameoptionsroute.states.ScoreStateSaver
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
