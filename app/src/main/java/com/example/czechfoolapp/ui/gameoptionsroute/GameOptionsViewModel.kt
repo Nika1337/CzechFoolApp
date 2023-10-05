@@ -12,7 +12,36 @@ class GameOptionsViewModel(
     private val validateNumberOfPlayersUseCase: ValidateNumberOfPlayersUseCase, // TODO DI
     private val validateLosingScoreUseCase: ValidateLosingScoreUseCase // TODO DI
 ) : ViewModel() {
-    private var gameOptionsState by mutableStateOf(GameOptionsState())
+    var gameOptionsState by mutableStateOf(GameOptionsState())
+        private set
+    fun onEvent(event: GameOptionEvent) {
+        when (event) {
+            is GameOptionEvent.LosingScoreChanged -> {
+                gameOptionsState = gameOptionsState.copy(losingScore = event.losingScore)
+            }
+            is GameOptionEvent.NumberOfPlayersChanged -> {
+                gameOptionsState = gameOptionsState.copy(numberOfPlayers = event.numberOfPlayers)
+            }
+            is GameOptionEvent.Next -> {
+                submitGameOptions()
+            }
+        }
+    }
 
+    private fun submitGameOptions() {
+        val numberOfPlayersResult = validateNumberOfPlayersUseCase.execute(gameOptionsState.numberOfPlayers)
+        val losingScoreResult = validateLosingScoreUseCase.execute(gameOptionsState.losingScore)
+
+        val hasError = listOf(
+            numberOfPlayersResult,
+            losingScoreResult
+        ).any { it.successful.not() }
+
+        gameOptionsState = gameOptionsState.copy(
+            numberOfPlayersError = numberOfPlayersResult.errorMessage,
+            losingScoreError = numberOfPlayersResult.errorMessage
+        )
+        if (hasError) { return }
+    }
 }
 
