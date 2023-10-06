@@ -26,6 +26,7 @@ class GameOptionsViewModel(
                 submitGameOptions()
             }
         }
+        gameOptionsState = gameOptionsState.copy(isEverythingValid = false)
     }
 
     private fun submitGameOptions() {
@@ -41,7 +42,11 @@ class GameOptionsViewModel(
             numberOfPlayersError = numberOfPlayersResult.errorMessage,
             losingScoreError = numberOfPlayersResult.errorMessage
         )
-        if (hasError) { return }
+        if (!hasError) {
+            gameOptionsState = gameOptionsState.copy(
+                isEverythingValid = true
+            )
+        }
     }
 }
 
