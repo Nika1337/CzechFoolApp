@@ -29,7 +29,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -38,17 +39,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.czechfoolapp.R
 import com.example.czechfoolapp.data.DefaultValuesSource
-import com.example.czechfoolapp.ui.gameoptionsroute.states.ExposedDropDownMenuState
-import com.example.czechfoolapp.ui.gameoptionsroute.states.PlayerNumberState
-import com.example.czechfoolapp.ui.gameoptionsroute.states.PlayerNumberStateSaver
-import com.example.czechfoolapp.ui.gameoptionsroute.states.ScoreState
-import com.example.czechfoolapp.ui.gameoptionsroute.states.ScoreStateSaver
+import com.example.czechfoolapp.ui.gameoptionsroute.newstates.GameOptionState
+import com.example.czechfoolapp.ui.gameoptionsroute.newstates.GameOptionsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameOptionsScreen(
     onNavigateUp: () -> Unit,
-    onNavigateToNext: () -> Unit
+    onNavigateToNext: () -> Unit,
+    gameOptionState: GameOptionsState,
+    onEvent: (event: GameOptionEvent) -> Unit
 ) {
 
     Scaffold(
@@ -62,11 +62,13 @@ fun GameOptionsScreen(
         }
     ) { innerPadding ->
         MenusAndNextColumn(
+            onNavigateToNext = onNavigateToNext,
+            gameOptionState = gameOptionState,
+            onEvent = onEvent,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(24.dp),
-            onNavigateToNext = onNavigateToNext
+                .padding(24.dp)
         )
     }
 }
@@ -130,13 +132,12 @@ private fun Branding(modifier: Modifier = Modifier) {
 @Composable
 private fun MenusAndNextColumn(
     onNavigateToNext: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEvent: (event: GameOptionEvent) -> Unit,
+    gameOptionState: GameOptionsState
 ) {
-    val playerNumberState by rememberSaveable(stateSaver = PlayerNumberStateSaver) {
-        mutableStateOf(PlayerNumberState())
-    }
-    val scoreState by rememberSaveable(stateSaver = ScoreStateSaver) {
-        mutableStateOf(ScoreState())
+    if(gameOptionState.canNavigateNext) {
+        onNavigateToNext()
     }
     Column(
         modifier = modifier,
@@ -144,15 +145,16 @@ private fun MenusAndNextColumn(
     ) {
         MenusColumn(
             modifier = Modifier.weight(1f),
-            playerNumberState = playerNumberState,
-            scoreState = scoreState
+            gameOptionState = gameOptionState,
+            onEvent = onEvent
         )
         Button(
-            onClick = { onNavigateToNext() },
+            onClick = {
+                      onEvent(GameOptionEvent.Next)
+            },
             modifier = Modifier
                 .align(alignment = Alignment.End)
                 .width(96.dp),
-            enabled = playerNumberState.isValid && scoreState.isValid
         ) {
             Text(
                text = stringResource(id = R.string.next_button)
@@ -164,8 +166,8 @@ private fun MenusAndNextColumn(
 @Composable
 private fun MenusColumn(
     modifier: Modifier = Modifier,
-    playerNumberState: ExposedDropDownMenuState,
-    scoreState: ExposedDropDownMenuState
+    gameOptionState: GameOptionsState,
+    onEvent: (event: GameOptionEvent) -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -173,13 +175,15 @@ private fun MenusColumn(
         verticalArrangement = Arrangement.Center
     ) {
         TextFieldMenu(
-            state = playerNumberState,
+            onEvent = { value: String -> onEvent(GameOptionEvent.NumberOfPlayersChanged(value)) },
+            state = gameOptionState.numberOfPlayersState,
             items = DefaultValuesSource.numbersOfPlayers,
             label = R.string.number_of_players
         )
         Spacer(modifier = Modifier.height(48.dp))
         TextFieldMenu(
-            state = scoreState,
+            onEvent = { value: String -> onEvent(GameOptionEvent.LosingScoreChanged(value)) },
+            state = gameOptionState.losingScoreState,
             items = DefaultValuesSource.scores,
             label = R.string.losing_score,
         )
@@ -189,45 +193,44 @@ private fun MenusColumn(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldMenu(
-    state: ExposedDropDownMenuState,
+    onEvent: (String) -> Unit,
+    state: GameOptionState,
     items: List<String>,
     @StringRes label: Int,
     modifier: Modifier = Modifier
 ) {
+    var expanded by remember { mutableStateOf(false) }
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         ExposedDropdownMenuBox(
-            expanded = state.expanded,
+            expanded = expanded,
             onExpandedChange = {
-                state.expanded = !state.expanded
+                expanded = !expanded
             }
         ) {
             OutlinedTextField(
-                value = state.text,
-                onValueChange = {
-                    state.text = it
-                    state.enableShowErrors()
-                },
+                value = state.value,
+                onValueChange = { onEvent(it)},
+                singleLine = true,
                 readOnly = false,
                 label = { Text(stringResource(label)) } ,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = state.expanded) },
-                isError = state.showErrors(),
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                isError = state.errorMessage != null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .menuAnchor()
             )
             ExposedDropdownMenu(
-                expanded = state.expanded,
-                onDismissRequest = { state.expanded = false }
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
             ) {
                 items.forEach { item ->
                     DropdownMenuItem(
                         text = { Text(text = item) },
                         onClick = {
-                            state.text = item
-                            state.expanded = false
+                            onEvent(item)
                         },
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -235,7 +238,7 @@ private fun TextFieldMenu(
             }
         }
     }
-    state.getError()?.let { error -> TextFieldError(textError = error) }
+    state.errorMessage?.let { error -> TextFieldError(textError = error) }
 }
 
 @Composable
@@ -254,5 +257,10 @@ private fun TextFieldError(textError: String) {
 @Preview
 @Composable
 fun GameOptionsScreenPreview() {
-    GameOptionsScreen(onNavigateUp = { /*TODO*/ }, onNavigateToNext = { /*TODO*/ })
+    GameOptionsScreen(
+        onNavigateUp = { /*TODO*/ },
+        onNavigateToNext = { /*TODO*/ },
+        gameOptionState = GameOptionsState(),
+        onEvent = {}
+    )
 }
