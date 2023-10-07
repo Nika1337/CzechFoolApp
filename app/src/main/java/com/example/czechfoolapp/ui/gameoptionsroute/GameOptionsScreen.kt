@@ -1,5 +1,6 @@
 package com.example.czechfoolapp.ui.gameoptionsroute
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -186,8 +187,7 @@ private fun MenusColumn(
             items = DefaultValuesSource.numbersOfPlayers,
             label = R.string.number_of_players,
             keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Number
+                imeAction = ImeAction.Next
             ),
             modifier = Modifier.padding(24.dp)
         )
@@ -219,53 +219,57 @@ private fun TextFieldMenu(
     onImeAction: () -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = {
-                expanded = !expanded
-            }
+    Column(
+        modifier = modifier
+    ){
+        Box(
+            contentAlignment = Alignment.Center
         ) {
-            OutlinedTextField(
-                value = state.value,
-                onValueChange = {
-                    onEvent(it)
-                },
-                singleLine = true,
-                readOnly = false,
-                label = { Text(stringResource(label)) } ,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                isError = state.errorMessage != null,
-                keyboardOptions = keyboardOptions,
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        onImeAction()
-                    }
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor()
-            )
-            ExposedDropdownMenu(
+            ExposedDropdownMenuBox(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onExpandedChange = {
+                    expanded = !expanded
+                }
             ) {
-                items.forEach { item ->
-                    DropdownMenuItem(
-                        text = { Text(text = item.text) },
-                        onClick = {
-                            onEvent(item)
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                OutlinedTextField(
+                    value = state.value,
+                    onValueChange = {
+                        Log.d("onValueChange", it.text)
+                        onEvent(it)
+                    },
+                    singleLine = true,
+                    readOnly = false,
+                    label = { Text(stringResource(label)) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                    isError = state.errorMessage != null,
+                    keyboardOptions = keyboardOptions,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            onImeAction()
+                        }
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor()
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    items.forEach { item ->
+                        DropdownMenuItem(
+                            text = { Text(text = item.text) },
+                            onClick = {
+                                onEvent(item)
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 }
             }
         }
+        state.errorMessage?.let { error -> TextFieldError(textError = error) }
     }
-    state.errorMessage?.let { error -> TextFieldError(textError = error) }
 }
 
 @Composable
