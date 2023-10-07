@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.czechfoolapp.domain.use_case.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.ui.gameoptionsroute.newstates.GameOptionsState
@@ -24,13 +23,12 @@ class GameOptionsViewModel(
                 gameOptionsState = gameOptionsState.copy(numberOfPlayersState = gameOptionsState.numberOfPlayersState.copy(value = event.numberOfPlayers))
             }
             is GameOptionEvent.Next -> {
-                submitGameOptions()
+                submitGameOptions(navigateToNext = event.navigateToNext)
             }
         }
-        gameOptionsState = gameOptionsState.copy(canNavigateNext = false)
     }
 
-    private fun submitGameOptions() {
+    private fun submitGameOptions(navigateToNext: () -> Unit) {
         val numberOfPlayersResult = validateNumberOfPlayersUseCase.execute(gameOptionsState.numberOfPlayersState.value)
         val losingScoreResult = validateLosingScoreUseCase.execute(gameOptionsState.losingScoreState.value)
 
@@ -43,13 +41,11 @@ class GameOptionsViewModel(
             losingScoreState = gameOptionsState.losingScoreState.copy(errorMessage = losingScoreResult.errorMessage),
             numberOfPlayersState = gameOptionsState.numberOfPlayersState.copy(errorMessage = numberOfPlayersResult.errorMessage)
         )
-        if (!hasError) {
-            gameOptionsState = gameOptionsState.copy(
-                canNavigateNext = true
-            )
+        if (hasError) {
+            return
         }
+        navigateToNext()
     }
-
 
 }
 
