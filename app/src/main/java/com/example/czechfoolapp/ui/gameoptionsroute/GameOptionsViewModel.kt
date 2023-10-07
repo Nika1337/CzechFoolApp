@@ -41,7 +41,7 @@ class GameOptionsViewModel(
 
         gameOptionsState = gameOptionsState.copy(
             losingScoreState = gameOptionsState.losingScoreState.copy(errorMessage = losingScoreResult.errorMessage),
-            numberOfPlayersState = gameOptionsState.numberOfPlayersState.copy(errorMessage = losingScoreResult.errorMessage)
+            numberOfPlayersState = gameOptionsState.numberOfPlayersState.copy(errorMessage = numberOfPlayersResult.errorMessage)
         )
         if (!hasError) {
             gameOptionsState = gameOptionsState.copy(

@@ -63,7 +63,7 @@ fun GameOptionsScreen(
     ) { innerPadding ->
         MenusAndNextColumn(
             onNavigateToNext = onNavigateToNext,
-            gameOptionState = gameOptionState,
+            gameOptionsState = gameOptionState,
             onEvent = onEvent,
             modifier = Modifier
                 .padding(innerPadding)
@@ -134,18 +134,15 @@ private fun MenusAndNextColumn(
     onNavigateToNext: () -> Unit,
     modifier: Modifier = Modifier,
     onEvent: (event: GameOptionEvent) -> Unit,
-    gameOptionState: GameOptionsState
+    gameOptionsState: GameOptionsState
 ) {
-    if(gameOptionState.canNavigateNext) {
-        onNavigateToNext()
-    }
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MenusColumn(
             modifier = Modifier.weight(1f),
-            gameOptionState = gameOptionState,
+            gameOptionsState = gameOptionsState,
             onEvent = onEvent
         )
         Button(
@@ -166,7 +163,7 @@ private fun MenusAndNextColumn(
 @Composable
 private fun MenusColumn(
     modifier: Modifier = Modifier,
-    gameOptionState: GameOptionsState,
+    gameOptionsState: GameOptionsState,
     onEvent: (event: GameOptionEvent) -> Unit
 ) {
     Column(
@@ -176,14 +173,14 @@ private fun MenusColumn(
     ) {
         TextFieldMenu(
             onEvent = { value: String -> onEvent(GameOptionEvent.NumberOfPlayersChanged(value)) },
-            state = gameOptionState.numberOfPlayersState,
+            state = gameOptionsState.numberOfPlayersState,
             items = DefaultValuesSource.numbersOfPlayers,
             label = R.string.number_of_players
         )
         Spacer(modifier = Modifier.height(48.dp))
         TextFieldMenu(
             onEvent = { value: String -> onEvent(GameOptionEvent.LosingScoreChanged(value)) },
-            state = gameOptionState.losingScoreState,
+            state = gameOptionsState.losingScoreState,
             items = DefaultValuesSource.scores,
             label = R.string.losing_score,
         )
@@ -212,7 +209,9 @@ private fun TextFieldMenu(
         ) {
             OutlinedTextField(
                 value = state.value,
-                onValueChange = { onEvent(it)},
+                onValueChange = {
+                    onEvent(it)
+                },
                 singleLine = true,
                 readOnly = false,
                 label = { Text(stringResource(label)) } ,
