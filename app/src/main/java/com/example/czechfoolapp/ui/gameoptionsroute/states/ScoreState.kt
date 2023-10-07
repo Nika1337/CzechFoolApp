@@ -10,7 +10,7 @@ private const val SCORE_VALIDATION_REGEX = "^(\\d)+\$"
 class ScoreState :
     ExposedDropDownMenuState(validator = ::isScoreValid, errorFor = ::scoreValidationError) {
         init {
-            text = DefaultValuesSource.defaultScore
+            text = DefaultValuesSource.defaultScore.text
         }
     }
 

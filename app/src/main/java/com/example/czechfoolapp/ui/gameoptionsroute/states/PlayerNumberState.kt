@@ -9,7 +9,7 @@ private const val SCORE_VALIDATION_REGEX = "^(\\d)+\$"
 class PlayerNumberState :
     ExposedDropDownMenuState(validator = ::isPlayerNumberValid, errorFor = ::playerNumberValidationError) {
         init {
-            text = DefaultValuesSource.defaultNumberOfPlayers
+            text = DefaultValuesSource.defaultNumberOfPlayers.text
         }
     }
 

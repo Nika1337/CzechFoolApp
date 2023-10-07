@@ -41,6 +41,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -180,7 +181,7 @@ private fun MenusColumn(
         verticalArrangement = Arrangement.Center
     ) {
         TextFieldMenu(
-            onEvent = { value: String -> onEvent(GameOptionEvent.NumberOfPlayersChanged(value)) },
+            onEvent = { value: TextFieldValue -> onEvent(GameOptionEvent.NumberOfPlayersChanged(value)) },
             state = gameOptionsState.numberOfPlayersState,
             items = DefaultValuesSource.numbersOfPlayers,
             label = R.string.number_of_players,
@@ -191,7 +192,7 @@ private fun MenusColumn(
             modifier = Modifier.padding(24.dp)
         )
         TextFieldMenu(
-            onEvent = { value: String -> onEvent(GameOptionEvent.LosingScoreChanged(value)) },
+            onEvent = { value: TextFieldValue -> onEvent(GameOptionEvent.LosingScoreChanged(value)) },
             state = gameOptionsState.losingScoreState,
             items = DefaultValuesSource.scores,
             label = R.string.losing_score,
@@ -199,7 +200,7 @@ private fun MenusColumn(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Number
             ),
-            onImeAction = { focusManager.clearFocus() },
+//            onImeAction = { focusManager.clearFocus() },
             modifier = Modifier.padding(24.dp)
         )
         Spacer(modifier = Modifier.height(64.dp))
@@ -209,9 +210,9 @@ private fun MenusColumn(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldMenu(
-    onEvent: (String) -> Unit,
+    onEvent: (TextFieldValue) -> Unit,
     state: GameOptionState,
-    items: List<String>,
+    items: List<TextFieldValue>,
     @StringRes label: Int,
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -254,7 +255,7 @@ private fun TextFieldMenu(
             ) {
                 items.forEach { item ->
                     DropdownMenuItem(
-                        text = { Text(text = item) },
+                        text = { Text(text = item.text) },
                         onClick = {
                             onEvent(item)
                         },

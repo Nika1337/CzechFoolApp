@@ -3,7 +3,9 @@ package com.example.czechfoolapp.ui.gameoptionsroute
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import com.example.czechfoolapp.data.DefaultValuesSource
 import com.example.czechfoolapp.domain.use_case.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.ui.gameoptionsroute.newstates.GameOptionsState
@@ -27,10 +29,16 @@ class GameOptionsViewModel(
             }
         }
     }
+    init {
+        gameOptionsState = gameOptionsState.copy(
+            numberOfPlayersState = gameOptionsState.numberOfPlayersState.copy(value = DefaultValuesSource.defaultNumberOfPlayers),
+            losingScoreState = gameOptionsState.losingScoreState.copy(value = DefaultValuesSource.defaultScore)
+        )
+    }
 
     private fun submitGameOptions(navigateToNext: () -> Unit) {
-        val numberOfPlayersResult = validateNumberOfPlayersUseCase.execute(gameOptionsState.numberOfPlayersState.value)
-        val losingScoreResult = validateLosingScoreUseCase.execute(gameOptionsState.losingScoreState.value)
+        val numberOfPlayersResult = validateNumberOfPlayersUseCase.execute(gameOptionsState.numberOfPlayersState.value.text)
+        val losingScoreResult = validateLosingScoreUseCase.execute(gameOptionsState.losingScoreState.value.text)
 
         val hasError = listOf(
             numberOfPlayersResult,
