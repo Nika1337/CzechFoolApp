@@ -1,5 +1,6 @@
 package com.example.czechfoolapp.ui.gameoptionsroute
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,9 +21,11 @@ class GameOptionsViewModel(
         when (event) {
             is GameOptionEvent.LosingScoreChanged -> {
                 gameOptionsState = gameOptionsState.copy(losingScoreState = gameOptionsState.losingScoreState.copy(value = event.losingScore))
+                Log.d("losingScore", "losing score changed ${gameOptionsState.losingScoreState.value.text}")
             }
             is GameOptionEvent.NumberOfPlayersChanged -> {
                 gameOptionsState = gameOptionsState.copy(numberOfPlayersState = gameOptionsState.numberOfPlayersState.copy(value = event.numberOfPlayers))
+                Log.d("losingScore", "number of players changed ${gameOptionsState.losingScoreState.value.text}")
             }
             is GameOptionEvent.Next -> {
                 submitGameOptions(navigateToNext = event.navigateToNext)

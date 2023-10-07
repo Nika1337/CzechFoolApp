@@ -200,7 +200,7 @@ private fun MenusColumn(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Number
             ),
-//            onImeAction = { focusManager.clearFocus() },
+            onImeAction = { focusManager.clearFocus() },
             modifier = Modifier.padding(24.dp)
         )
         Spacer(modifier = Modifier.height(64.dp))
