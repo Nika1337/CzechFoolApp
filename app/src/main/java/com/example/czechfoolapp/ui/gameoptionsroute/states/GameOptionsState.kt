@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.gameoptionsroute.newstates
+package com.example.czechfoolapp.ui.gameoptionsroute.states
 
 import androidx.compose.ui.text.input.TextFieldValue
 
