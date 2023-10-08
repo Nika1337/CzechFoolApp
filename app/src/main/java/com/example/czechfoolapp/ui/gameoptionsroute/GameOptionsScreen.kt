@@ -198,7 +198,6 @@ private fun MenusColumn(
             label = R.string.losing_score,
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Number
             ),
             onImeAction = { focusManager.clearFocus() },
             modifier = Modifier.padding(24.dp)
@@ -234,7 +233,6 @@ private fun TextFieldMenu(
                 OutlinedTextField(
                     value = state.value,
                     onValueChange = {
-                        Log.d("onValueChange", it.text)
                         onEvent(it)
                     },
                     singleLine = true,
@@ -261,6 +259,7 @@ private fun TextFieldMenu(
                             text = { Text(text = item.text) },
                             onClick = {
                                 onEvent(item)
+                                expanded = false
                             },
                             modifier = Modifier.fillMaxWidth()
                         )
