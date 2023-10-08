@@ -41,6 +41,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -211,13 +212,15 @@ private fun TextFieldMenu(
         modifier = modifier
     ){
         Box(
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange = {
                     expanded = !expanded
-                }
+                },
+                modifier = Modifier.fillMaxWidth()
             ) {
                 OutlinedTextField(
                     value = state.value,
@@ -225,7 +228,7 @@ private fun TextFieldMenu(
                         onEvent(it)
                     },
                     singleLine = true,
-                    readOnly = false,
+                    readOnly = true,
                     label = { Text(stringResource(label)) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                     isError = state.errorMessage != null,
@@ -245,12 +248,20 @@ private fun TextFieldMenu(
                 ) {
                     items.forEach { item ->
                         DropdownMenuItem(
-                            text = { Text(text = item.text) },
+                            text = {
+                                Text(
+                                    text = item.text,
+                                    textAlign = TextAlign.Start,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                   },
                             onClick = {
                                 onEvent(item)
+                                onImeAction()
                                 expanded = false
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
                         )
                     }
                 }
