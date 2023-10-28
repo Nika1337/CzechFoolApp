@@ -15,21 +15,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,9 +39,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.czechfoolapp.R
 import com.example.czechfoolapp.data.DefaultValuesSource
+import com.example.czechfoolapp.ui.CzechFoolTopAppBar
 import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionState
 import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionsState
 
@@ -61,7 +55,7 @@ fun GameOptionsScreen(
 ) {
     Scaffold(
         topBar = {
-            GameOptionsScreenAppBar(
+            CzechFoolTopAppBar(
                 canNavigateBack = false,
                 onNavigateUp = onNavigateUp,
                 modifier = Modifier
@@ -80,52 +74,6 @@ fun GameOptionsScreen(
     }
 }
 
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun GameOptionsScreenAppBar(
-    canNavigateBack: Boolean,
-    onNavigateUp: () -> Unit,
-    modifier: Modifier = Modifier,
-    branding: @Composable () -> Unit = { Branding() }
-) {
-    CenterAlignedTopAppBar(
-        title = branding,
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary
-        ),
-        modifier = modifier,
-        navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = onNavigateUp) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back_button)
-                    )
-                }
-            }
-        }
-    )
-}
-
-@Composable
-private fun Branding(modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.Bottom
-    ){
-        Text(
-            text = "Czech",
-            fontSize = 32.sp
-        )
-        Text(
-            text = "Fool",
-            fontSize = 16.sp
-        )
-    }
-}
 
 @Composable
 private fun MenusAndNextColumn(
