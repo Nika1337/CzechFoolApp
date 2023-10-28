@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textField_horizontal">24dp</dimen>
+    <dimen name="textField_vertical_small">12dp</dimen>
+    <dimen name="textField_vertical_large">24dp</dimen>
+
+</resources>
