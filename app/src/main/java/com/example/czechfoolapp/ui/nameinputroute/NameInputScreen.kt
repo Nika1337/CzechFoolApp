@@ -33,7 +33,6 @@ fun NameInputScreen(
     onNavigateUp: () -> Unit,
     onEvent: (event: NameInputEvent) -> Unit,
     nameInputState: Map<Int, String>,
-    onValueChange: (id: Int, value: String) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -56,7 +55,9 @@ fun NameInputScreen(
         floatingActionButtonPosition = FabPosition.End
     ) {
         TextFieldsColumn(
-            onValueChange = onValueChange,
+            onValueChange = { id: Int, value: String ->
+                onEvent(NameInputEvent.PlayerNameChanged(id = id, value = value))
+            },
             nameInputState = nameInputState,
             modifier = Modifier
                 .padding(it)
@@ -80,6 +81,7 @@ fun TextFieldsColumn(
         verticalArrangement = Arrangement.Center
     ){
         Spacer(modifier = Modifier.height(12.dp))
+        
         nameInputState.forEach { entry ->
             OutlinedTextField(
                 value = entry.value,
@@ -109,8 +111,7 @@ fun NameInputScreenPreview() {
         onNavigateToNext = { /*TODO*/ },
         onNavigateUp = { /*TODO*/ },
         onEvent = {},
-        nameInputState = mapOf(1 to "Nika", 2 to "Taso", 3 to "Neka", 4 to ""),
-        onValueChange = {i: Int, s: String -> }
+        nameInputState = mapOf(1 to "Nika", 2 to "Taso", 3 to "Neka", 4 to "")
     )
 }
 

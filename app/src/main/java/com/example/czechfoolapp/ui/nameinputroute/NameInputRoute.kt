@@ -1,6 +1,7 @@
 package com.example.czechfoolapp.ui.nameinputroute
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
@@ -8,13 +9,12 @@ fun NameInputRoute(
     onNavigateUp: () -> Unit,
     onNavigateToNext: () -> Unit
 ) {
-    
+    val viewModel: NameInputViewModel = viewModel()
     NameInputScreen(
         onNavigateToNext = onNavigateToNext,
         onNavigateUp = onNavigateUp,
-        onEvent = {},
-        nameInputState = mapOf(1 to "Nika", 2 to "Taso", 3 to "Neka", 4 to ""),
-        onValueChange = { i: Int, s: String -> }
+        onEvent = viewModel::onEvent,
+        nameInputState = viewModel.playerNameState.value,
     )
 }
 
