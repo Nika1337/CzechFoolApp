@@ -8,5 +8,8 @@ fun NameInputRoute(
     onNavigateUp: () -> Unit,
     onNavigateToNext: () -> Unit
 ) {
-
+    NameInputScreen(
+        onNavigateUp = onNavigateUp,
+        onNavigateToNext = onNavigateToNext
+    )
 }
