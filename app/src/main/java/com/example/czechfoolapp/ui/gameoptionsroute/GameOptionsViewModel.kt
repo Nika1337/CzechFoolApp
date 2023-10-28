@@ -39,8 +39,8 @@ class GameOptionsViewModel(
     }
 
     private fun submitGameOptions(navigateToNext: () -> Unit) {
-        val numberOfPlayersResult = validateNumberOfPlayersUseCase.execute(gameOptionsState.numberOfPlayersState.value.text)
-        val losingScoreResult = validateLosingScoreUseCase.execute(gameOptionsState.losingScoreState.value.text)
+        val numberOfPlayersResult = validateNumberOfPlayersUseCase(gameOptionsState.numberOfPlayersState.value.text)
+        val losingScoreResult = validateLosingScoreUseCase(gameOptionsState.losingScoreState.value.text)
 
         val hasError = listOf(
             numberOfPlayersResult,

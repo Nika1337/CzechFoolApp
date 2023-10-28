@@ -5,11 +5,14 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.czechfoolapp.domain.use_case.ValidatePlayerName
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
-class NameInputViewModel : ViewModel() {
-    private val _playerNameState = mutableStateMapOf<Int, String>()
+class NameInputViewModel(
+    private val validatePlayerName: ValidatePlayerName = ValidatePlayerName() // TODO factory and di
+) : ViewModel() {
+    private val _playerNameState = mutableStateMapOf<Int, PlayerNameState>()
     val playerNameState = derivedStateOf { _playerNameState.toMap() }
 
     init {
@@ -17,11 +20,10 @@ class NameInputViewModel : ViewModel() {
         viewModelScope.launch {
             repositoryMockFlow.collect { playerNumber ->
                 repeat(playerNumber) {
-                    _playerNameState[it + 1] = ""
+                    _playerNameState[it + 1] = PlayerNameState()
                 }
             }
         }
-        Log.d("playerNameState", playerNameState.value.toString())
     }
 
     fun onEvent(event: NameInputEvent) {
@@ -40,11 +42,30 @@ class NameInputViewModel : ViewModel() {
         }
     }
     private fun changePlayerName(id: Int, value: String) {
-        _playerNameState[id] = value
-
+        _playerNameState[id] = _playerNameState[id].let {
+            if (it == null) {
+                Log.e("PlayerIDNull", id.toString())
+                PlayerNameState()
+            } else {
+                it.copy(name = value)
+            }
+        }
     }
 
     private fun submitPlayerNames(navigateToNext: () -> Unit) {
+        var hasError = false
+        _playerNameState.forEach { entry ->
+            val validationResult = validatePlayerName(entry.value.name)
+            if (validationResult.successful.not()) {
+                _playerNameState[entry.key] = entry.value.copy(nameError = validationResult.errorMessage)
+                hasError = true
+            } else {
+                _playerNameState[entry.key] = entry.value.copy(nameError = validationResult.errorMessage)
+            }
+        }
+        if (hasError) {
+            return
+        }
         navigateToNext()
         // TODO storing to repository
     }

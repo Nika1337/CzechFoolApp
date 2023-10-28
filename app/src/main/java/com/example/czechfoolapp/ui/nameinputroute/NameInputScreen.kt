@@ -2,6 +2,7 @@ package com.example.czechfoolapp.ui.nameinputroute
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -32,7 +34,7 @@ fun NameInputScreen(
     onNavigateToNext: () -> Unit,
     onNavigateUp: () -> Unit,
     onEvent: (event: NameInputEvent) -> Unit,
-    nameInputState: Map<Int, String>,
+    nameInputState: Map<Int, PlayerNameState>,
 ) {
     Scaffold(
         topBar = {
@@ -67,11 +69,11 @@ fun NameInputScreen(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun TextFieldsColumn(
     onValueChange: (id: Int, value: String) -> Unit,
-    nameInputState: Map<Int, String>,
+    nameInputState: Map<Int, PlayerNameState>,
     modifier: Modifier = Modifier
 ){
     Column(
@@ -83,8 +85,8 @@ fun TextFieldsColumn(
         Spacer(modifier = Modifier.height(12.dp))
         
         nameInputState.forEach { entry ->
-            OutlinedTextField(
-                value = entry.value,
+            NameTextField(
+                entry = entry,
                 onValueChange = { value ->
                     onValueChange(entry.key, value)
                 },
@@ -93,14 +95,47 @@ fun TextFieldsColumn(
                         horizontal = dimensionResource(R.dimen.textField_horizontal),
                         vertical = dimensionResource(R.dimen.textField_vertical_small)
                     )
-                    .fillMaxWidth(),
-                label = {
-                    Text(text = "Player ${entry.key}")
-                }
             )
         }
 
         Spacer(modifier = Modifier.height(64.dp))
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NameTextField(
+    onValueChange: (String) -> Unit,
+    entry: Map.Entry<Int, PlayerNameState>,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ){
+        OutlinedTextField(
+            value = entry.value.name,
+            onValueChange = onValueChange,
+            modifier = Modifier
+                .fillMaxWidth(),
+            label = {
+                Text(text = "Player ${entry.key}")
+            },
+            singleLine = true,
+            isError = entry.value.nameError != null
+        )
+        entry.value.nameError?.let { nameError -> TextFieldError(textError = nameError) }
+    }
+}
+
+@Composable
+private fun TextFieldError(textError: String) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = textError,
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.error
+        )
     }
 }
 
@@ -111,7 +146,7 @@ fun NameInputScreenPreview() {
         onNavigateToNext = { /*TODO*/ },
         onNavigateUp = { /*TODO*/ },
         onEvent = {},
-        nameInputState = mapOf(1 to "Nika", 2 to "Taso", 3 to "Neka", 4 to "")
+        nameInputState = mapOf(1 to PlayerNameState("nika"), 2 to PlayerNameState("neka"), 3 to PlayerNameState("taso"))
     )
 }
 

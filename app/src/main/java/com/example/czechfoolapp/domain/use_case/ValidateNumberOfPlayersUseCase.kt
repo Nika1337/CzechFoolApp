@@ -4,7 +4,7 @@ package com.example.czechfoolapp.domain.use_case
 
 private const val MAX_NUMBER_OF_PLAYERS = 16
 class ValidateNumberOfPlayersUseCase {
-    fun execute(numberOfPlayers: String) : ValidationResult {
+    operator fun invoke(numberOfPlayers: String) : ValidationResult {
         if (numberOfPlayers.isBlank()) {
             return ValidationResult(
                 successful = false,
@@ -20,7 +20,7 @@ class ValidateNumberOfPlayersUseCase {
         if (numberOfPlayers.toInt() > MAX_NUMBER_OF_PLAYERS) {
                 return ValidationResult(
                     successful = false,
-                    errorMessage = "More than 16 players not supported"
+                    errorMessage = "More than $MAX_NUMBER_OF_PLAYERS players not supported"
                 )
         }
         return ValidationResult(

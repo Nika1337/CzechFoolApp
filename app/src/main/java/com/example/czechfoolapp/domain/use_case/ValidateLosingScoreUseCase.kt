@@ -4,7 +4,7 @@ package com.example.czechfoolapp.domain.use_case
 private const val MAX_LOSING_SCORE = 1000
 
 class ValidateLosingScoreUseCase {
-    fun execute(score: String) : ValidationResult {
+    operator fun invoke(score: String) : ValidationResult {
         if (score.isBlank()) {
             return ValidationResult(
                 successful = false,
@@ -20,7 +20,7 @@ class ValidateLosingScoreUseCase {
         if (score.toInt() > MAX_LOSING_SCORE) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "More than 1000 losing score not supported"
+                errorMessage = "More than $MAX_LOSING_SCORE losing score not supported"
             )
         }
         return ValidationResult(
