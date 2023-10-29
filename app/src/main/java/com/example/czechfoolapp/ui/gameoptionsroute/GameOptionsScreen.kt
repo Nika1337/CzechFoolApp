@@ -137,7 +137,6 @@ private fun MenusColumn(
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done,
             ),
-            onImeAction = { focusManager.clearFocus() },
             modifier = Modifier.padding(24.dp)
         )
         Spacer(modifier = Modifier.height(64.dp))
@@ -153,7 +152,6 @@ private fun TextFieldMenu(
     @StringRes label: Int,
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    onImeAction: () -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
     Column(
@@ -181,11 +179,6 @@ private fun TextFieldMenu(
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                     isError = state.errorMessage != null,
                     keyboardOptions = keyboardOptions,
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            onImeAction()
-                        }
-                    ),
                     modifier = Modifier
                         .fillMaxWidth()
                         .menuAnchor()
@@ -205,7 +198,6 @@ private fun TextFieldMenu(
                                    },
                             onClick = {
                                 onEvent(item)
-                                onImeAction()
                                 expanded = false
                             },
                             modifier = Modifier.fillMaxWidth(),
