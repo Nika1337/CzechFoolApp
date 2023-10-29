@@ -8,7 +8,7 @@ fun GameOptionsRoute(
     onNavigateUp: () -> Unit,
     onNavigateToNext: () -> Unit
 ) {
-    val viewModel: GameOptionsViewModel = viewModel() // TODO factory and DI
+    val viewModel: GameOptionsViewModel = viewModel(factory = GameOptionsViewModel.factory)
     GameOptionsScreen(
         onNavigateUp = onNavigateUp,
         onNavigateToNext = onNavigateToNext,

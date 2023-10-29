@@ -9,7 +9,7 @@ fun NameInputRoute(
     onNavigateUp: () -> Unit,
     onNavigateToNext: () -> Unit
 ) {
-    val viewModel: NameInputViewModel = viewModel()
+    val viewModel: NameInputViewModel = viewModel(factory = NameInputViewModel.factory)
     NameInputScreen(
         onNavigateToNext = onNavigateToNext,
         onNavigateUp = onNavigateUp,
