@@ -2,7 +2,7 @@ package com.example.czechfoolapp.domain.use_case
 
 
 private const val MAX_LENGTH_OF_NAME = 16
-class ValidatePlayerName {
+class ValidatePlayerNameUseCase {
     operator fun invoke(name: String) : ValidationResult {
         if (name.isBlank()) {
             return ValidationResult(

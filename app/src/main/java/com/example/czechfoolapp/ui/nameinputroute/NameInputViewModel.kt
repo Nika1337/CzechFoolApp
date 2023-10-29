@@ -4,13 +4,18 @@ import android.util.Log
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.czechfoolapp.domain.use_case.ValidatePlayerName
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.czechfoolapp.CzechFoolApplication
+import com.example.czechfoolapp.domain.use_case.ValidatePlayerNameUseCase
+import com.example.czechfoolapp.ui.gameoptionsroute.GameOptionsViewModel
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 class NameInputViewModel(
-    private val validatePlayerName: ValidatePlayerName = ValidatePlayerName() // TODO factory and di
+    private val validatePlayerNameUseCase: ValidatePlayerNameUseCase
 ) : ViewModel() {
     private val _playerNameState = mutableStateMapOf<Int, PlayerNameState>()
     val playerNameState = derivedStateOf { _playerNameState.toMap() }
@@ -55,7 +60,7 @@ class NameInputViewModel(
     private fun submitPlayerNames(navigateToNext: () -> Unit) {
         var hasError = false
         _playerNameState.forEach { entry ->
-            val validationResult = validatePlayerName(entry.value.name)
+            val validationResult = validatePlayerNameUseCase(entry.value.name)
             if (validationResult.successful.not()) {
                 _playerNameState[entry.key] = entry.value.copy(nameError = validationResult.errorMessage)
                 hasError = true
@@ -68,5 +73,17 @@ class NameInputViewModel(
         }
         navigateToNext()
         // TODO storing to repository
+    }
+
+    companion object {
+        val factory : ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
+                val validatePlayerNameUseCase = application.container.validatePlayerNameUseCase
+                NameInputViewModel(
+                    validatePlayerNameUseCase = validatePlayerNameUseCase
+                )
+            }
+        }
     }
 }

@@ -5,14 +5,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.data.DefaultValuesSource
 import com.example.czechfoolapp.domain.use_case.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionsState
 
 class GameOptionsViewModel(
-    private val validateNumberOfPlayersUseCase: ValidateNumberOfPlayersUseCase = ValidateNumberOfPlayersUseCase(), // TODO DI
-    private val validateLosingScoreUseCase: ValidateLosingScoreUseCase = ValidateLosingScoreUseCase() // TODO DI
+    private val validateNumberOfPlayersUseCase: ValidateNumberOfPlayersUseCase,
+    private val validateLosingScoreUseCase: ValidateLosingScoreUseCase
 ) : ViewModel() {
     var gameOptionsState by mutableStateOf(GameOptionsState())
         private set
@@ -54,8 +58,21 @@ class GameOptionsViewModel(
         if (hasError) {
             return
         }
+        // TODO storing in repository
         navigateToNext()
     }
-
+    companion object {
+        val factory : ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
+                val validateNumberOfPlayersUseCase = application.container.validateNumberOfPlayersUseCase
+                val validateLosingScoreUseCase = application.container.validateLosingScoreUseCase
+                GameOptionsViewModel(
+                    validateNumberOfPlayersUseCase = validateNumberOfPlayersUseCase,
+                    validateLosingScoreUseCase = validateLosingScoreUseCase
+                )
+            }
+        }
+    }
 }
 
