@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.czechfoolapp.data.model.Game
 import java.time.LocalDateTime
 
 @Entity(
@@ -19,3 +20,11 @@ data class GameEntity(
     val numberOfPlayers: Int,
     val date: LocalDateTime
 )
+
+fun GameEntity.toGame() =
+    Game(
+        id = this.id,
+        losingScore = this.losingScore,
+        numberOfPlayers = this.numberOfPlayers,
+        date = this.date
+    )
