@@ -23,7 +23,7 @@ class OfflineGamesRepository(
     }
 
     override fun getAllGamesStream(): Flow<List<Game>> =
-        gameDao.getAll()
+        gameDao.getAllGames()
             .map { gameEntityList ->
                 gameEntityList.map { gameEntity ->
                     gameEntity.toGame()

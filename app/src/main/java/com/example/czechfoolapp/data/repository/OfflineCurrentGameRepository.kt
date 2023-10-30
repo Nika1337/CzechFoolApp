@@ -8,7 +8,7 @@ class OfflineCurrentGameRepository(
     private var currentGame: Game? = null
     override suspend fun startGame(game: Game) {
         gamesRepository.insert(game)
-        currentGame = getCurrentGame()
+        currentGame = game
     }
 
     override fun getCurrentGame(): Game? {

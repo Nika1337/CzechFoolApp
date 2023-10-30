@@ -21,5 +21,5 @@ interface GameDao {
     suspend fun update(game: GameEntity)
 
     @Query("Select * FROM game")
-    fun getAll(): Flow<List<GameEntity>>
+    fun getAllGames(): Flow<List<GameEntity>>
 }
