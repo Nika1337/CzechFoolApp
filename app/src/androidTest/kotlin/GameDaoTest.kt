@@ -35,7 +35,7 @@ class GameDaoTest {
         czechFoolGameDatabase.close()
     }
 
-    private var gameEntity1 =
+    private val gameEntity1 =
         GameEntity(
             id = 1,
             losingScore = 200,
@@ -43,7 +43,7 @@ class GameDaoTest {
             date = LocalDateTime.now()
         )
 
-    private var gameEntity2 =
+    private val gameEntity2 =
         GameEntity(
             id = 2,
             losingScore = 300,
@@ -70,7 +70,7 @@ class GameDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoGetAllItems_returnsAllItemsFromDb() = runBlocking {
+    fun daoGetAllGames_returnsAllGamesFromDb() = runBlocking {
         addTwoGamesToDb()
         val allItems = gameDao.getAllGames().first()
         assertEquals(allItems[0], gameEntity1)
@@ -79,7 +79,7 @@ class GameDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoUpdateGames_updatesItemsInDb() = runBlocking {
+    fun daoUpdateGames_updatesGamesInDb() = runBlocking {
         val gameEntity1Copy = gameEntity1.copy(numberOfPlayers = 123)
         val gameEntity2Copy = gameEntity2.copy(losingScore = 123)
 
