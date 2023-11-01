@@ -18,6 +18,14 @@ class OfflineCurrentGameRepository(
         return currentGame
     }
 
+    override suspend fun updateGame(game: Game) {
+        if (currentGame != null) {
+            return
+        }
+        gamesRepository.update(game)
+        currentGame = game
+    }
+
     override suspend fun endGame() {
         currentGame = null
     }

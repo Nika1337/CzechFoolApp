@@ -6,17 +6,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.data.DefaultValuesSource
+import com.example.czechfoolapp.data.model.Game
+import com.example.czechfoolapp.data.repository.CurrentGameRepository
 import com.example.czechfoolapp.domain.use_case.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionsState
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class GameOptionsViewModel(
     private val validateNumberOfPlayersUseCase: ValidateNumberOfPlayersUseCase,
-    private val validateLosingScoreUseCase: ValidateLosingScoreUseCase
+    private val validateLosingScoreUseCase: ValidateLosingScoreUseCase,
+    private val currentGameRepository: CurrentGameRepository
 ) : ViewModel() {
     var gameOptionsState by mutableStateOf(GameOptionsState())
         private set
@@ -58,18 +64,35 @@ class GameOptionsViewModel(
         if (hasError) {
             return
         }
-        // TODO storing in repository
+        saveGameToRepository()
         navigateToNext()
     }
+
+    private fun saveGameToRepository() = viewModelScope.launch {
+        val newGame = Game(
+            losingScore = gameOptionsState.losingScoreState.value.text.toInt(),
+            numberOfPlayers = gameOptionsState.losingScoreState.value.text.toInt(),
+            date = LocalDateTime.now()
+        )
+        if (currentGameRepository.getCurrentGame() != null) {
+            currentGameRepository.updateGame(newGame)
+        } else {
+            currentGameRepository.startGame(newGame)
+        }
+    }
+
+
     companion object {
         val factory : ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
                 val validateNumberOfPlayersUseCase = application.container.validateNumberOfPlayersUseCase
                 val validateLosingScoreUseCase = application.container.validateLosingScoreUseCase
+                val currentGameRepository = application.container.currentGameRepository
                 GameOptionsViewModel(
                     validateNumberOfPlayersUseCase = validateNumberOfPlayersUseCase,
-                    validateLosingScoreUseCase = validateLosingScoreUseCase
+                    validateLosingScoreUseCase = validateLosingScoreUseCase,
+                    currentGameRepository = currentGameRepository
                 )
             }
         }
