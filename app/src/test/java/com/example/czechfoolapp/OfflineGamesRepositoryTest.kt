@@ -1,10 +1,10 @@
-package test
+package com.example.czechfoolapp
 
 import com.example.czechfoolapp.data.model.Game
 import com.example.czechfoolapp.data.repository.GamesRepository
 import com.example.czechfoolapp.data.repository.OfflineGamesRepository
-import test.fake.FakeDataSource
-import test.fake.FakeGameDao
+import com.example.czechfoolapp.fake.FakeDataSource
+import com.example.czechfoolapp.fake.FakeGameDao
 import kotlinx.coroutines.flow.first
 import org.junit.Before
 import org.junit.Test

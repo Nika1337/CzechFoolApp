@@ -1,4 +1,4 @@
-package test.fake
+package com.example.czechfoolapp.fake
 
 import com.example.czechfoolapp.data.model.Game
 import com.example.czechfoolapp.data.model.Player

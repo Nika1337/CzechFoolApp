@@ -1,10 +1,10 @@
-package test
+package com.example.czechfoolapp
 
 import com.example.czechfoolapp.data.model.Player
 import com.example.czechfoolapp.data.repository.OfflinePlayersRepository
 import com.example.czechfoolapp.data.repository.PlayersRepository
-import test.fake.FakeDataSource
-import test.fake.FakePlayerDao
+import com.example.czechfoolapp.fake.FakeDataSource
+import com.example.czechfoolapp.fake.FakePlayerDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

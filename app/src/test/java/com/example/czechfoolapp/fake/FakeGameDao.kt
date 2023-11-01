@@ -1,4 +1,4 @@
-package test.fake
+package com.example.czechfoolapp.fake
 
 import com.example.czechfoolapp.database.dao.GameDao
 import com.example.czechfoolapp.database.model.GameEntity

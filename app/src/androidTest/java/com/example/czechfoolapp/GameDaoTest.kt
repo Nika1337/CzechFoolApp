@@ -1,4 +1,4 @@
-package test
+package com.example.czechfoolapp
 
 import android.content.Context
 import androidx.room.Room
