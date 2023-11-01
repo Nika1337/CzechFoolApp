@@ -29,6 +29,6 @@ class OfflinePlayersRepository(
                 }
             }
 
-    override suspend fun getPlayerStream(gameID: Int, name: String): Player =
+    override suspend fun getPlayer(gameID: Int, name: String): Player =
         playerDao.getPlayer(gameID = gameID, name = name).toPlayer()
 }

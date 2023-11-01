@@ -12,5 +12,5 @@ interface PlayersRepository {
 
     fun getAllPlayersInGameSpecified(gameID: Int) : Flow<List<Player>>
 
-    suspend fun getPlayerStream(gameID: Int, name: String) : Player
+    suspend fun getPlayer(gameID: Int, name: String) : Player
 }

@@ -8,5 +8,5 @@ interface GamesRepository {
     suspend fun delete(game: Game)
 
     suspend fun update(game: Game)
-    fun getAllGamesStream() : Flow<List<Game>>
+    fun getAllGames() : Flow<List<Game>>
 }

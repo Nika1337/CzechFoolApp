@@ -5,7 +5,7 @@ import com.example.czechfoolapp.database.model.PlayerEntity
 data class Player(
     val gameId: Int,
     val name: String,
-    val score: Int
+    val score: Int = 0
 )
 
 fun Player.toPlayerEntity() =

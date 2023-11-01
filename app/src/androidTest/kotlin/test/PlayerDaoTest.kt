@@ -1,3 +1,5 @@
+package test
+
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -8,6 +10,7 @@ import com.example.czechfoolapp.database.model.GameEntity
 import com.example.czechfoolapp.database.model.PlayerEntity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -75,7 +78,7 @@ class PlayerDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoInsert_insertsPlayerIntoDb() = runBlocking {
+    fun daoInsert_insertsPlayerIntoDb() = runTest {
         addOnePlayerToDb()
         val allPlayers = playerDao.getAllPlayersInGameSpecified(defaultGameId).first()
         assertEquals(playerEntity1, allPlayers[0])
@@ -83,7 +86,7 @@ class PlayerDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoGetAllItems_returnsAllItemsFromDb() = runBlocking {
+    fun daoGetAllItems_returnsAllItemsFromDb() = runTest {
         addTwoPlayersToDb()
         val allItems = playerDao.getAllPlayersInGameSpecified(defaultGameId).first()
         assertEquals(allItems[0], playerEntity1)
@@ -92,7 +95,7 @@ class PlayerDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoGetPlayer_returnsCorrectPlayerFromDb() = runBlocking {
+    fun daoGetPlayer_returnsCorrectPlayerFromDb() = runTest {
         addTwoPlayersToDb()
         val expectedPlayerEntity1 = playerDao.getPlayer(defaultGameId, playerEntity1.name)
         val expectedPlayerEntity2 = playerDao.getPlayer(defaultGameId, playerEntity2.name)
@@ -103,7 +106,7 @@ class PlayerDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoUpdatePlayer_updatesPlayerInDb() = runBlocking {
+    fun daoUpdatePlayer_updatesPlayerInDb() = runTest {
         val playerEntity1Copy = playerEntity1.copy(score = 67)
 
         addOnePlayerToDb()
@@ -115,7 +118,7 @@ class PlayerDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun daoDeletePlayers_deletesAllPlayersFromDb() = runBlocking {
+    fun daoDeletePlayers_deletesAllPlayersFromDb() = runTest {
         addTwoPlayersToDb()
         playerDao.delete(playerEntity1)
         playerDao.delete(playerEntity2)
@@ -123,6 +126,7 @@ class PlayerDaoTest {
         val allPlayers = playerDao.getAllPlayersInGameSpecified(defaultGameId).first()
         assertTrue(allPlayers.isEmpty())
     }
+
 
 }
 
