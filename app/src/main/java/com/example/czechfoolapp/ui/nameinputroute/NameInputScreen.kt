@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.czechfoolapp.R
@@ -90,6 +92,9 @@ fun TextFieldsColumn(
                 onValueChange = { value ->
                     onValueChange(entry.key, value)
                 },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = if (entry.key <= nameInputState.size) ImeAction.Next else ImeAction.Done
+                ),
                 modifier = Modifier
                     .padding(
                         horizontal = dimensionResource(R.dimen.textField_horizontal),
@@ -107,7 +112,8 @@ fun TextFieldsColumn(
 fun NameTextField(
     onValueChange: (String) -> Unit,
     entry: Map.Entry<Int, PlayerNameState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions
 ) {
     Column(
         modifier = modifier
@@ -120,6 +126,7 @@ fun NameTextField(
             label = {
                 Text(text = "Player ${entry.key}")
             },
+            keyboardOptions = keyboardOptions,
             singleLine = true,
             isError = entry.value.nameError != null
         )
