@@ -1,5 +1,6 @@
 package com.example.czechfoolapp.ui.nameinputroute
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -86,14 +87,15 @@ fun TextFieldsColumn(
     ){
         Spacer(modifier = Modifier.height(12.dp))
         
-        nameInputState.forEach { entry ->
+        nameInputState.forEach { (id: Int, playerNameState: PlayerNameState) ->
             NameTextField(
-                entry = entry,
+                id = id,
+                playerNameState = playerNameState,
                 onValueChange = { value ->
-                    onValueChange(entry.key, value)
+                    onValueChange(id, value)
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = if (entry.key <= nameInputState.size) ImeAction.Next else ImeAction.Done
+                    imeAction = if (id <= nameInputState.size) ImeAction.Next else ImeAction.Done
                 ),
                 modifier = Modifier
                     .padding(
@@ -110,27 +112,29 @@ fun TextFieldsColumn(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NameTextField(
+    id: Int,
+    playerNameState: PlayerNameState,
     onValueChange: (String) -> Unit,
-    entry: Map.Entry<Int, PlayerNameState>,
     modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions
+    keyboardOptions: KeyboardOptions,
 ) {
+    Log.d("recomposedNameTextField", playerNameState.name)
     Column(
         modifier = modifier
     ){
         OutlinedTextField(
-            value = entry.value.name,
+            value = playerNameState.name,
             onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth(),
             label = {
-                Text(text = "Player ${entry.key}")
+                Text(text = "Player $id")
             },
             keyboardOptions = keyboardOptions,
             singleLine = true,
-            isError = entry.value.nameError != null
+            isError = playerNameState.nameError != null
         )
-        entry.value.nameError?.let { nameError -> TextFieldError(textError = nameError) }
+        playerNameState.nameError?.let { nameError -> TextFieldError(textError = nameError) }
     }
 }
 
