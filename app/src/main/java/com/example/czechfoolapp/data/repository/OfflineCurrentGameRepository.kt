@@ -1,32 +1,39 @@
 package com.example.czechfoolapp.data.repository
 
 import com.example.czechfoolapp.data.model.Game
+import com.example.czechfoolapp.data.model.Player
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlin.jvm.Throws
 
 class OfflineCurrentGameRepository(
     private val gamesRepository: GamesRepository
 ) : CurrentGameRepository {
-    private var currentGame: Game? = null
+    private val currentGame: MutableStateFlow<Game?> = MutableStateFlow(null)
     override suspend fun startGame(game: Game) {
-        if (currentGame != null) {
-            return
+        if (currentGame.value != null) {
+            throw IllegalStateException("Game already in progress")
         }
         gamesRepository.insert(game)
-        currentGame = game
+        currentGame.value = game
     }
 
-    override fun getCurrentGame(): Game? {
-        return currentGame
-    }
+    override fun getCurrentGame(): StateFlow<Game?> = currentGame
 
     override suspend fun updateGame(game: Game) {
-        if (currentGame != null) {
-            return
+        if (currentGame.value != null) {
+            throw IllegalStateException("No game in progress")
         }
         gamesRepository.update(game)
-        currentGame = game
+        currentGame.value = game
     }
 
     override suspend fun endGame() {
-        currentGame = null
+        if (currentGame.value == null) {
+            throw IllegalStateException("No game in progress")
+        }
+        currentGame.value = null
     }
 }
