@@ -10,7 +10,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.domain.use_case.ValidatePlayerNameUseCase
-import com.example.czechfoolapp.ui.gameoptionsroute.GameOptionsViewModel
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 

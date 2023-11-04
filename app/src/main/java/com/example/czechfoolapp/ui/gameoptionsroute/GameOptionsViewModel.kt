@@ -13,8 +13,8 @@ import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.data.DefaultValuesSource
 import com.example.czechfoolapp.data.model.Game
 import com.example.czechfoolapp.data.repository.CurrentGameRepository
-import com.example.czechfoolapp.domain.use_case.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.ValidateLosingScoreUseCase
+import com.example.czechfoolapp.domain.use_case.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionsState
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -74,7 +74,7 @@ class GameOptionsViewModel(
             numberOfPlayers = gameOptionsState.losingScoreState.value.text.toInt(),
             date = LocalDateTime.now()
         )
-        if (currentGameRepository.getCurrentGame() != null) {
+        if (currentGameRepository.getCurrentGame().value != null) {
             currentGameRepository.updateGame(newGame)
         } else {
             currentGameRepository.startGame(newGame)
