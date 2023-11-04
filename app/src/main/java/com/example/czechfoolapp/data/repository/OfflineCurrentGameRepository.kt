@@ -23,7 +23,7 @@ class OfflineCurrentGameRepository(
     override fun getCurrentGame(): StateFlow<Game?> = currentGame
 
     override suspend fun updateGame(game: Game) {
-        if (currentGame.value != null) {
+        if (currentGame.value == null) {
             throw IllegalStateException("No game in progress")
         }
         gamesRepository.update(game)
