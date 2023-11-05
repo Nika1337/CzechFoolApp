@@ -2,7 +2,7 @@ package com.example.czechfoolapp.data
 
 import android.content.Context
 import com.example.czechfoolapp.data.repository.CurrentGameRepository
-import com.example.czechfoolapp.data.repository.OfflineCurrentGameRepository
+import com.example.czechfoolapp.data.repository.DefaultCurrentGameRepository
 import com.example.czechfoolapp.data.repository.OfflineGamesRepository
 import com.example.czechfoolapp.database.CzechFoolGameDatabase
 import com.example.czechfoolapp.domain.use_case.ValidateLosingScoreUseCase
@@ -38,6 +38,6 @@ class DefaultAppContainer(
         OfflineGamesRepository(gameDao = gameDao)
     }
     override val currentGameRepository: CurrentGameRepository by lazy {
-        OfflineCurrentGameRepository(gamesRepository = gamesRepository)
+        DefaultCurrentGameRepository(gamesRepository = gamesRepository)
     }
 }

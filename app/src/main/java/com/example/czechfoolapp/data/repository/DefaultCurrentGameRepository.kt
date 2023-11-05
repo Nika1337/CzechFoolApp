@@ -4,7 +4,7 @@ import com.example.czechfoolapp.data.model.Game
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class OfflineCurrentGameRepository(
+class DefaultCurrentGameRepository(
     private val gamesRepository: GamesRepository
 ) : CurrentGameRepository {
     private val currentGame: MutableStateFlow<Game?> = MutableStateFlow(null)

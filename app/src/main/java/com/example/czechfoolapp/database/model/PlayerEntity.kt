@@ -10,7 +10,7 @@ import com.example.czechfoolapp.data.model.Player
     tableName = "player",
     primaryKeys = [
         "game_id",
-        "name"
+        "player_id"
     ],
     foreignKeys = [
         ForeignKey(
@@ -22,12 +22,14 @@ import com.example.czechfoolapp.data.model.Player
         )
     ],
     indices = [
-        Index(value = ["game_id", "name"])
+        Index(value = ["game_id", "name"], unique = true)
     ]
 )
 data class PlayerEntity(
     @ColumnInfo(name = "game_id")
     val gameId: Int,
+    @ColumnInfo(name = "player_id")
+    val playerId: Int,
     val name: String,
     val score: Int,
 )
@@ -35,6 +37,7 @@ data class PlayerEntity(
 fun PlayerEntity.toPlayer() =
     Player(
         gameId = this.gameId,
+        playerId = this.playerId,
         name = this.name,
         score = this.score
     )
