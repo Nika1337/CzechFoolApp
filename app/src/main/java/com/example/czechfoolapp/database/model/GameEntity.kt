@@ -16,7 +16,8 @@ data class GameEntity(
     val losingScore: Int,
     @ColumnInfo(name = "number_of_players")
     val numberOfPlayers: Int,
-    val date: LocalDateTime
+    val date: LocalDateTime,
+    val isFinished: Boolean
 )
 
 fun GameEntity.toGame() =
@@ -24,5 +25,7 @@ fun GameEntity.toGame() =
         id = this.id,
         losingScore = this.losingScore,
         numberOfPlayers = this.numberOfPlayers,
-        date = this.date
+        date = this.date,
+        isFinished = this.isFinished,
+        isStarted = true
     )

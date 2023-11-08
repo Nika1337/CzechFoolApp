@@ -9,4 +9,5 @@ interface GamesRepository {
 
     suspend fun update(game: Game)
     fun getAllGames() : Flow<List<Game>>
+    suspend fun getMaxGameId() : Int
 }

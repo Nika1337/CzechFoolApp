@@ -16,7 +16,7 @@ import com.example.czechfoolapp.database.model.PlayerEntity
         PlayerEntity::class,
         GameEntity::class
     ],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(value = [Converters::class])
@@ -31,6 +31,7 @@ abstract class CzechFoolGameDatabase : RoomDatabase() {
         fun getDatabase(context: Context): CzechFoolGameDatabase {
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, CzechFoolGameDatabase::class.java, "czech_fool_database")
+                    .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }
             }

@@ -22,4 +22,9 @@ interface GameDao {
 
     @Query("Select * FROM game")
     fun getAllGames(): Flow<List<GameEntity>>
+
+    @Query("""
+        SELECT MAX(id) FROM game
+    """)
+    suspend fun getMaxGameId(): Int
 }

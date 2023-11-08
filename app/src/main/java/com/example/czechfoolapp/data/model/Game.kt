@@ -11,13 +11,18 @@ data class Game(
     val id: Int = 0,
     val losingScore: Int = 0,
     val numberOfPlayers: Int,
-    val date: LocalDateTime
-)
+    val date: LocalDateTime,
+    val isStarted: Boolean = false,
+    val isFinished: Boolean = false
+) {
+    fun isInProgress() = isStarted && isFinished.not()
+}
 
 fun Game.toGameEntity() =
     GameEntity(
         id = this.id,
         losingScore = this.losingScore,
         numberOfPlayers = this.numberOfPlayers,
-        date = this.date
+        date = this.date,
+        isFinished = this.isFinished
     )

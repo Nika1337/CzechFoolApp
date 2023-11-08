@@ -30,4 +30,7 @@ class OfflineGamesRepository(
                 }
             }
 
+    override suspend fun getMaxGameId(): Int =
+        gameDao.getMaxGameId()
+
 }
