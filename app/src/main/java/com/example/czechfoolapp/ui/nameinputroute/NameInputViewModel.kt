@@ -10,23 +10,23 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.domain.use_case.GetCurrentPlayerNamesUseCase
-import com.example.czechfoolapp.domain.use_case.SetPlayersAndStartGameUseCase
+import com.example.czechfoolapp.domain.use_case.StartGameAndInsertPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.validation.ValidatePlayerNameUseCase
 import kotlinx.coroutines.launch
 
 class NameInputViewModel(
     private val validatePlayerNameUseCase: ValidatePlayerNameUseCase,
     private val getCurrentPlayerNamesUseCase: GetCurrentPlayerNamesUseCase,
-    private val setPlayersAndStartGameUseCase: SetPlayersAndStartGameUseCase
+    private val startGameAndInsertPlayersUseCase: StartGameAndInsertPlayersUseCase
 ) : ViewModel() {
     private val _playerNameState = mutableStateMapOf<Int, PlayerNameState>()
     val playerNameState = derivedStateOf { _playerNameState.toMap() }
 
     init {
-        populatePlayers()
+        populatePlayerNameState()
     }
 
-    private fun populatePlayers() {
+    private fun populatePlayerNameState() {
         _playerNameState.clear()
         getCurrentPlayerNamesUseCase().forEach {(id: Int, playerNameState: PlayerNameState) ->
             _playerNameState[id] = playerNameState
@@ -65,7 +65,7 @@ class NameInputViewModel(
             if (playerNamesValidationSuccess.not()) {
                 return@launch
             }
-            setPlayersAndStartGameUseCase(_playerNameState)
+            startGameAndInsertPlayersUseCase(_playerNameState)
             navigateToNext()
         }
     }
@@ -92,11 +92,11 @@ class NameInputViewModel(
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
                 val validatePlayerNameUseCase = application.container.validatePlayerNameUseCase
                 val getCurrentPlayerNamesUseCase = application.container.getCurrentPlayerNamesUseCase
-                val setPlayersAndStartGameUseCase = application.container.setPlayersAndStartGameUseCase
+                val setPlayersAndStartGameUseCase = application.container.startGameAndInsertPlayersUseCase
                 NameInputViewModel(
                     validatePlayerNameUseCase = validatePlayerNameUseCase,
                     getCurrentPlayerNamesUseCase = getCurrentPlayerNamesUseCase,
-                    setPlayersAndStartGameUseCase = setPlayersAndStartGameUseCase
+                    startGameAndInsertPlayersUseCase = setPlayersAndStartGameUseCase
                 )
             }
         }

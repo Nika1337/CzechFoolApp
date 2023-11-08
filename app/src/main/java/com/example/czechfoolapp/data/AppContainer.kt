@@ -10,7 +10,7 @@ import com.example.czechfoolapp.data.repository.OfflinePlayersRepository
 import com.example.czechfoolapp.data.repository.PlayersRepository
 import com.example.czechfoolapp.database.CzechFoolGameDatabase
 import com.example.czechfoolapp.domain.use_case.GetCurrentPlayerNamesUseCase
-import com.example.czechfoolapp.domain.use_case.SetPlayersAndStartGameUseCase
+import com.example.czechfoolapp.domain.use_case.StartGameAndInsertPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.validation.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.domain.use_case.validation.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.validation.ValidatePlayerNameUseCase
@@ -22,7 +22,7 @@ interface AppContainer {
     val currentGameRepository: CurrentGameRepository
     val currentPlayersRepository: CurrentPlayersRepository
     val getCurrentPlayerNamesUseCase: GetCurrentPlayerNamesUseCase
-    val setPlayersAndStartGameUseCase: SetPlayersAndStartGameUseCase
+    val startGameAndInsertPlayersUseCase: StartGameAndInsertPlayersUseCase
 }
 
 class DefaultAppContainer(
@@ -51,15 +51,9 @@ class DefaultAppContainer(
         DefaultCurrentGameRepository(gamesRepository = gamesRepository)
     }
 
-    // For Current Players Repository
-    private val playerDao by lazy {
-        CzechFoolGameDatabase.getDatabase(context).playerDao()
-    }
-    private val playersRepository: PlayersRepository by lazy {
-        OfflinePlayersRepository(playerDao = playerDao)
-    }
+
     override val currentPlayersRepository: CurrentPlayersRepository by lazy {
-        DefaultCurrentPlayersRepository(playersRepository = playersRepository)
+        DefaultCurrentPlayersRepository()
     }
 
     override val getCurrentPlayerNamesUseCase: GetCurrentPlayerNamesUseCase by lazy {
@@ -69,10 +63,18 @@ class DefaultAppContainer(
         )
     }
 
-    override val setPlayersAndStartGameUseCase: SetPlayersAndStartGameUseCase by lazy {
-        SetPlayersAndStartGameUseCase(
+    // For SetPlayersAndStartGameUseCase
+    private val playerDao by lazy {
+        CzechFoolGameDatabase.getDatabase(context).playerDao()
+    }
+    private val playersRepository: PlayersRepository by lazy {
+        OfflinePlayersRepository(playerDao = playerDao)
+    }
+    override val startGameAndInsertPlayersUseCase: StartGameAndInsertPlayersUseCase by lazy {
+        StartGameAndInsertPlayersUseCase(
             currentGameRepository = currentGameRepository,
-            currentPlayersRepository = currentPlayersRepository
+            currentPlayersRepository = currentPlayersRepository,
+            playersRepository = playersRepository
         )
     }
 }
