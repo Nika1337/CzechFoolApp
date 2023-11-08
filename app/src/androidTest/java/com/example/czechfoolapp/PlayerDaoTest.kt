@@ -31,6 +31,7 @@ class PlayerDaoTest {
     private val playerEntity1 =
         PlayerEntity(
             gameId = defaultGameId,
+            playerId = 1,
             name = "Player1",
             score = 0
         )
@@ -38,6 +39,7 @@ class PlayerDaoTest {
     private val playerEntity2 =
         PlayerEntity(
             gameId = defaultGameId,
+            playerId = 2,
             name = "Player2",
             score = 0
         )
@@ -58,7 +60,8 @@ class PlayerDaoTest {
                 id = defaultGameId,
                 losingScore = 200,
                 numberOfPlayers = 4,
-                date = LocalDateTime.now()
+                date = LocalDateTime.now(),
+                isFinished = false
             )
         gameDao.insert(gameEntity1)
     }

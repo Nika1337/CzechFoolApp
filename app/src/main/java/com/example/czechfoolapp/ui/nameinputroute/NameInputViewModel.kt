@@ -9,24 +9,27 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
-import com.example.czechfoolapp.domain.use_case.ValidatePlayerNameUseCase
-import kotlinx.coroutines.flow.flowOf
+import com.example.czechfoolapp.domain.use_case.GetCurrentPlayerNamesUseCase
+import com.example.czechfoolapp.domain.use_case.SetPlayersAndStartGameUseCase
+import com.example.czechfoolapp.domain.use_case.validation.ValidatePlayerNameUseCase
 import kotlinx.coroutines.launch
 
 class NameInputViewModel(
-    private val validatePlayerNameUseCase: ValidatePlayerNameUseCase
+    private val validatePlayerNameUseCase: ValidatePlayerNameUseCase,
+    private val getCurrentPlayerNamesUseCase: GetCurrentPlayerNamesUseCase,
+    private val setPlayersAndStartGameUseCase: SetPlayersAndStartGameUseCase
 ) : ViewModel() {
     private val _playerNameState = mutableStateMapOf<Int, PlayerNameState>()
     val playerNameState = derivedStateOf { _playerNameState.toMap() }
 
     init {
-        val repositoryMockFlow = flowOf(4)
-        viewModelScope.launch {
-            repositoryMockFlow.collect { playerNumber ->
-                repeat(playerNumber) {
-                    _playerNameState[it + 1] = PlayerNameState()
-                }
-            }
+        populatePlayers()
+    }
+
+    private fun populatePlayers() {
+        _playerNameState.clear()
+        getCurrentPlayerNamesUseCase().forEach {(id: Int, playerNameState: PlayerNameState) ->
+            _playerNameState[id] = playerNameState
         }
     }
 
@@ -57,21 +60,30 @@ class NameInputViewModel(
     }
 
     private fun submitPlayerNames(navigateToNext: () -> Unit) {
+        viewModelScope.launch {
+            val playerNamesValidationSuccess = validatePlayerNamesAndUpdateErrorMessages()
+            if (playerNamesValidationSuccess.not()) {
+                return@launch
+            }
+            setPlayersAndStartGameUseCase(_playerNameState)
+            navigateToNext()
+        }
+    }
+
+    private fun validatePlayerNamesAndUpdateErrorMessages() : Boolean {
         var hasError = false
         _playerNameState.forEach { entry ->
             val validationResult = validatePlayerNameUseCase(entry.value.name)
             if (validationResult.successful.not()) {
-                _playerNameState[entry.key] = entry.value.copy(nameError = validationResult.errorMessage)
                 hasError = true
+                _playerNameState[entry.key] =
+                    entry.value.copy(nameError = validationResult.errorMessage)
             } else {
-                _playerNameState[entry.key] = entry.value.copy(nameError = validationResult.errorMessage)
+                _playerNameState[entry.key] =
+                    entry.value.copy(nameError = validationResult.errorMessage)
             }
         }
-        if (hasError) {
-            return
-        }
-        navigateToNext()
-        // TODO storing to repository
+        return hasError.not()
     }
 
     companion object {
@@ -79,8 +91,12 @@ class NameInputViewModel(
             initializer {
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
                 val validatePlayerNameUseCase = application.container.validatePlayerNameUseCase
+                val getCurrentPlayerNamesUseCase = application.container.getCurrentPlayerNamesUseCase
+                val setPlayersAndStartGameUseCase = application.container.setPlayersAndStartGameUseCase
                 NameInputViewModel(
-                    validatePlayerNameUseCase = validatePlayerNameUseCase
+                    validatePlayerNameUseCase = validatePlayerNameUseCase,
+                    getCurrentPlayerNamesUseCase = getCurrentPlayerNamesUseCase,
+                    setPlayersAndStartGameUseCase = setPlayersAndStartGameUseCase
                 )
             }
         }

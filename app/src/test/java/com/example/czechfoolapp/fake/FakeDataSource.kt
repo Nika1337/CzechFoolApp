@@ -25,30 +25,37 @@ object FakeDataSource {
     val players = listOf(
         Player(
             gameId = gameId1,
+            playerId = 1,
             name = "Emily",
         ),
         Player(
             gameId = gameId1,
+            playerId = 2,
             name = "Joseph"
         ),
         Player(
             gameId = gameId1,
+            playerId = 3,
             name = "Farhad"
         ),
         Player(
             gameId = gameId2,
+            playerId = 1,
             name = "James"
         ),
         Player(
             gameId = gameId2,
+            playerId = 2,
             name = "Farhad"
         ),
         Player(
             gameId = gameId2,
+            playerId = 3,
             name = "Maryam"
         ),
         Player(
             gameId = gameId2,
+            playerId = 4,
             name = "Parvati"
         )
     )
