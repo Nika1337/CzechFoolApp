@@ -10,14 +10,17 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.domain.use_case.GetCurrentPlayerNamesUseCase
+import com.example.czechfoolapp.domain.use_case.StoreCurrentPlayerNamesUseCase
 import com.example.czechfoolapp.domain.use_case.StartGameAndInsertPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.validation.ValidatePlayerNameUseCase
+import com.example.czechfoolapp.util.getDuplicates
 import kotlinx.coroutines.launch
 
 class NameInputViewModel(
     private val validatePlayerNameUseCase: ValidatePlayerNameUseCase,
     private val getCurrentPlayerNamesUseCase: GetCurrentPlayerNamesUseCase,
-    private val startGameAndInsertPlayersUseCase: StartGameAndInsertPlayersUseCase
+    private val startGameAndInsertPlayersUseCase: StartGameAndInsertPlayersUseCase,
+    private val storeCurrentPlayerNamesUseCase: StoreCurrentPlayerNamesUseCase
 ) : ViewModel() {
     private val _playerNameState = mutableStateMapOf<Int, PlayerNameState>()
     val playerNameState = derivedStateOf { _playerNameState.toMap() }
@@ -46,8 +49,17 @@ class NameInputViewModel(
                     navigateToNext = event.navigateToNext
                 )
             }
+            is NameInputEvent.Back -> {
+                storeCurrentPlayerNames(event.navigateUp)
+            }
         }
     }
+
+    private fun storeCurrentPlayerNames(navigateUp: () -> Unit) {
+        storeCurrentPlayerNamesUseCase(_playerNameState.toMap())
+        navigateUp()
+    }
+
     private fun changePlayerName(id: Int, value: String) {
         _playerNameState[id] = _playerNameState[id].let {
             if (it == null) {
@@ -71,6 +83,22 @@ class NameInputViewModel(
     }
 
     private fun validatePlayerNamesAndUpdateErrorMessages() : Boolean {
+        var hasError = validateNameStructureAndUpdateMessages()
+        hasError = hasError || validateNameUniqueness()
+        return hasError.not()
+    }
+
+    private fun validateNameUniqueness(): Boolean {
+        val duplicateKeys = _playerNameState.toMap().getDuplicates()
+        duplicateKeys.forEach {
+            _playerNameState[it] = _playerNameState.getOrDefault(it, PlayerNameState()).copy(
+                nameError = "Name should be unique"
+            )
+        }
+        return duplicateKeys.isNotEmpty()
+    }
+
+    private fun validateNameStructureAndUpdateMessages(): Boolean {
         var hasError = false
         _playerNameState.forEach { entry ->
             val validationResult = validatePlayerNameUseCase(entry.value.name)
@@ -83,7 +111,7 @@ class NameInputViewModel(
                     entry.value.copy(nameError = validationResult.errorMessage)
             }
         }
-        return hasError.not()
+        return hasError
     }
 
     companion object {
@@ -93,10 +121,12 @@ class NameInputViewModel(
                 val validatePlayerNameUseCase = application.container.validatePlayerNameUseCase
                 val getCurrentPlayerNamesUseCase = application.container.getCurrentPlayerNamesUseCase
                 val setPlayersAndStartGameUseCase = application.container.startGameAndInsertPlayersUseCase
+                val storeCurrentPlayerNamesUseCase = application.container.storeCurrentPlayerNamesUseCase
                 NameInputViewModel(
                     validatePlayerNameUseCase = validatePlayerNameUseCase,
                     getCurrentPlayerNamesUseCase = getCurrentPlayerNamesUseCase,
-                    startGameAndInsertPlayersUseCase = setPlayersAndStartGameUseCase
+                    startGameAndInsertPlayersUseCase = setPlayersAndStartGameUseCase,
+                    storeCurrentPlayerNamesUseCase = storeCurrentPlayerNamesUseCase
                 )
             }
         }
