@@ -11,6 +11,7 @@ import com.example.czechfoolapp.data.repository.PlayersRepository
 import com.example.czechfoolapp.database.CzechFoolGameDatabase
 import com.example.czechfoolapp.domain.use_case.GetCurrentPlayerNamesUseCase
 import com.example.czechfoolapp.domain.use_case.StartGameAndInsertPlayersUseCase
+import com.example.czechfoolapp.domain.use_case.StoreCurrentPlayerNamesUseCase
 import com.example.czechfoolapp.domain.use_case.validation.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.domain.use_case.validation.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.use_case.validation.ValidatePlayerNameUseCase
@@ -23,6 +24,7 @@ interface AppContainer {
     val currentPlayersRepository: CurrentPlayersRepository
     val getCurrentPlayerNamesUseCase: GetCurrentPlayerNamesUseCase
     val startGameAndInsertPlayersUseCase: StartGameAndInsertPlayersUseCase
+    val storeCurrentPlayerNamesUseCase: StoreCurrentPlayerNamesUseCase
 }
 
 class DefaultAppContainer(
@@ -75,6 +77,11 @@ class DefaultAppContainer(
             currentGameRepository = currentGameRepository,
             currentPlayersRepository = currentPlayersRepository,
             playersRepository = playersRepository
+        )
+    }
+    override val storeCurrentPlayerNamesUseCase: StoreCurrentPlayerNamesUseCase by lazy {
+        StoreCurrentPlayerNamesUseCase(
+            currentPlayersRepository = currentPlayersRepository
         )
     }
 }
