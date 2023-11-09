@@ -17,8 +17,8 @@ import com.example.czechfoolapp.data.model.Player
             entity = GameEntity::class,
             parentColumns = ["id"],
             childColumns = ["game_id"],
-            onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE
         )
     ],
     indices = [
