@@ -14,9 +14,7 @@ data class Game(
     val date: LocalDateTime,
     val isStarted: Boolean = false,
     val isFinished: Boolean = false
-) {
-    fun isInProgress() = isStarted && isFinished.not()
-}
+)
 
 fun Game.toGameEntity() =
     GameEntity(
