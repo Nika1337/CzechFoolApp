@@ -4,7 +4,7 @@ import com.example.czechfoolapp.data.repository.CurrentPlayersRepository
 import com.example.czechfoolapp.ui.nameinputroute.PlayerNameState
 import com.example.czechfoolapp.util.toPlayersList
 
-class SetCurrentPlayerNamesUseCase(
+class StoreCurrentPlayerNamesUseCase(
     private val currentPlayersRepository: CurrentPlayersRepository
 ) {
     operator fun invoke(players: Map<Int, PlayerNameState>) {
