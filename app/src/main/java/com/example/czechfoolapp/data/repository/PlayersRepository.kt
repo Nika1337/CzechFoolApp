@@ -12,5 +12,4 @@ interface PlayersRepository {
 
     fun getAllPlayersInGameSpecified(gameID: Int) : Flow<List<Player>>
 
-    suspend fun getPlayer(gameID: Int, name: String) : Player
 }
