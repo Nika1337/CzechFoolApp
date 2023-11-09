@@ -16,5 +16,3 @@ fun Player.toPlayerEntity() =
         name = this.name,
         score = this.score
     )
-
-fun Player.hasSameId(player: Player) = this.gameId == player.gameId && this.playerId == player.playerId
