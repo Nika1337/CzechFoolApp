@@ -15,7 +15,7 @@ import com.example.czechfoolapp.ui.nameinputroute.NameInputRoute
 
 
 object Destinations {
-    const val GAME_OPTIONS_ROUTE = "start"
+    const val GAME_OPTIONS_ROUTE = "options_input"
     const val NAME_INPUT_ROUTE= "name_input"
     const val GAME_ROUTE = "game"
 }
@@ -44,8 +44,7 @@ fun CzechFoulNavHost(
         composable(GAME_ROUTE) {
             GameRoute(
                 windowWidth = windowWidth,
-                onCancel = { navController.navigate(GAME_OPTIONS_ROUTE) },
-                onNavigateUp = navController::navigateUp
+                onCancel = { navController.navigate(GAME_OPTIONS_ROUTE) }
             )
         }
     }
