@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.data
+package com.example.czechfoolapp.di
 
 import android.content.Context
 import com.example.czechfoolapp.data.repository.CurrentGameRepository
@@ -9,12 +9,12 @@ import com.example.czechfoolapp.data.repository.OfflineGamesRepository
 import com.example.czechfoolapp.data.repository.OfflinePlayersRepository
 import com.example.czechfoolapp.data.repository.PlayersRepository
 import com.example.czechfoolapp.database.CzechFoolGameDatabase
-import com.example.czechfoolapp.domain.use_case.PopulatePlayerNameStateUseCase
-import com.example.czechfoolapp.domain.use_case.StartGameAndInsertPlayersUseCase
-import com.example.czechfoolapp.domain.use_case.StoreCurrentPlayerNamesUseCase
-import com.example.czechfoolapp.domain.use_case.validation.ValidateLosingScoreUseCase
-import com.example.czechfoolapp.domain.use_case.validation.ValidateNumberOfPlayersUseCase
-import com.example.czechfoolapp.domain.use_case.validation.ValidatePlayerNameUseCase
+import com.example.czechfoolapp.domain.PopulatePlayerNameStateUseCase
+import com.example.czechfoolapp.domain.StartGameAndInsertPlayersUseCase
+import com.example.czechfoolapp.domain.StoreCurrentPlayerNamesUseCase
+import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
+import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
+import com.example.czechfoolapp.domain.validation.ValidatePlayerNameUseCase
 
 interface AppContainer {
     val validateLosingScoreUseCase: ValidateLosingScoreUseCase

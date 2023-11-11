@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.domain.use_case.validation
+package com.example.czechfoolapp.domain.validation
 
 
 private const val MAX_NUMBER_OF_PLAYERS = 16

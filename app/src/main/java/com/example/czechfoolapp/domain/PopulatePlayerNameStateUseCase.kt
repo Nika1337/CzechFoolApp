@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.domain.use_case
+package com.example.czechfoolapp.domain
 
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import com.example.czechfoolapp.data.repository.CurrentGameRepository

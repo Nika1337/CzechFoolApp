@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.domain.use_case.validation
+package com.example.czechfoolapp.domain.validation
 
 data class ValidationResult(
     val successful: Boolean,

@@ -13,8 +13,8 @@ import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.data.DefaultValuesSource
 import com.example.czechfoolapp.data.model.Game
 import com.example.czechfoolapp.data.repository.CurrentGameRepository
-import com.example.czechfoolapp.domain.use_case.validation.ValidateLosingScoreUseCase
-import com.example.czechfoolapp.domain.use_case.validation.ValidateNumberOfPlayersUseCase
+import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
+import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionsState
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -72,7 +72,7 @@ class GameOptionsViewModel(
         }
     }
 
-    private suspend fun saveGameToRepository() {
+    private fun saveGameToRepository() {
         val newGame = Game(
             losingScore = gameOptionsState.losingScoreState.value.text.toInt(),
             numberOfPlayers = gameOptionsState.numberOfPlayersState.value.text.toInt(),

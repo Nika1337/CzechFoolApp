@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.domain.use_case
+package com.example.czechfoolapp.domain
 
 import com.example.czechfoolapp.data.repository.CurrentPlayerNamesRepository
 import com.example.czechfoolapp.ui.nameinputroute.PlayerNameState

@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.domain.use_case.validation
+package com.example.czechfoolapp.domain.validation
 
 
 private const val MAX_LENGTH_OF_NAME = 16

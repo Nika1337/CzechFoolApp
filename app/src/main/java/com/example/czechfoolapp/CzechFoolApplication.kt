@@ -1,8 +1,8 @@
 package com.example.czechfoolapp
 
 import android.app.Application
-import com.example.czechfoolapp.data.AppContainer
-import com.example.czechfoolapp.data.DefaultAppContainer
+import com.example.czechfoolapp.di.AppContainer
+import com.example.czechfoolapp.di.DefaultAppContainer
 
 class CzechFoolApplication : Application() {
     lateinit var container: AppContainer

@@ -9,10 +9,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
-import com.example.czechfoolapp.domain.use_case.PopulatePlayerNameStateUseCase
-import com.example.czechfoolapp.domain.use_case.StoreCurrentPlayerNamesUseCase
-import com.example.czechfoolapp.domain.use_case.StartGameAndInsertPlayersUseCase
-import com.example.czechfoolapp.domain.use_case.validation.ValidatePlayerNameUseCase
+import com.example.czechfoolapp.domain.PopulatePlayerNameStateUseCase
+import com.example.czechfoolapp.domain.StoreCurrentPlayerNamesUseCase
+import com.example.czechfoolapp.domain.StartGameAndInsertPlayersUseCase
+import com.example.czechfoolapp.domain.validation.ValidatePlayerNameUseCase
 import com.example.czechfoolapp.util.getDuplicates
 import kotlinx.coroutines.launch
 
