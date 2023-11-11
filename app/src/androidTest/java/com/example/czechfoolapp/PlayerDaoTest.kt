@@ -100,8 +100,9 @@ class PlayerDaoTest {
     @Throws(Exception::class)
     fun daoGetPlayer_returnsCorrectPlayerFromDb() = runTest {
         addTwoPlayersToDb()
-        val expectedPlayerEntity1 = playerDao.getPlayer(defaultGameId, playerEntity1.name)
-        val expectedPlayerEntity2 = playerDao.getPlayer(defaultGameId, playerEntity2.name)
+        val allPlayers = playerDao.getAllPlayersInGameSpecified(defaultGameId).first()
+        val expectedPlayerEntity1 = allPlayers[0]
+        val expectedPlayerEntity2 = allPlayers[1]
 
         assertEquals(playerEntity1, expectedPlayerEntity1)
         assertEquals(playerEntity2, expectedPlayerEntity2)

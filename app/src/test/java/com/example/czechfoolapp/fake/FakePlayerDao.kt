@@ -35,12 +35,4 @@ class FakePlayerDao : PlayerDao {
         )
     }
 
-    override fun getPlayer(gameID: Int, name: String): PlayerEntity {
-        currentPlayers.forEach {
-            if (it.gameId == gameID && it.name == name) {
-                return it
-            }
-        }
-        throw Exception("No such player")
-    }
 }

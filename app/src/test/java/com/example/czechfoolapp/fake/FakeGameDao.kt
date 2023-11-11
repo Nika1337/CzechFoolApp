@@ -18,10 +18,8 @@ class FakeGameDao : GameDao {
     override suspend fun update(game: GameEntity) {
         currentGames = currentGames.map {
             if (it.id == game.id) {
-                println("Found $it $game")
                 game
             } else {
-                println("Not Found $it $game")
                 it
             }
         }.toMutableList()
@@ -31,5 +29,9 @@ class FakeGameDao : GameDao {
         return flowOf(
             currentGames
         )
+    }
+
+    override suspend fun getMaxGameId(): Int {
+        return FakeDataSource.maxGameId
     }
 }

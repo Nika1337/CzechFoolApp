@@ -42,7 +42,8 @@ class GameDaoTest {
             id = 1,
             losingScore = 200,
             numberOfPlayers = 4,
-            date = LocalDateTime.now()
+            date = LocalDateTime.now(),
+            isFinished = true
         )
 
     private val gameEntity2 =
@@ -50,7 +51,8 @@ class GameDaoTest {
             id = 2,
             losingScore = 300,
             numberOfPlayers = 3,
-            date = LocalDateTime.now()
+            date = LocalDateTime.now(),
+            isFinished = true
         )
 
     private suspend fun addOneGameToDb() {

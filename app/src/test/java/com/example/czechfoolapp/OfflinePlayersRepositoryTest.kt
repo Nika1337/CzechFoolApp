@@ -8,6 +8,7 @@ import com.example.czechfoolapp.fake.FakePlayerDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -68,28 +69,35 @@ class OfflinePlayersRepositoryTest {
         insertPlayer(testPlayer)
 
         val expectedPlayer = testPlayer
-        val actualPlayer = playersRepository.getPlayer(
-            gameID = testPlayer.gameId,
-            name = testPlayer.name
-        )
+        val actualPlayer = playersRepository.getAllPlayersInGameSpecified(testPlayer.gameId).first()[0]
 
         assertEquals(expectedPlayer, actualPlayer)
     }
 
     @Test
     fun offlinePlayersRepository_updatePlayer_updatesPlayer() = runTest {
-        insertAllPlayers()
-        val testPlayer = FakeDataSource.players[3].let {
+        val testPlayer = FakeDataSource.players[3]
+        insertPlayer(testPlayer)
+        val updatedTestPlayer = FakeDataSource.players[3].let {
             it.copy(score = it.score + 33)
         }
-        playersRepository.update(testPlayer)
+        playersRepository.update(updatedTestPlayer)
 
-        val expectedPlayer = testPlayer
-        val actualPlayer = playersRepository.getPlayer(
-            gameID = testPlayer.gameId,
-            name = testPlayer.name
-        )
+        val expectedPlayer = updatedTestPlayer
+        val actualPlayer = playersRepository.getAllPlayersInGameSpecified(testPlayer.gameId).first()[0]
+
         assertEquals(expectedPlayer, actualPlayer)
+    }
+
+    @Test
+    fun offlinePlayersRepository_deletePlayer_deletesPlayer() = runTest {
+        val testPlayer = FakeDataSource.players[0]
+        insertPlayer(testPlayer)
+
+        playersRepository.delete(testPlayer)
+        val allGames = playersRepository.getAllPlayersInGameSpecified(testPlayer.gameId).first()
+
+        assertTrue(allGames.isEmpty())
     }
 }
 

@@ -26,12 +26,13 @@ class DefaultCurrentGameRepository(
         }
         gamesRepository.insert(currentGame!!)
         val gameWithCorrectId = currentGame!!.copy(
-            id = gamesRepository.getMaxGameId()
+            id = gamesRepository.getMaxGameId(),
+            isStarted = true
         )
         currentGame = gameWithCorrectId
     }
 
-    override suspend fun updateGame(game: Game) {
+    override fun updateGame(game: Game) {
         if (currentGame == null) {
             throw IllegalStateException("No game set")
         }
@@ -41,7 +42,7 @@ class DefaultCurrentGameRepository(
         currentGame = game
     }
 
-    override suspend fun cancelGame() {
+    override fun cancelGame() {
         if (currentGame == null) {
             throw IllegalStateException("No game set")
         }
@@ -51,6 +52,9 @@ class DefaultCurrentGameRepository(
     override suspend fun endGame() {
         if (currentGame == null) {
             throw IllegalStateException("No game in progress")
+        }
+        if (currentGame!!.isStarted.not()) {
+            throw IllegalStateException("Can't end game that is not started")
         }
         gamesRepository.update(
             currentGame!!.copy(

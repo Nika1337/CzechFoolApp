@@ -62,6 +62,26 @@ class OfflineGamesRepositoryTest {
         assertEquals(expectedValue, actualValue)
     }
 
+    @Test
+    fun offlineGamesRepository_deleteGame_deletesGame() = runTest {
+        insertAllGames()
+        gamesRepository.delete(FakeDataSource.games[0])
+
+        val expectedValue = listOf(FakeDataSource.games[1])
+        val actualValues = gamesRepository.getAllGames().first()
+
+        assertEquals(expectedValue, actualValues)
+    }
+
+    @Test
+    fun offlineGamesRepository_getMaxGameId_returnsMaxGameID() = runTest {
+        insertAllGames()
+
+        val expectedValue = FakeDataSource.maxGameId
+        val actualValue = gamesRepository.getMaxGameId()
+
+        assertEquals(expectedValue, actualValue)
+    }
 
 
 }

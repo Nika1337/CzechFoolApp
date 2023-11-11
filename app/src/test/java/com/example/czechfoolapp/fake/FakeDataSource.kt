@@ -5,20 +5,23 @@ import com.example.czechfoolapp.data.model.Player
 import java.time.LocalDateTime
 
 object FakeDataSource {
-    val gameId1 = 1
-    val gameId2 = 2
+    const val gameId1 = 1
+    const val gameId2 = 2
+    val maxGameId = gameId2
     val games = listOf(
         Game(
             id = gameId1,
             losingScore = 200,
             numberOfPlayers = 4,
-            date = LocalDateTime.now()
+            date = LocalDateTime.now(),
+            isStarted = true
         ),
         Game(
             id = gameId2,
             losingScore = 300,
             numberOfPlayers = 3,
-            date = LocalDateTime.now()
+            date = LocalDateTime.now(),
+            isStarted = true
         )
     )
 

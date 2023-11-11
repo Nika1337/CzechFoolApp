@@ -6,8 +6,8 @@ interface CurrentGameRepository{
     fun setGame(game: Game)
     fun getCurrentGame() : Game?
     suspend fun startGame()
-    suspend fun updateGame(game: Game)
-    suspend fun cancelGame()
+    fun updateGame(game: Game)
+    fun cancelGame()
     suspend fun endGame()
 
 }
