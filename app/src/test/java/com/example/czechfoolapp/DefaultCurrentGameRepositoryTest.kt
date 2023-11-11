@@ -26,7 +26,7 @@ class DefaultCurrentGameRepositoryTest {
     }
 
     @Test
-    fun defaultCurrentGameRepository_setGame_storesGivenGame() {
+    fun defaultCurrentGameRepository_setGame_setsGivenGame() {
         val testGame = FakeDataSource.games[0]
         currentGameRepository.setGame(testGame)
 
@@ -61,7 +61,7 @@ class DefaultCurrentGameRepositoryTest {
     }
 
     @Test
-    fun defaultCurrentGameRepository_startGame_storesGame() = runTest {
+    fun defaultCurrentGameRepository_startGame_storesGameInDatabase() = runTest {
         val testGame = FakeDataSource.games[1].copy(id = 0, isStarted = false)
         currentGameRepository.setGame(testGame)
         currentGameRepository.startGame()
