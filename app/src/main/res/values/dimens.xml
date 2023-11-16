@@ -3,5 +3,7 @@
     <dimen name="textField_horizontal">48dp</dimen>
     <dimen name="textField_vertical_small">12dp</dimen>
     <dimen name="textField_vertical_large">24dp</dimen>
-
+    <dimen name="padding_large">20dp</dimen>
+    <dimen name="textFieldError">16dp</dimen>
+    <dimen name="padding_extraLarge">88dp</dimen>
 </resources>

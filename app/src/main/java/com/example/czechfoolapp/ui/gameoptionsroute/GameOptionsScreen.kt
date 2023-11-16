@@ -14,11 +14,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -30,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
@@ -40,15 +44,13 @@ import androidx.compose.ui.unit.dp
 import com.example.czechfoolapp.R
 import com.example.czechfoolapp.data.DefaultValuesSource
 import com.example.czechfoolapp.ui.CzechFoolTopAppBar
-import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionState
-import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameOptionsScreen(
     onNavigateUp: () -> Unit,
     onNavigateToNext: () -> Unit,
-    gameOptionState: GameOptionsState,
+    gameOptionsState: GameOptionsState,
     onEvent: (event: GameOptionEvent) -> Unit
 ) {
     Scaffold(
@@ -59,51 +61,32 @@ fun GameOptionsScreen(
                 modifier = Modifier
                     .fillMaxWidth()
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { onEvent(GameOptionEvent.Next(onNavigateToNext)) },
+                shape = MaterialTheme.shapes.extraLarge,
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = stringResource(R.string.next_button)
+                )
+            }
         }
     ) { innerPadding ->
-        MenusAndNextColumn(
-            onNavigateToNext = onNavigateToNext,
-            gameOptionsState = gameOptionState,
-            onEvent = onEvent,
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        )
-    }
-}
-
-
-@Composable
-private fun MenusAndNextColumn(
-    onNavigateToNext: () -> Unit,
-    modifier: Modifier = Modifier,
-    onEvent: (event: GameOptionEvent) -> Unit,
-    gameOptionsState: GameOptionsState
-) {
-    Box(
-        modifier = modifier
-    ) {
         MenusColumn(
             modifier = Modifier
+                .padding(innerPadding)
                 .fillMaxSize(),
             gameOptionsState = gameOptionsState,
             onEvent = onEvent
         )
-        Button(
-            onClick = {
-                      onEvent(GameOptionEvent.Next(onNavigateToNext))
-            },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(24.dp)
-                .width(96.dp),
-        ) {
-            Text(
-               text = stringResource(id = R.string.next_button)
-            )
-        }
     }
 }
+
+
+
 
 @Composable
 private fun MenusColumn(
@@ -124,7 +107,10 @@ private fun MenusColumn(
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Next
             ),
-            modifier = Modifier.padding(24.dp)
+            modifier = Modifier.padding(
+                horizontal = dimensionResource(R.dimen.textField_horizontal),
+                vertical = dimensionResource(R.dimen.textField_vertical_large)
+            )
         )
         TextFieldMenu(
             onEvent = { value: TextFieldValue -> onEvent(GameOptionEvent.LosingScoreChanged(value)) },
@@ -134,9 +120,12 @@ private fun MenusColumn(
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done,
             ),
-            modifier = Modifier.padding(24.dp)
+            modifier = Modifier.padding(
+                horizontal = dimensionResource(R.dimen.textField_horizontal),
+                vertical = dimensionResource(R.dimen.textField_vertical_large)
+            )
         )
-        Spacer(modifier = Modifier.height(64.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_extraLarge)))
     }
 }
 
@@ -227,7 +216,7 @@ fun GameOptionsScreenPreview() {
     GameOptionsScreen(
         onNavigateUp = { /*TODO*/ },
         onNavigateToNext = { /*TODO*/ },
-        gameOptionState = GameOptionsState(),
+        gameOptionsState = GameOptionsState(),
         onEvent = {}
     )
 }
@@ -238,7 +227,7 @@ fun GameOptionsScreenPreviewLandscape() {
     GameOptionsScreen(
         onNavigateUp = { /*TODO*/ },
         onNavigateToNext = { /*TODO*/ },
-        gameOptionState = GameOptionsState(),
+        gameOptionsState = GameOptionsState(),
         onEvent = {}
     )
 }

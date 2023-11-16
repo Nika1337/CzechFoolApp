@@ -12,7 +12,7 @@ fun GameOptionsRoute(
     GameOptionsScreen(
         onNavigateUp = onNavigateUp,
         onNavigateToNext = onNavigateToNext,
-        gameOptionState = viewModel.gameOptionsState,
+        gameOptionsState = viewModel.gameOptionsState,
         onEvent = viewModel::onEvent
     )
 }

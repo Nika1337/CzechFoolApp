@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -27,7 +29,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.czechfoolapp.R
 import com.example.czechfoolapp.ui.CzechFoolTopAppBar
 
@@ -48,16 +49,17 @@ fun NameInputScreen(
             )
         },
         floatingActionButton = {
-            Button(
+            FloatingActionButton(
                 onClick = { onEvent(NameInputEvent.Next(onNavigateToNext)) },
-                modifier = Modifier.width(96.dp)
+                shape = MaterialTheme.shapes.extraLarge,
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
             ) {
-                Text(
-                    text = stringResource(id = R.string.start_button)
+                Icon(
+                    imageVector = Icons.Default.Done,
+                    contentDescription = stringResource(R.string.start_button)
                 )
             }
-        },
-        floatingActionButtonPosition = FabPosition.End
+        }
     ) {
         TextFieldsColumn(
             onValueChange = { id: Int, value: String ->
@@ -85,8 +87,7 @@ fun TextFieldsColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
-        Spacer(modifier = Modifier.height(12.dp))
-        
+
         nameInputState.forEach { (id: Int, playerNameState: PlayerNameState) ->
             NameTextField(
                 id = id,
@@ -105,7 +106,7 @@ fun TextFieldsColumn(
             )
         }
 
-        Spacer(modifier = Modifier.height(64.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_extraLarge)))
     }
 }
 
@@ -141,7 +142,7 @@ fun NameTextField(
 @Composable
 private fun TextFieldError(textError: String) {
     Row(modifier = Modifier.fillMaxWidth()) {
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.textFieldError)))
         Text(
             text = textError,
             modifier = Modifier.fillMaxWidth(),

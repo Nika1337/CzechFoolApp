@@ -6,10 +6,10 @@ import com.example.czechfoolapp.data.repository.OfflineGamesRepository
 import com.example.czechfoolapp.fake.FakeDataSource
 import com.example.czechfoolapp.fake.FakeGameDao
 import kotlinx.coroutines.flow.first
-import org.junit.Before
-import org.junit.Test
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
 
 
 class OfflineGamesRepositoryTest {

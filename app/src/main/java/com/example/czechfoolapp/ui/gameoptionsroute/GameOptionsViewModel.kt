@@ -15,7 +15,6 @@ import com.example.czechfoolapp.data.model.Game
 import com.example.czechfoolapp.data.repository.CurrentGameRepository
 import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
-import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionsState
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
