@@ -6,15 +6,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.czechfoolapp.Destinations.GAMES_HISTORY_ROUTE
 import com.example.czechfoolapp.Destinations.GAME_OPTIONS_ROUTE
 import com.example.czechfoolapp.Destinations.GAME_ROUTE
 import com.example.czechfoolapp.Destinations.NAME_INPUT_ROUTE
 import com.example.czechfoolapp.ui.GameRoute
 import com.example.czechfoolapp.ui.gameoptionsroute.GameOptionsRoute
+import com.example.czechfoolapp.ui.gameshistoryroute.GamesHistoryRoute
 import com.example.czechfoolapp.ui.nameinputroute.NameInputRoute
 
 
 object Destinations {
+    const val GAMES_HISTORY_ROUTE = "games_history_route"
     const val GAME_OPTIONS_ROUTE = "options_input"
     const val NAME_INPUT_ROUTE= "name_input"
     const val GAME_ROUTE = "game"
@@ -26,8 +29,14 @@ fun CzechFoulNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = GAME_OPTIONS_ROUTE
+        startDestination = GAMES_HISTORY_ROUTE
     ) {
+        composable(GAMES_HISTORY_ROUTE) {
+            GamesHistoryRoute(
+                onNavigateUp = navController::navigateUp,
+                onStartNewGame = { navController.navigate(GAME_OPTIONS_ROUTE) }
+            )
+        }
         composable(GAME_OPTIONS_ROUTE) {
             GameOptionsRoute(
                 onNavigateUp = navController::navigateUp,
