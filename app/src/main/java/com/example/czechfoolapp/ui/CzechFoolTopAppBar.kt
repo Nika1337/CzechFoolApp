@@ -2,6 +2,7 @@ package com.example.czechfoolapp.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -21,8 +22,8 @@ import com.example.czechfoolapp.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CzechFoolTopAppBar(
-    canNavigateBack: Boolean,
-    onNavigateUp: () -> Unit,
+    canNavigateBack: Boolean = false,
+    onNavigateUp: () -> Unit = {},
     modifier: Modifier = Modifier,
     branding: @Composable () -> Unit = { Branding() }
 ) {
@@ -31,7 +32,7 @@ fun CzechFoolTopAppBar(
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
         ),
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(onClick = onNavigateUp) {
