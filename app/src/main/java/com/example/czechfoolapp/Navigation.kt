@@ -34,7 +34,9 @@ fun CzechFoulNavHost(
         composable(GAMES_HISTORY_ROUTE) {
             GamesHistoryRoute(
                 onNavigateUp = navController::navigateUp,
-                onStartNewGame = { navController.navigate(GAME_OPTIONS_ROUTE) }
+                onStartNewGame = { navController.navigate(GAME_OPTIONS_ROUTE) },
+                onContinueGame = { navController.navigate(GAME_ROUTE) },
+                windowWidth = windowWidth
             )
         }
         composable(GAME_OPTIONS_ROUTE) {
