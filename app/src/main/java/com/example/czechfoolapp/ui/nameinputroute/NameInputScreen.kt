@@ -44,14 +44,12 @@ fun NameInputScreen(
         topBar = {
             CzechFoolTopAppBar(
                 canNavigateBack = true,
-                onNavigateUp = onNavigateUp,
-                modifier = Modifier.fillMaxWidth()
+                onNavigateUp = onNavigateUp
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onEvent(NameInputEvent.Next(onNavigateToNext)) },
-                shape = MaterialTheme.shapes.extraLarge,
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
             ) {
                 Icon(

@@ -56,16 +56,13 @@ fun GameOptionsScreen(
     Scaffold(
         topBar = {
             CzechFoolTopAppBar(
-                canNavigateBack = false,
-                onNavigateUp = onNavigateUp,
-                modifier = Modifier
-                    .fillMaxWidth()
+                canNavigateBack = true,
+                onNavigateUp = onNavigateUp
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { onEvent(GameOptionEvent.Next(onNavigateToNext)) },
-                shape = MaterialTheme.shapes.extraLarge,
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
             ) {
                 Icon(
