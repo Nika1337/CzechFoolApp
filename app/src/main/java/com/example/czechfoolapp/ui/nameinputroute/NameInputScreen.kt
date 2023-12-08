@@ -54,7 +54,7 @@ fun NameInputScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.Done,
-                    contentDescription = stringResource(R.string.start_button)
+                    contentDescription = stringResource(R.string.start_new_game)
                 )
             }
         }
@@ -104,7 +104,7 @@ fun TextFieldsColumn(
             )
         }
 
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_extraLarge)))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.bottom_space)))
     }
 }
 
