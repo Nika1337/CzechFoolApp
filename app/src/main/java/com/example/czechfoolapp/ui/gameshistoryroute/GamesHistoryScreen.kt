@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.czechfoolapp.R
-import com.example.czechfoolapp.ui.CzechFoolTopAppBar
+import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
 import java.time.LocalDateTime
 import java.time.Month
 import java.time.format.DateTimeFormatter
@@ -47,7 +47,7 @@ fun GamesHistoryScreen(
 ) {
     Scaffold(
         topBar = {
-                 CzechFoolTopAppBar()
+                 CzechFoolSmallTopAppBar()
         },
         floatingActionButton = {
             FloatingActionButton(

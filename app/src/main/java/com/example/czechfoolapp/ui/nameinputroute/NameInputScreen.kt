@@ -30,7 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.czechfoolapp.R
-import com.example.czechfoolapp.ui.CzechFoolTopAppBar
+import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,8 +42,7 @@ fun NameInputScreen(
 ) {
     Scaffold(
         topBar = {
-            CzechFoolTopAppBar(
-                canNavigateBack = true,
+            CzechFoolSmallTopAppBar(
                 onNavigateUp = onNavigateUp
             )
         },

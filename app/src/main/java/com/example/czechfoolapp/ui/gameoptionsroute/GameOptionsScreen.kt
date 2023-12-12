@@ -43,7 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.czechfoolapp.R
 import com.example.czechfoolapp.data.DefaultValuesSource
-import com.example.czechfoolapp.ui.CzechFoolTopAppBar
+import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,8 +55,7 @@ fun GameOptionsScreen(
 ) {
     Scaffold(
         topBar = {
-            CzechFoolTopAppBar(
-                canNavigateBack = true,
+            CzechFoolSmallTopAppBar(
                 onNavigateUp = onNavigateUp
             )
         },
