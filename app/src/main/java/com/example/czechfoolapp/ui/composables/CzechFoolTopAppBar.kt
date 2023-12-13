@@ -7,7 +7,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,33 +20,10 @@ import com.example.czechfoolapp.R
 fun CzechFoolSmallTopAppBar(
     modifier: Modifier = Modifier,
     onNavigateUp: (() -> Unit)? = null,
-    title: @Composable () -> Unit = { Branding(modifier = modifier.height(dimensionResource(R.dimen.logo_height))) }
-) {
-    CenterAlignedTopAppBar(
-        title = title,
-        modifier = modifier,
-        navigationIcon = {
-            if (onNavigateUp != null) {
-                IconButton(onClick = onNavigateUp) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back_button)
-                    )
-                }
-            }
-        }
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CzechFoolMediumTopAppBar(
-    modifier: Modifier = Modifier,
-    onNavigateUp: (() -> Unit)? = null,
-    title: @Composable () -> Unit,
+    title: @Composable () -> Unit = { Branding(modifier = modifier.height(dimensionResource(R.dimen.logo_height))) },
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
-    MediumTopAppBar(
+    CenterAlignedTopAppBar(
         title = title,
         modifier = modifier,
         navigationIcon = {
@@ -66,18 +42,15 @@ fun CzechFoolMediumTopAppBar(
 
 
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun SmallBarPreview() {
     CzechFoolSmallTopAppBar()
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
-@Composable
-fun MediumBarPreview() {
-    CzechFoolMediumTopAppBar(title = {})
-}
+
 
 
 
