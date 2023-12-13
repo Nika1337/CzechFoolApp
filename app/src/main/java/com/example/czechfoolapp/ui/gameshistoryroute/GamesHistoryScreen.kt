@@ -38,6 +38,9 @@ import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.Date
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.LosingScore
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.PlayerAndScore
+import com.example.czechfoolapp.ui.gameshistoryroute.states.GameUiModel
+import com.example.czechfoolapp.ui.gameshistoryroute.states.GamesHistoryUiState
+import com.example.czechfoolapp.ui.gameshistoryroute.states.PlayerUiModel
 import java.time.LocalDateTime
 import java.time.Month
 
@@ -264,7 +267,7 @@ fun GamesHomeScreenPreview() {
                             score = 64
                         )
                     )
-                ),GameUiModel(
+                ), GameUiModel(
                     gameId = 124,
                     losingScore = 300,
                     date = LocalDateTime.now(),
@@ -283,7 +286,7 @@ fun GamesHomeScreenPreview() {
                             score = 198
                         )
                     )
-                ),GameUiModel(
+                ), GameUiModel(
                     gameId = 104,
                     losingScore = 200,
                     date = LocalDateTime.now(),
@@ -306,7 +309,7 @@ fun GamesHomeScreenPreview() {
                             score = 89
                         )
                     )
-                ),GameUiModel(
+                ), GameUiModel(
                     gameId = 104,
                     losingScore = 200,
                     date = LocalDateTime.now(),

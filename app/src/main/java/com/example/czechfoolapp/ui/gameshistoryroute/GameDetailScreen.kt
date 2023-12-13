@@ -30,6 +30,8 @@ import com.example.czechfoolapp.ui.composables.Title
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.Date
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.LosingScore
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.PlayerAndScore
+import com.example.czechfoolapp.ui.gameshistoryroute.states.GameUiModel
+import com.example.czechfoolapp.ui.gameshistoryroute.states.PlayerUiModel
 import java.time.LocalDateTime
 import java.time.Month
 

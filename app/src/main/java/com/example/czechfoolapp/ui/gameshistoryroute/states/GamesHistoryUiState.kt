@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.gameshistoryroute
+package com.example.czechfoolapp.ui.gameshistoryroute.states
 
 import java.time.LocalDateTime
 
