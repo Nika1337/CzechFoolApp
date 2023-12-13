@@ -21,22 +21,25 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.czechfoolapp.R
 import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
+import com.example.czechfoolapp.ui.gameshistoryroute.composables.Date
+import com.example.czechfoolapp.ui.gameshistoryroute.composables.LosingScore
+import com.example.czechfoolapp.ui.gameshistoryroute.composables.PlayerAndScore
 import java.time.LocalDateTime
 import java.time.Month
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,9 +48,12 @@ fun GamesHistoryScreen(
     onEvent: (event: GamesHistoryEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         topBar = {
-                 CzechFoolSmallTopAppBar()
+                 CzechFoolSmallTopAppBar(
+                     scrollBehavior = scrollBehavior
+                 )
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -62,7 +68,7 @@ fun GamesHistoryScreen(
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
         GamesList(
             gamesHistoryUiState = gamesHistoryUiState,
@@ -89,7 +95,10 @@ fun GamesList(
                 gameUiModel = it,
                 onGameClicked = onGameClicked,
                 modifier = Modifier
-                    .padding(dimensionResource(R.dimen.padding_medium))
+                    .padding(
+                        horizontal = dimensionResource(R.dimen.padding_medium),
+                        vertical = dimensionResource(R.dimen.padding_small)
+                    )
             )
         }
     }
@@ -149,19 +158,21 @@ fun LosingScoreAndGameStatus(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = "Losing Score: $losingScore",
+        LosingScore(
+            score = losingScore,
             style = MaterialTheme.typography.bodyMedium
         )
         Text(
             text = status,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }
 
 @Composable
-fun PlayerNamesAndScores(
+private fun PlayerNamesAndScores(
     players: List<PlayerUiModel>,
     modifier: Modifier = Modifier
 ) {
@@ -197,27 +208,6 @@ fun PlayerNamesAndScores(
     }
 }
 
-@Composable
-private fun PlayerAndScore(
-    player: String,
-    score: String,
-    style: TextStyle,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier
-    ) {
-        Text(
-            text = player,
-            style = style
-        )
-        Text(
-            text = score,
-            style = style
-        )
-    }
-}
 
 @Composable
 fun TitleAndDate(
@@ -235,10 +225,13 @@ fun TitleAndDate(
             style = MaterialTheme.typography.headlineMedium
                 .copy(
                     fontWeight = FontWeight.Bold
-                )
+                ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
-        Text(
-            text = date.format(DateTimeFormatter.ofPattern("MMMM d\t\tHH:mm", Locale.ENGLISH)),
+        Date(
+            dateTime = date,
+            formatPattern = "MMMM d\t\tHH:mm",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.alpha(0.6f)
         )
