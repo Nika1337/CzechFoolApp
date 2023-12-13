@@ -5,8 +5,10 @@
     <dimen name="textField_vertical_large">24dp</dimen>
     <dimen name="padding_large">20dp</dimen>
     <dimen name="textFieldError">16dp</dimen>
-    <dimen name="bottom_space">88dp</dimen>
+    <dimen name="spacer_large">96dp</dimen>
     <dimen name="padding_medium">16dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="logo_height">32dp</dimen>
+    <dimen name="divider_small">2dp</dimen>
+    <dimen name="button_height">56dp</dimen>
 </resources>

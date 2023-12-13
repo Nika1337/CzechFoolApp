@@ -121,7 +121,7 @@ private fun MenusColumn(
                 vertical = dimensionResource(R.dimen.textField_vertical_large)
             )
         )
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.bottom_space)))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_large)))
     }
 }
 

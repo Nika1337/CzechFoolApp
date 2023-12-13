@@ -103,7 +103,7 @@ fun TextFieldsColumn(
             )
         }
 
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.bottom_space)))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacer_large)))
     }
 }
 
