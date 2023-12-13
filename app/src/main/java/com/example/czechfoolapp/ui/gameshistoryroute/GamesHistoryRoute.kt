@@ -5,10 +5,8 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun GamesHistoryRoute(
-    onNavigateUp: () -> Unit,
     onStartNewGame: () -> Unit,
     onContinueGame: () -> Unit,
     windowWidth: WindowWidthSizeClass
 ) {
-
 }
