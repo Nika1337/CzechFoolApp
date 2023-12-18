@@ -1,11 +1,11 @@
 package com.example.czechfoolapp.ui.gameshistoryroute
 
 import androidx.lifecycle.ViewModel
-import com.example.czechfoolapp.data.repository.CurrentGameRepository
+import com.example.czechfoolapp.data.repository.CurrentGameManager
 import com.example.czechfoolapp.data.repository.GamesRepository
 
 class GamesHistoryViewModel(
-    val currentGameRepository: CurrentGameRepository,
+    val currentGameManager: CurrentGameManager,
     val gamesRepository: GamesRepository
 ): ViewModel() {
 

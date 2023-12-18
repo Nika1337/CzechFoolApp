@@ -9,26 +9,20 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
-import com.example.czechfoolapp.domain.PopulatePlayerNameStateUseCase
-import com.example.czechfoolapp.domain.StoreCurrentPlayerNamesUseCase
-import com.example.czechfoolapp.domain.StartGameAndInsertPlayersUseCase
+import com.example.czechfoolapp.data.repository.CurrentGameManager
 import com.example.czechfoolapp.domain.validation.ValidatePlayerNameUseCase
+import com.example.czechfoolapp.ui.gameoptionsroute.GameBuilder
 import com.example.czechfoolapp.util.getDuplicates
+import com.example.czechfoolapp.util.toPlayersList
 import kotlinx.coroutines.launch
 
 class NameInputViewModel(
     private val validatePlayerNameUseCase: ValidatePlayerNameUseCase,
-    private val populatePlayerNameStateUseCase: PopulatePlayerNameStateUseCase,
-    private val startGameAndInsertPlayersUseCase: StartGameAndInsertPlayersUseCase,
-    private val storeCurrentPlayerNamesUseCase: StoreCurrentPlayerNamesUseCase
+    private val gameBuilder: GameBuilder,
+    private val currentGameManager: CurrentGameManager
 ) : ViewModel() {
     private val _playerNameState = mutableStateMapOf<Int, PlayerNameState>()
     val playerNameState = derivedStateOf { _playerNameState.toMap() }
-
-    init {
-        populatePlayerNameStateUseCase(_playerNameState)
-    }
-
 
     fun onEvent(event: NameInputEvent) {
         when(event) {
@@ -43,16 +37,9 @@ class NameInputViewModel(
                     navigateToNext = event.navigateToNext
                 )
             }
-            is NameInputEvent.Back -> {
-                storeCurrentPlayerNames(event.navigateUp)
-            }
         }
     }
 
-    private fun storeCurrentPlayerNames(navigateUp: () -> Unit) {
-        storeCurrentPlayerNamesUseCase(_playerNameState.toMap())
-        navigateUp()
-    }
 
     private fun changePlayerName(id: Int, value: String) {
         _playerNameState[id] = _playerNameState[id].let {
@@ -71,7 +58,10 @@ class NameInputViewModel(
             if (playerNamesValidationSuccess.not()) {
                 return@launch
             }
-            startGameAndInsertPlayersUseCase(_playerNameState)
+            val game = gameBuilder
+                .setPlayerNames(_playerNameState.toPlayersList())
+                .build()
+            currentGameManager.setCurrentGame(game)
             navigateToNext()
         }
     }
@@ -113,14 +103,12 @@ class NameInputViewModel(
             initializer {
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
                 val validatePlayerNameUseCase = application.container.validatePlayerNameUseCase
-                val getCurrentPlayerNamesUseCase = application.container.populatePlayerNameStateUseCase
-                val setPlayersAndStartGameUseCase = application.container.startGameAndInsertPlayersUseCase
-                val storeCurrentPlayerNamesUseCase = application.container.storeCurrentPlayerNamesUseCase
+                val gameBuilder = application.container.gameBuilder
+                val currentGameManager = application.container.currentGameManager
                 NameInputViewModel(
                     validatePlayerNameUseCase = validatePlayerNameUseCase,
-                    populatePlayerNameStateUseCase = getCurrentPlayerNamesUseCase,
-                    startGameAndInsertPlayersUseCase = setPlayersAndStartGameUseCase,
-                    storeCurrentPlayerNamesUseCase = storeCurrentPlayerNamesUseCase
+                    gameBuilder = gameBuilder,
+                    currentGameManager = currentGameManager
                 )
             }
         }

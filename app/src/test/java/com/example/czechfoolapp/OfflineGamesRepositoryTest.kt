@@ -5,6 +5,7 @@ import com.example.czechfoolapp.data.repository.GamesRepository
 import com.example.czechfoolapp.data.repository.OfflineGamesRepository
 import com.example.czechfoolapp.fake.FakeDataSource
 import com.example.czechfoolapp.fake.FakeGameDao
+import com.example.czechfoolapp.util.clearPlayers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -23,18 +24,18 @@ class OfflineGamesRepositoryTest {
     }
 
     private suspend fun insertGame(game: Game) {
-        gamesRepository.insert(game)
+        gamesRepository.insertWithoutPlayers(game)
     }
     private suspend fun insertAllGames() =
         FakeDataSource.games.forEach {
-            gamesRepository.insert(it)
+            gamesRepository.insertWithoutPlayers(it)
         }
     @Test
     fun offlineGamesRepository_insertGame_insertsGameInDatabase() = runTest {
         insertGame(FakeDataSource.games[0])
 
         val allGames = gamesRepository.getAllGames().first()
-        val expectedValue = FakeDataSource.games[0]
+        val expectedValue = FakeDataSource.games[0].clearPlayers()
         val actualValue = allGames[0]
 
         assertEquals(expectedValue, actualValue)
@@ -43,44 +44,22 @@ class OfflineGamesRepositoryTest {
     @Test
     fun offlineGamesRepository_getAllGamesStream_returnsAllGamesInDb() = runTest {
         insertAllGames()
-        val expectedValue = FakeDataSource.games
+        val expectedValue = FakeDataSource.games.map { it.clearPlayers() }
         val actualValue = gamesRepository.getAllGames().first()
 
         assertEquals(expectedValue, actualValue)
     }
 
-    @Test
-    fun offlineGamesRepository_updateGame_updatesGame() = runTest {
-        insertAllGames()
-
-        val expectedValue = FakeDataSource.games[1].copy(numberOfPlayers = 5)
-        gamesRepository.update(expectedValue)
-        val actualValue = gamesRepository.getAllGames().first().find {
-            it.id == expectedValue.id
-        }
-
-        assertEquals(expectedValue, actualValue)
-    }
 
     @Test
     fun offlineGamesRepository_deleteGame_deletesGame() = runTest {
         insertAllGames()
         gamesRepository.delete(FakeDataSource.games[0])
 
-        val expectedValue = listOf(FakeDataSource.games[1])
+        val expectedValue = listOf(FakeDataSource.games[1].clearPlayers())
         val actualValues = gamesRepository.getAllGames().first()
 
         assertEquals(expectedValue, actualValues)
-    }
-
-    @Test
-    fun offlineGamesRepository_getMaxGameId_returnsMaxGameID() = runTest {
-        insertAllGames()
-
-        val expectedValue = FakeDataSource.maxGameId
-        val actualValue = gamesRepository.getMaxGameId()
-
-        assertEquals(expectedValue, actualValue)
     }
 
 

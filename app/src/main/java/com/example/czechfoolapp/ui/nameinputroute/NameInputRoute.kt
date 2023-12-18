@@ -16,9 +16,7 @@ fun NameInputRoute(
     }
     NameInputScreen(
         onNavigateToNext = onNavigateToNext,
-        onNavigateUp = {
-            viewModel.onEvent(NameInputEvent.Back(onNavigateUp))
-        },
+        onNavigateUp = onNavigateUp,
         onEvent = viewModel::onEvent,
         nameInputState = viewModel.playerNameState.value,
     )

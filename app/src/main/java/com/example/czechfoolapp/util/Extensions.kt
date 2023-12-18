@@ -5,12 +5,11 @@ import com.example.czechfoolapp.ui.nameinputroute.PlayerNameState
 
 
 
-fun Map<Int, PlayerNameState>.toPlayersList(gameID: Int) = this
+fun Map<Int, PlayerNameState>.toPlayersList() = this
     .toMap()
     .toList()
     .map { (id: Int, playerNameState: PlayerNameState) ->
         Player(
-            gameId = gameID,
             playerId = id,
             name = playerNameState.name.trim()
         )

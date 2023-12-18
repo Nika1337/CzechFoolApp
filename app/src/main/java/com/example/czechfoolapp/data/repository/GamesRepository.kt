@@ -4,10 +4,8 @@ import com.example.czechfoolapp.data.model.Game
 import kotlinx.coroutines.flow.Flow
 
 interface GamesRepository {
-    suspend fun insert(game: Game)
+    suspend fun insertWithoutPlayers(game: Game)
     suspend fun delete(game: Game)
-
-    suspend fun update(game: Game)
+    fun getGame(gameId: Int): Flow<Game>
     fun getAllGames() : Flow<List<Game>>
-    suspend fun getMaxGameId() : Int
 }

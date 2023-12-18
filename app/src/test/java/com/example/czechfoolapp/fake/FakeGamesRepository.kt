@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.flowOf
 class FakeGamesRepository : GamesRepository {
     private var currentGames: MutableList<Game> = mutableListOf()
     private var maxGameID = 0
-    override suspend fun insert(game: Game) {
+    override suspend fun insertWithoutPlayers(game: Game) {
         maxGameID++
-        val updatedGame = game.copy(id = maxGameID, isStarted = true)
+        val updatedGame = game.copy(id = maxGameID)
         currentGames.add(updatedGame)
     }
 
@@ -18,15 +18,7 @@ class FakeGamesRepository : GamesRepository {
         currentGames.remove(game)
     }
 
-    override suspend fun update(game: Game) {
-        currentGames = currentGames.map {
-            if (it.id == game.id) {
-                game
-            } else {
-                it
-            }
-        }.toMutableList()
-    }
+    override fun getGame(gameId: Int): Flow<Game> = flowOf( currentGames.find { it.id == gameId }!! )
 
     override fun getAllGames(): Flow<List<Game>> {
         return flowOf(
@@ -34,7 +26,4 @@ class FakeGamesRepository : GamesRepository {
         )
     }
 
-    override suspend fun getMaxGameId(): Int {
-        return maxGameID
-    }
 }

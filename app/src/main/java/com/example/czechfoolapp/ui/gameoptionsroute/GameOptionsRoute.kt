@@ -9,10 +9,11 @@ fun GameOptionsRoute(
     onNavigateToNext: () -> Unit
 ) {
     val viewModel: GameOptionsViewModel = viewModel(factory = GameOptionsViewModel.factory)
+    val gameOptionState = viewModel.gameOptionsState
     GameOptionsScreen(
         onNavigateUp = onNavigateUp,
         onNavigateToNext = onNavigateToNext,
-        gameOptionsState = viewModel.gameOptionsState,
+        gameOptionsState = gameOptionState,
         onEvent = viewModel::onEvent
     )
 }

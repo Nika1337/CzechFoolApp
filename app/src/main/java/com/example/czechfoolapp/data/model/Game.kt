@@ -9,18 +9,16 @@ data class Game(
      * user set values are needed only for testing FOR NOW
      */
     val id: Int = 0,
-    val losingScore: Int = 0,
-    val numberOfPlayers: Int,
+    val losingScore: Int,
     val date: LocalDateTime,
-    val isStarted: Boolean = false,
-    val isFinished: Boolean = false
-)
+    val players: List<Player>
+) {
+    val isFinished = players.any { it.score >= losingScore }
+}
 
 fun Game.toGameEntity() =
     GameEntity(
-        id = this.id,
+        gameId = this.id,
         losingScore = this.losingScore,
-        numberOfPlayers = this.numberOfPlayers,
         date = this.date,
-        isFinished = this.isFinished
     )

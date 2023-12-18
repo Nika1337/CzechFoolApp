@@ -1,6 +1,5 @@
 package com.example.czechfoolapp.ui.gameoptionsroute
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,17 +10,14 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.data.DefaultValuesSource
-import com.example.czechfoolapp.data.model.Game
-import com.example.czechfoolapp.data.repository.CurrentGameRepository
 import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 
 class GameOptionsViewModel(
     private val validateNumberOfPlayersUseCase: ValidateNumberOfPlayersUseCase,
     private val validateLosingScoreUseCase: ValidateLosingScoreUseCase,
-    private val currentGameRepository: CurrentGameRepository
+    private val gameBuilder: GameBuilder
 ) : ViewModel() {
     var gameOptionsState by mutableStateOf(GameOptionsState())
         private set
@@ -29,11 +25,9 @@ class GameOptionsViewModel(
         when (event) {
             is GameOptionEvent.LosingScoreChanged -> {
                 gameOptionsState = gameOptionsState.copy(losingScoreState = gameOptionsState.losingScoreState.copy(value = event.losingScore))
-                Log.d("losingScore", "losing score changed ${gameOptionsState.losingScoreState.value.text}")
             }
             is GameOptionEvent.NumberOfPlayersChanged -> {
                 gameOptionsState = gameOptionsState.copy(numberOfPlayersState = gameOptionsState.numberOfPlayersState.copy(value = event.numberOfPlayers))
-                Log.d("losingScore", "number of players changed ${gameOptionsState.losingScoreState.value.text}")
             }
             is GameOptionEvent.Next -> {
                 submitGameOptions(navigateToNext = event.navigateToNext)
@@ -66,22 +60,15 @@ class GameOptionsViewModel(
             if (hasError) {
                 return@launch
             }
-            saveGameToRepository()
+            saveGameOptions()
             navigateToNext()
         }
     }
 
-    private fun saveGameToRepository() {
-        val newGame = Game(
-            losingScore = gameOptionsState.losingScoreState.value.text.toInt(),
-            numberOfPlayers = gameOptionsState.numberOfPlayersState.value.text.toInt(),
-            date = LocalDateTime.now()
-        )
-        if (currentGameRepository.getCurrentGame() != null) {
-            currentGameRepository.updateGame(newGame)
-        } else {
-            currentGameRepository.setGame(newGame)
-        }
+    private fun saveGameOptions() {
+        gameBuilder
+            .setLosingScore(gameOptionsState.losingScoreState.value.text.toInt())
+            .setNumberOfPlayers(gameOptionsState.numberOfPlayersState.value.text.toInt())
     }
 
 
@@ -91,11 +78,11 @@ class GameOptionsViewModel(
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
                 val validateNumberOfPlayersUseCase = application.container.validateNumberOfPlayersUseCase
                 val validateLosingScoreUseCase = application.container.validateLosingScoreUseCase
-                val currentGameRepository = application.container.currentGameRepository
+                val gameBuilder = application.container.gameBuilder
                 GameOptionsViewModel(
                     validateNumberOfPlayersUseCase = validateNumberOfPlayersUseCase,
                     validateLosingScoreUseCase = validateLosingScoreUseCase,
-                    currentGameRepository = currentGameRepository
+                    gameBuilder = gameBuilder
                 )
             }
         }

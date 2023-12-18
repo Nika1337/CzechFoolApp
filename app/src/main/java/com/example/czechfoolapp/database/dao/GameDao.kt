@@ -5,8 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
+import androidx.room.Transaction
 import com.example.czechfoolapp.database.model.GameEntity
+import com.example.czechfoolapp.database.model.GameWithPlayers
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,15 +17,14 @@ interface GameDao {
 
     @Delete
     suspend fun delete(game: GameEntity)
-
-    @Update
-    suspend fun update(game: GameEntity)
-
-    @Query("Select * FROM game")
-    fun getAllGames(): Flow<List<GameEntity>>
-
-    @Query("""
-        SELECT MAX(id) FROM game
-    """)
-    suspend fun getMaxGameId(): Int
+    @Query(
+        "SELECT * FROM game " +
+        "where game_id = :id "
+    )
+    fun getGame(id: Int): Flow<GameWithPlayers>
+    @Transaction
+    @Query(
+        "SELECT * FROM game"
+    )
+    fun getAllGames(): Flow<List<GameWithPlayers>>
 }

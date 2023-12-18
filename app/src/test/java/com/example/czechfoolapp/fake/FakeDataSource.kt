@@ -7,59 +7,55 @@ import java.time.LocalDateTime
 object FakeDataSource {
     const val gameId1 = 1
     const val gameId2 = 2
-    val maxGameId = gameId2
+
+    val players = mapOf(
+        gameId1 to listOf(
+            Player(
+                playerId = 1,
+                name = "Emily",
+            ),
+            Player(
+                playerId = 2,
+                name = "Joseph"
+            ),
+            Player(
+                playerId = 3,
+                name = "Farhad"
+            )
+        ),
+        gameId2 to listOf(
+            Player(
+                playerId = 1,
+                name = "James"
+            ),
+            Player(
+                playerId = 2,
+                name = "Farhad"
+            ),
+            Player(
+                playerId = 3,
+                name = "Maryam"
+            ),
+            Player(
+                playerId = 4,
+                name = "Parvati"
+            )
+        )
+    )
     val games = listOf(
         Game(
             id = gameId1,
             losingScore = 200,
-            numberOfPlayers = 4,
             date = LocalDateTime.now(),
-            isStarted = true
+            players = players[gameId1]!!
         ),
         Game(
             id = gameId2,
             losingScore = 300,
-            numberOfPlayers = 3,
             date = LocalDateTime.now(),
-            isStarted = true
+            players = players[gameId2]!!
         )
     )
 
-    val players = listOf(
-        Player(
-            gameId = gameId1,
-            playerId = 1,
-            name = "Emily",
-        ),
-        Player(
-            gameId = gameId1,
-            playerId = 2,
-            name = "Joseph"
-        ),
-        Player(
-            gameId = gameId1,
-            playerId = 3,
-            name = "Farhad"
-        ),
-        Player(
-            gameId = gameId2,
-            playerId = 1,
-            name = "James"
-        ),
-        Player(
-            gameId = gameId2,
-            playerId = 2,
-            name = "Farhad"
-        ),
-        Player(
-            gameId = gameId2,
-            playerId = 3,
-            name = "Maryam"
-        ),
-        Player(
-            gameId = gameId2,
-            playerId = 4,
-            name = "Parvati"
-        )
-    )
+
 }

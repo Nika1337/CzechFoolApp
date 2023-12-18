@@ -18,7 +18,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.LocalDateTime
-import kotlin.jvm.Throws
 
 @RunWith(AndroidJUnit4::class)
 class PlayerDaoTest {
@@ -57,11 +56,9 @@ class PlayerDaoTest {
         val gameDao = czechFoolGameDatabase.gameDao()
         val gameEntity1 =
             GameEntity(
-                id = defaultGameId,
+                gameId = defaultGameId,
                 losingScore = 200,
-                numberOfPlayers = 4,
                 date = LocalDateTime.now(),
-                isFinished = false
             )
         gameDao.insert(gameEntity1)
     }

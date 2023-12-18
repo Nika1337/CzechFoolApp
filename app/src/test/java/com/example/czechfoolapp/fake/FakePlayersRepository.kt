@@ -6,32 +6,26 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class FakePlayersRepository : PlayersRepository {
-    private val currentPlayers: MutableList<Player> = mutableListOf()
-    override suspend fun insertAll(vararg players: Player) {
-        currentPlayers.addAll(players)
+    private val currentPlayers: MutableMap<Int,MutableList<Player>> = mutableMapOf()
+    override suspend fun insertAll(vararg players: Player, gameID: Int) {
+        currentPlayers[gameID] = players.toMutableList()
     }
 
-    override suspend fun delete(player: Player) {
-        currentPlayers.remove(player)
+    override suspend fun delete(player: Player, gameID: Int) {
+        currentPlayers[gameID]!!.remove(player)
     }
 
-    override suspend fun update(player: Player) {
-        currentPlayers.forEachIndexed() { index: Int, it: Player ->
-            if (it.gameId == player.gameId && it.playerId == player.playerId) {
-                currentPlayers[index] = player
+    override suspend fun update(player: Player, gameID: Int) {
+        currentPlayers[gameID]!!.forEachIndexed { index: Int, it: Player ->
+            if (it.playerId == player.playerId) {
+                currentPlayers[gameID]!![index] = player
             }
         }
     }
 
     override fun getAllPlayersInGameSpecified(gameID: Int): Flow<List<Player>> {
-        val resultList: MutableList<Player> = mutableListOf()
-        currentPlayers.forEach {
-            if (it.gameId == gameID) {
-                resultList.add(it)
-            }
-        }
         return flowOf(
-            resultList
+            currentPlayers[gameID]!!
         )
     }
 }

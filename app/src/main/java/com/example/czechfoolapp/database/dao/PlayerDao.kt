@@ -22,5 +22,4 @@ interface PlayerDao {
 
     @Query("SELECT * From player WHERE game_id = :gameID")
     fun getAllPlayersInGameSpecified(gameID: Int) : Flow<List<PlayerEntity>>
-
 }

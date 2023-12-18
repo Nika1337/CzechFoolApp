@@ -21,18 +21,25 @@ class OfflinePlayersRepositoryTest {
         )
     }
 
-    private suspend fun insertPlayer(player: Player) =
-        playersRepository.insertAll(player)
+    private suspend fun insertPlayer(player: Player, gameID: Int) =
+        playersRepository.insertAll(
+            player,
+            gameID = gameID
+        )
 
-    private suspend fun insertAllPlayers() =
-        playersRepository.insertAll(*(FakeDataSource.players.toTypedArray()))
-
+    private suspend fun insertAllPlayers() = FakeDataSource.players.forEach {
+        playersRepository.insertAll(
+            players = it.value.toTypedArray(),
+            gameID = it.key
+        )
+    }
     @Test
     fun offlinePlayersRepository_insertPlayer_insertsPlayerInDatabase() = runTest {
-        val testPlayer = FakeDataSource.players[0]
-        insertPlayer(testPlayer)
+        val gameID = FakeDataSource.gameId1
+        val testPlayer = FakeDataSource.players[gameID]!![0]
+        insertPlayer(testPlayer, gameID)
 
-        val allPlayers = playersRepository.getAllPlayersInGameSpecified(testPlayer.gameId).first()
+        val allPlayers = playersRepository.getAllPlayersInGameSpecified(gameID = gameID).first()
         val expectedPlayer = testPlayer
         val actualPlayer = allPlayers[0]
 
@@ -42,13 +49,9 @@ class OfflinePlayersRepositoryTest {
     @Test
     fun offlinePlayersRepository_getAllPlayersInGameSpecified_returnsAllPlayersInAGivenGame() = runTest {
         insertAllPlayers()
+        val expectedPlayersInFirstGame = FakeDataSource.players[FakeDataSource.gameId1]!!
+        val expectedPlayersInSecondGame = FakeDataSource.players[FakeDataSource.gameId2]!!
 
-        val expectedPlayersInFirstGame = FakeDataSource.players.filter {
-            it.gameId == FakeDataSource.gameId1
-        }
-        val expectedPlayersInSecondGame = FakeDataSource.players.filter {
-            it.gameId == FakeDataSource.gameId2
-        }
         val actualPlayersInFirstGame =
             playersRepository
                 .getAllPlayersInGameSpecified(FakeDataSource.gameId1)
@@ -65,37 +68,40 @@ class OfflinePlayersRepositoryTest {
 
     @Test
     fun offlinePlayersRepository_getPlayer_returnsPlayer() = runTest {
-        val testPlayer = FakeDataSource.players[5]
-        insertPlayer(testPlayer)
+        val gameID = FakeDataSource.gameId2
+        val testPlayer = FakeDataSource.players[gameID]!!.first()
+        insertPlayer(testPlayer, gameID)
 
         val expectedPlayer = testPlayer
-        val actualPlayer = playersRepository.getAllPlayersInGameSpecified(testPlayer.gameId).first()[0]
+        val actualPlayer = playersRepository.getAllPlayersInGameSpecified(gameID).first()[0]
 
         assertEquals(expectedPlayer, actualPlayer)
     }
 
     @Test
     fun offlinePlayersRepository_updatePlayer_updatesPlayer() = runTest {
-        val testPlayer = FakeDataSource.players[3]
-        insertPlayer(testPlayer)
-        val updatedTestPlayer = FakeDataSource.players[3].let {
+        val gameID = FakeDataSource.gameId2
+        val testPlayer = FakeDataSource.players[gameID]!![0]
+        insertPlayer(testPlayer, gameID)
+        val updatedTestPlayer = testPlayer.let {
             it.copy(score = it.score + 33)
         }
-        playersRepository.update(updatedTestPlayer)
+        playersRepository.update(updatedTestPlayer, gameID)
 
         val expectedPlayer = updatedTestPlayer
-        val actualPlayer = playersRepository.getAllPlayersInGameSpecified(testPlayer.gameId).first()[0]
+        val actualPlayer = playersRepository.getAllPlayersInGameSpecified(gameID).first()[0]
 
         assertEquals(expectedPlayer, actualPlayer)
     }
 
     @Test
     fun offlinePlayersRepository_deletePlayer_deletesPlayer() = runTest {
-        val testPlayer = FakeDataSource.players[0]
-        insertPlayer(testPlayer)
+        val gameID = FakeDataSource.gameId1
+        val testPlayer = FakeDataSource.players[gameID]!![0]
+        insertPlayer(testPlayer, gameID)
 
-        playersRepository.delete(testPlayer)
-        val allGames = playersRepository.getAllPlayersInGameSpecified(testPlayer.gameId).first()
+        playersRepository.delete(testPlayer, gameID)
+        val allGames = playersRepository.getAllPlayersInGameSpecified(gameID).first()
 
         assertTrue(allGames.isEmpty())
     }

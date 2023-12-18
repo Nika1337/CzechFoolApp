@@ -16,7 +16,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.LocalDateTime
-import kotlin.jvm.Throws
 
 @RunWith(AndroidJUnit4::class)
 class GameDaoTest {
@@ -39,20 +38,16 @@ class GameDaoTest {
 
     private val gameEntity1 =
         GameEntity(
-            id = 1,
+            gameId = 1,
             losingScore = 200,
-            numberOfPlayers = 4,
             date = LocalDateTime.now(),
-            isFinished = true
         )
 
     private val gameEntity2 =
         GameEntity(
-            id = 2,
+            gameId = 2,
             losingScore = 300,
-            numberOfPlayers = 3,
             date = LocalDateTime.now(),
-            isFinished = true
         )
 
     private suspend fun addOneGameToDb() {
@@ -69,7 +64,7 @@ class GameDaoTest {
     fun daoInsert_insertsGameIntoDb() = runBlocking {
         addOneGameToDb()
         val allGames = gameDao.getAllGames().first()
-        assertEquals(allGames[0], gameEntity1)
+        assertEquals(allGames[0].gameEntity, gameEntity1)
     }
 
     @Test
@@ -77,24 +72,10 @@ class GameDaoTest {
     fun daoGetAllGames_returnsAllGamesFromDb() = runBlocking {
         addTwoGamesToDb()
         val allItems = gameDao.getAllGames().first()
-        assertEquals(allItems[0], gameEntity1)
-        assertEquals(allItems[1], gameEntity2)
+        assertEquals(allItems[0].gameEntity, gameEntity1)
+        assertEquals(allItems[1].gameEntity, gameEntity2)
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun daoUpdateGames_updatesGamesInDb() = runBlocking {
-        val gameEntity1Copy = gameEntity1.copy(numberOfPlayers = 123)
-        val gameEntity2Copy = gameEntity2.copy(losingScore = 123)
-
-        addTwoGamesToDb()
-        gameDao.update(gameEntity1Copy)
-        gameDao.update(gameEntity2Copy)
-
-        val allGames = gameDao.getAllGames().first()
-        assertEquals(gameEntity1Copy, allGames[0])
-        assertEquals(gameEntity2Copy, allGames[1])
-    }
 
     @Test
     @Throws(Exception::class)

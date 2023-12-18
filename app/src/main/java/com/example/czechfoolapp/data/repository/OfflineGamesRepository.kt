@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 class OfflineGamesRepository(
     private val gameDao: GameDao
 ) : GamesRepository{
-    override suspend fun insert(game: Game) {
+    override suspend fun insertWithoutPlayers(game: Game) {
         gameDao.insert(game.toGameEntity())
     }
 
@@ -18,19 +18,27 @@ class OfflineGamesRepository(
         gameDao.delete(game.toGameEntity())
     }
 
-    override suspend fun update(game: Game) {
-        gameDao.update(game.toGameEntity())
-    }
+    override fun getGame(gameId: Int): Flow<Game> =
+        gameDao.getGame(gameId).map {
+            it.toGame()
+        }
+
+
 
     override fun getAllGames(): Flow<List<Game>> =
-        gameDao.getAllGames()
-            .map { gameEntityList ->
-                gameEntityList.map { gameEntity ->
-                    gameEntity.toGame()
-                }
+        gameDao.getAllGames().map {
+            it.map { gameWithPlayers ->
+                gameWithPlayers.toGame()
             }
-
-    override suspend fun getMaxGameId(): Int =
-        gameDao.getMaxGameId()
-
+        }
 }
+
+
+
+
+
+
+
+
+
+

@@ -15,7 +15,7 @@ import com.example.czechfoolapp.data.model.Player
     foreignKeys = [
         ForeignKey(
             entity = GameEntity::class,
-            parentColumns = ["id"],
+            parentColumns = ["game_id"],
             childColumns = ["game_id"],
             onUpdate = ForeignKey.CASCADE,
             onDelete = ForeignKey.CASCADE
@@ -34,10 +34,11 @@ data class PlayerEntity(
     val score: Int,
 )
 
-fun PlayerEntity.toPlayer() =
-    Player(
-        gameId = this.gameId,
-        playerId = this.playerId,
-        name = this.name,
-        score = this.score
-    )
+fun List<PlayerEntity>.toPlayers() =
+    this.map {
+        Player(
+            playerId = it.playerId,
+            name = it.name,
+            score = it.score
+        )
+    }
