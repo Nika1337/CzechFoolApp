@@ -62,6 +62,15 @@ class OfflineGamesRepositoryTest {
         assertEquals(expectedValue, actualValues)
     }
 
+    @Test
+    fun offlineGamesRepository_getMaxGameId_returnsMaxGameID() = runTest {
+        insertAllGames()
+
+        val expectedValue = FakeDataSource.maxGameID
+        val actualValue = gamesRepository.getMaxGameID()
+
+        assertEquals(expectedValue, actualValue)
+    }
 
 }
 

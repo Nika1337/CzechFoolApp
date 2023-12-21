@@ -10,7 +10,7 @@ import com.example.czechfoolapp.Destinations.GAMES_HISTORY_ROUTE
 import com.example.czechfoolapp.Destinations.GAME_OPTIONS_ROUTE
 import com.example.czechfoolapp.Destinations.GAME_ROUTE
 import com.example.czechfoolapp.Destinations.NAME_INPUT_ROUTE
-import com.example.czechfoolapp.ui.GameRoute
+import com.example.czechfoolapp.ui.gameroute.GameRoute
 import com.example.czechfoolapp.ui.gameoptionsroute.GameOptionsRoute
 import com.example.czechfoolapp.ui.gameshistoryroute.GamesHistoryRoute
 import com.example.czechfoolapp.ui.nameinputroute.NameInputRoute
@@ -40,7 +40,7 @@ fun CzechFoulNavHost(
         }
         composable(GAME_OPTIONS_ROUTE) {
             GameOptionsRoute(
-                onNavigateUp = navController::navigateUp,
+                onNavigateUp = { navController.navigate(GAMES_HISTORY_ROUTE) },
                 onNavigateToNext = { navController.navigate(NAME_INPUT_ROUTE) }
             )
         }
@@ -54,7 +54,7 @@ fun CzechFoulNavHost(
         composable(GAME_ROUTE) {
             GameRoute(
                 windowWidth = windowWidth,
-                onCancel = { navController.navigate(GAME_OPTIONS_ROUTE) }
+                onCancel = { navController.navigate(GAMES_HISTORY_ROUTE) }
             )
         }
     }

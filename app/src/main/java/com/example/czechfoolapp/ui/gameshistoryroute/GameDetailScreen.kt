@@ -1,5 +1,6 @@
 package com.example.czechfoolapp.ui.gameshistoryroute
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,6 +45,9 @@ fun GameDetailScreen(
     onContinueGameNavigate: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BackHandler {
+        onNavigateUp()
+    }
     if (game == null) {
         return
     }

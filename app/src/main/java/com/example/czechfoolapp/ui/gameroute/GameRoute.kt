@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui
+package com.example.czechfoolapp.ui.gameroute
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass

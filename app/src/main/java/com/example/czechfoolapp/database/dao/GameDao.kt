@@ -27,4 +27,12 @@ interface GameDao {
         "SELECT * FROM game"
     )
     fun getAllGames(): Flow<List<GameWithPlayers>>
+
+    @Query(
+        "SELECT MAX(game_id) FROM game"
+    )
+    suspend fun getMaxGameID(): Int
+
+    @Query("SELECT EXISTS(SELECT * FROM game WHERE game_id = :gameID)")
+    suspend fun doesGameExistByID(gameID: Int): Boolean
 }

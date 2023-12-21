@@ -7,5 +7,9 @@ interface GamesRepository {
     suspend fun insertWithoutPlayers(game: Game)
     suspend fun delete(game: Game)
     fun getGame(gameId: Int): Flow<Game?>
-    fun getAllGames() : Flow<List<Game>>
+    fun getAllGames(): Flow<List<Game>>
+
+    suspend fun getMaxGameID(): Int
+
+    suspend fun doesGameExistByID(gameID: Int): Boolean
 }

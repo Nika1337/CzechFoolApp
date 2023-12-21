@@ -19,8 +19,10 @@ class FakePlayersRepository : PlayersRepository {
         currentPlayers[gameID]!!.forEachIndexed { index: Int, it: Player ->
             if (it.id == player.id) {
                 currentPlayers[gameID]!![index] = player
+                return
             }
         }
+
     }
 
     override fun getAllPlayersInGameSpecified(gameID: Int): Flow<List<Player>> {

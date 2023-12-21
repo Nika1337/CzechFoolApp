@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 object FakeDataSource {
     const val gameId1 = 1
     const val gameId2 = 2
+    const val maxGameID = 2
 
     val players = mapOf(
         gameId1 to listOf(

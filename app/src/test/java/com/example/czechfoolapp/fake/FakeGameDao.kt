@@ -36,4 +36,11 @@ class FakeGameDao: GameDao {
         }
         emit(gameWithPlayersList)
     }
+
+    override suspend fun doesGameExistByID(gameID: Int): Boolean = games.any {
+        it.gameId == gameID
+    }
+
+    override suspend fun getMaxGameID(): Int = FakeDataSource.maxGameID
+
 }

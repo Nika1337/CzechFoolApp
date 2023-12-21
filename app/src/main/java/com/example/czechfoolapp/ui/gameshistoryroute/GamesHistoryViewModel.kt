@@ -14,14 +14,16 @@ import com.example.czechfoolapp.data.repository.CurrentGameManager
 import com.example.czechfoolapp.data.repository.GamesRepository
 import com.example.czechfoolapp.ui.gameshistoryroute.states.GamesHistoryUiState
 import com.example.czechfoolapp.ui.gameshistoryroute.util.GamesHistoryCurrentScreen
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class GamesHistoryViewModel(
     private val currentGameManager: CurrentGameManager,
     private val gamesRepository: GamesRepository
@@ -35,14 +37,16 @@ class GamesHistoryViewModel(
             )
 
 
-    private var currentChosenGameId: Int = -1
+    private var currentChosenGameIdFlow = MutableStateFlow(-1)
     val currentChosenGame: StateFlow<Game?> =
-        gamesRepository.getGame(currentChosenGameId)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = null
-            )
+        currentChosenGameIdFlow.flatMapLatest {
+            gamesRepository.getGame(it)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+            initialValue = null
+        )
+
     var currentScreen: GamesHistoryCurrentScreen by mutableStateOf(GamesHistoryCurrentScreen.LIST)
         private set
 
@@ -58,7 +62,7 @@ class GamesHistoryViewModel(
                 event.onStartNewGameNavigate()
             }
             is GamesHistoryEvent.DetailScreenNavigateUp -> {
-
+                currentScreen = GamesHistoryCurrentScreen.LIST
             }
         }
     }
@@ -70,7 +74,8 @@ class GamesHistoryViewModel(
     }
 
     private fun chooseGame(gameId: Int) {
-        currentChosenGameId = gameId
+        currentChosenGameIdFlow.value = gameId
+        currentScreen = GamesHistoryCurrentScreen.DETAIL
     }
 
     companion object {
