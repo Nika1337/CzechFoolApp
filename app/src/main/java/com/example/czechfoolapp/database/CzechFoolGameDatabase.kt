@@ -16,7 +16,7 @@ import com.example.czechfoolapp.database.model.PlayerEntity
         PlayerEntity::class,
         GameEntity::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(value = [Converters::class])

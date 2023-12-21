@@ -5,7 +5,9 @@ import com.example.czechfoolapp.data.model.Player
 import kotlinx.coroutines.flow.Flow
 
 interface CurrentGameManager {
-    suspend fun setCurrentGame(game: Game)
+    suspend fun startNewGame(game: Game)
+
+    suspend fun continueGame(gameID: Int)
     fun getCurrentGame(): Flow<Game>
     suspend fun updatePlayer(player: Player)
 }

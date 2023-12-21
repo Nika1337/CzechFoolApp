@@ -11,33 +11,33 @@ object FakeDataSource {
     val players = mapOf(
         gameId1 to listOf(
             Player(
-                playerId = 1,
+                id = 1,
                 name = "Emily",
             ),
             Player(
-                playerId = 2,
+                id = 2,
                 name = "Joseph"
             ),
             Player(
-                playerId = 3,
+                id = 3,
                 name = "Farhad"
             )
         ),
         gameId2 to listOf(
             Player(
-                playerId = 1,
+                id = 1,
                 name = "James"
             ),
             Player(
-                playerId = 2,
+                id = 2,
                 name = "Farhad"
             ),
             Player(
-                playerId = 3,
+                id = 3,
                 name = "Maryam"
             ),
             Player(
-                playerId = 4,
+                id = 4,
                 name = "Parvati"
             )
         )

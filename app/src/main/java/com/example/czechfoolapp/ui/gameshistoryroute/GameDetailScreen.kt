@@ -25,42 +25,51 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.czechfoolapp.R
+import com.example.czechfoolapp.data.model.Game
+import com.example.czechfoolapp.data.model.Player
 import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
 import com.example.czechfoolapp.ui.composables.Title
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.Date
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.LosingScore
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.PlayerAndScore
-import com.example.czechfoolapp.ui.gameshistoryroute.states.GameUiModel
-import com.example.czechfoolapp.ui.gameshistoryroute.states.PlayerUiModel
 import java.time.LocalDateTime
 import java.time.Month
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameDetailScreen(
-    gameUiModel: GameUiModel,
+    game: Game?,
     onEvent: (event: GamesHistoryEvent) -> Unit,
     onNavigateUp: () -> Unit,
+    onContinueGameNavigate: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    if (game == null) {
+        return
+    }
     Scaffold(
         topBar = {
             CzechFoolSmallTopAppBar(
                 onNavigateUp = onNavigateUp,
-                title = { Title(text = stringResource(R.string.game_title, gameUiModel.gameId)) }
+                title = { Title(text = stringResource(R.string.game_title, game.id)) }
             )
         },
         floatingActionButton = {
             ContinueButton(
-                onClick = { onEvent(GamesHistoryEvent.ContinueGame(gameUiModel.gameId)) },
-                enabled = gameUiModel.isFinished.not()
+                onClick = {
+                    onEvent(GamesHistoryEvent.ContinueGame(
+                        gameId = game.id,
+                        onContinueGameNavigate = onContinueGameNavigate
+                    ))
+                          },
+                enabled = game.isFinished.not()
             )
         },
         floatingActionButtonPosition = FabPosition.Center,
         modifier = modifier
     ) {
         GameDetailContent(
-            gameUiModel = gameUiModel,
+            game = game,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
@@ -96,14 +105,15 @@ private fun ContinueButton(
 
 @Composable
 fun GameDetailContent(
-    gameUiModel: GameUiModel,
+    game: Game,
     modifier: Modifier = Modifier
 ) {
+
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
         Date(
-            dateTime = gameUiModel.date,
+            dateTime = game.date,
             formatPattern = "EEEE, MMMM d, yyyy, HH:mm",
             style = MaterialTheme.typography.bodyLarge.copy(
                 fontWeight = FontWeight.SemiBold
@@ -112,7 +122,7 @@ fun GameDetailContent(
                 .alpha(0.7f)
         )
         LosingScore(
-            score = gameUiModel.losingScore,
+            score = game.losingScore,
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.SemiBold
             ),
@@ -121,7 +131,7 @@ fun GameDetailContent(
         )
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacer_large)))
         PlayerNamesAndScores(
-            players = gameUiModel.players,
+            players = game.players,
             modifier = Modifier
                 .fillMaxWidth()
                 .alpha(0.85f)
@@ -131,13 +141,13 @@ fun GameDetailContent(
 
 @Composable
 private fun PlayerNamesAndScores(
-    players: List<PlayerUiModel>,
+    players: List<Player>,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
     ) {
-        players.forEachIndexed { index: Int, playerUiModel: PlayerUiModel ->
+        players.forEachIndexed { index: Int, player: Player ->
             if (index != 0) {
                 Divider(
                     thickness = dimensionResource(R.dimen.divider_small),
@@ -147,8 +157,8 @@ private fun PlayerNamesAndScores(
                 )
             }
             PlayerAndScore(
-                player = playerUiModel.name,
-                score = playerUiModel.score.toString(),
+                player = player.name,
+                score = player.score.toString(),
                 style = MaterialTheme.typography.displaySmall.copy(
                     fontWeight = FontWeight(690),
                     fontFamily = FontFamily.SansSerif
@@ -163,22 +173,22 @@ private fun PlayerNamesAndScores(
 @Preview
 @Composable
 fun GameDetailScreenPreview() {
-    val gameUiModel = GameUiModel(
-        gameId = 154,
+    val gameUiModel = Game(
+        id = 154,
         losingScore = 200,
         date = LocalDateTime.of(2023, Month.NOVEMBER, 9, 8, 20),
-        isFinished = false,
         players = listOf(
-            PlayerUiModel("Niku", 115),
-            PlayerUiModel("Anastasia", 9),
-            PlayerUiModel("Neka", 198),
-            PlayerUiModel("Wiko", 86)
+            Player(0,"Niku", 115),
+            Player(0,"Anastasia", 9),
+            Player(0,"Neka", 198),
+            Player(0,"Wiko", 86)
         )
     )
     GameDetailScreen(
-        gameUiModel = gameUiModel,
+        game = gameUiModel,
         onEvent = {},
-        onNavigateUp = {}
+        onNavigateUp = {},
+        onContinueGameNavigate = {}
     )
 }
 

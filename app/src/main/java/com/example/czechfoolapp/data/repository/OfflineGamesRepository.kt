@@ -18,9 +18,9 @@ class OfflineGamesRepository(
         gameDao.delete(game.toGameEntity())
     }
 
-    override fun getGame(gameId: Int): Flow<Game> =
+    override fun getGame(gameId: Int): Flow<Game?> =
         gameDao.getGame(gameId).map {
-            it.toGame()
+            it?.toGame()
         }
 
 

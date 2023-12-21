@@ -37,7 +37,7 @@ data class PlayerEntity(
 fun List<PlayerEntity>.toPlayers() =
     this.map {
         Player(
-            playerId = it.playerId,
+            id = it.playerId,
             name = it.name,
             score = it.score
         )

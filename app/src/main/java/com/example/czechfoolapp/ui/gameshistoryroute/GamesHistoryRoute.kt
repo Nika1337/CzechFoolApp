@@ -1,8 +1,15 @@
 package com.example.czechfoolapp.ui.gameshistoryroute
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import com.example.czechfoolapp.ui.util.GamesHistoryContentType
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.czechfoolapp.ui.gameshistoryroute.util.GamesHistoryContentType
+import com.example.czechfoolapp.ui.gameshistoryroute.util.GamesHistoryCurrentScreen
 
 @Composable
 fun GamesHistoryRoute(
@@ -22,6 +29,59 @@ fun GamesHistoryRoute(
         }
         else -> {
             GamesHistoryContentType.GAME_LIST_ONLY
+        }
+    }
+
+    val viewModel: GamesHistoryViewModel = viewModel(factory = GamesHistoryViewModel.factory)
+
+    val currentScreen = viewModel.currentScreen
+    val gamesHistoryUiState by viewModel.gamesHistoryUiState.collectAsStateWithLifecycle()
+    val currentGame by viewModel.currentChosenGame.collectAsStateWithLifecycle()
+
+    if (gamesHistoryContentType == GamesHistoryContentType.GAME_LIST_ONLY) {
+        if (currentScreen == GamesHistoryCurrentScreen.LIST){
+            GamesHistoryScreen(
+                gamesHistoryUiState = gamesHistoryUiState,
+                onEvent = viewModel::onEvent,
+                onStartNewGameNavigate = onStartNewGame,
+                modifier = Modifier
+                    .fillMaxSize()
+            )
+        } else {
+            GameDetailScreen(
+                game = currentGame,
+                onEvent = viewModel::onEvent,
+                onNavigateUp = {
+                    viewModel.onEvent(GamesHistoryEvent.DetailScreenNavigateUp)
+                },
+                onContinueGameNavigate = onContinueGame,
+                modifier = Modifier
+                    .fillMaxSize()
+            )
+        }
+    } else {
+        Row(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            GamesHistoryScreen(
+                gamesHistoryUiState = gamesHistoryUiState,
+                onEvent = viewModel::onEvent,
+                onStartNewGameNavigate = onStartNewGame,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+            )
+            GameDetailScreen(
+                game = currentGame,
+                onEvent = viewModel::onEvent,
+                onNavigateUp = {
+                    viewModel.onEvent(GamesHistoryEvent.DetailScreenNavigateUp)
+                },
+                onContinueGameNavigate = onContinueGame,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+            )
         }
     }
 }

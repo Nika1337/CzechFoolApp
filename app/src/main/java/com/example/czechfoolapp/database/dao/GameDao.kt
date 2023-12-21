@@ -21,7 +21,7 @@ interface GameDao {
         "SELECT * FROM game " +
         "where game_id = :id "
     )
-    fun getGame(id: Int): Flow<GameWithPlayers>
+    fun getGame(id: Int): Flow<GameWithPlayers?>
     @Transaction
     @Query(
         "SELECT * FROM game"

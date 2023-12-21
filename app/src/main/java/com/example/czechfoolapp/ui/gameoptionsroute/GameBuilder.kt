@@ -6,10 +6,12 @@ import java.time.LocalDateTime
 
 
 class GameBuilder {
-    private var losingScore: Int? = null
-    private var numberOfPlayers: Int? = null
-    private var players: List<Player> = listOf()
-
+    var losingScore: Int? = null
+        private set
+    var numberOfPlayers: Int? = null
+        private set
+    var players: List<Player> = listOf()
+        private set
     fun setNumberOfPlayers(numberOfPlayers: Int): GameBuilder {
         this.numberOfPlayers = numberOfPlayers
         return this
@@ -30,6 +32,9 @@ class GameBuilder {
         }
         if (numberOfPlayers == null) {
             throw IllegalStateException("Number of players not set")
+        }
+        if (players.size != numberOfPlayers) {
+            throw IllegalStateException("Number of players variable and number of player list size don't match")
         }
         return Game(
             id = 0,

@@ -3,6 +3,7 @@ package com.example.czechfoolapp.di
 import android.content.Context
 import com.example.czechfoolapp.data.repository.CurrentGameManager
 import com.example.czechfoolapp.data.repository.DefaultCurrentGameManager
+import com.example.czechfoolapp.data.repository.GamesRepository
 import com.example.czechfoolapp.data.repository.OfflineGamesRepository
 import com.example.czechfoolapp.data.repository.OfflinePlayersRepository
 import com.example.czechfoolapp.data.repository.PlayersRepository
@@ -18,6 +19,7 @@ interface AppContainer {
     val validatePlayerNameUseCase: ValidatePlayerNameUseCase
     val gameBuilder: GameBuilder
     val currentGameManager: CurrentGameManager
+    val gamesRepository: GamesRepository
 }
 
 class DefaultAppContainer(
@@ -49,7 +51,7 @@ class DefaultAppContainer(
     private val gameDao by lazy {
         CzechFoolGameDatabase.getDatabase(context).gameDao()
     }
-    private val gamesRepository by lazy {
+    override val gamesRepository by lazy {
         OfflineGamesRepository(gameDao = gameDao)
     }
 

@@ -10,14 +10,9 @@ fun Map<Int, PlayerNameState>.toPlayersList() = this
     .toList()
     .map { (id: Int, playerNameState: PlayerNameState) ->
         Player(
-            playerId = id,
+            id = id,
             name = playerNameState.name.trim()
         )
-    }
-fun Map<Int, PlayerNameState>.toNameList() = this
-    .toList()
-    .map { (_: Int, playerNameState: PlayerNameState) ->
-        playerNameState.name
     }
 fun Map<Int, PlayerNameState>.getDuplicates(): List<Int> {
     val seenValues: MutableList<String> = mutableListOf()

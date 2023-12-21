@@ -17,7 +17,7 @@ class FakePlayersRepository : PlayersRepository {
 
     override suspend fun update(player: Player, gameID: Int) {
         currentPlayers[gameID]!!.forEachIndexed { index: Int, it: Player ->
-            if (it.playerId == player.playerId) {
+            if (it.id == player.id) {
                 currentPlayers[gameID]!![index] = player
             }
         }

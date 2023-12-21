@@ -24,6 +24,14 @@ class NameInputViewModel(
     private val _playerNameState = mutableStateMapOf<Int, PlayerNameState>()
     val playerNameState = derivedStateOf { _playerNameState.toMap() }
 
+    init {
+        repeat(gameBuilder.numberOfPlayers!!) {
+            _playerNameState[it + 1] =
+                PlayerNameState(
+                    name = if (gameBuilder.players.size > it) gameBuilder.players[it].name else ""
+                )
+        }
+    }
     fun onEvent(event: NameInputEvent) {
         when(event) {
             is NameInputEvent.PlayerNameChanged -> {
@@ -61,7 +69,7 @@ class NameInputViewModel(
             val game = gameBuilder
                 .setPlayerNames(_playerNameState.toPlayersList())
                 .build()
-            currentGameManager.setCurrentGame(game)
+            currentGameManager.startNewGame(game)
             navigateToNext()
         }
     }

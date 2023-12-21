@@ -34,13 +34,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.czechfoolapp.R
+import com.example.czechfoolapp.data.model.Game
+import com.example.czechfoolapp.data.model.Player
 import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.Date
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.LosingScore
 import com.example.czechfoolapp.ui.gameshistoryroute.composables.PlayerAndScore
-import com.example.czechfoolapp.ui.gameshistoryroute.states.GameUiModel
 import com.example.czechfoolapp.ui.gameshistoryroute.states.GamesHistoryUiState
-import com.example.czechfoolapp.ui.gameshistoryroute.states.PlayerUiModel
 import java.time.LocalDateTime
 import java.time.Month
 
@@ -49,6 +49,7 @@ import java.time.Month
 fun GamesHistoryScreen(
     gamesHistoryUiState: GamesHistoryUiState,
     onEvent: (event: GamesHistoryEvent) -> Unit,
+    onStartNewGameNavigate: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -61,7 +62,11 @@ fun GamesHistoryScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    onEvent(GamesHistoryEvent.StartNewGame)
+                    onEvent(
+                        GamesHistoryEvent.StartNewGame(
+                            onStartNewGameNavigate = onStartNewGameNavigate
+                        )
+                    )
                 },
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
             ) {
@@ -95,7 +100,7 @@ fun GamesList(
     ) {
         items(gamesHistoryUiState.games) {
             GameCard(
-                gameUiModel = it,
+                game = it,
                 onGameClicked = onGameClicked,
                 modifier = Modifier
                     .padding(
@@ -109,14 +114,14 @@ fun GamesList(
 
 @Composable
 fun GameCard(
-    gameUiModel: GameUiModel,
+    game: Game,
     onGameClicked: (gameId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .clickable {
-                onGameClicked(gameUiModel.gameId)
+                onGameClicked(game.id)
             }
         ,
         elevation = CardDefaults.cardElevation(defaultElevation = dimensionResource(R.dimen.padding_small))
@@ -126,19 +131,19 @@ fun GameCard(
                 .padding(dimensionResource(R.dimen.padding_medium))
         ) {
             TitleAndDate(
-                title = stringResource(R.string.game_title, gameUiModel.gameId),
-                date = gameUiModel.date,
+                title = stringResource(R.string.game_title, game.id),
+                date = game.date,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             PlayerNamesAndScores(
-                players = gameUiModel.players,
+                players = game.players,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             LosingScoreAndGameStatus(
-                losingScore = gameUiModel.losingScore,
-                status = if (gameUiModel.isFinished) {
+                losingScore = game.losingScore,
+                status = if (game.isFinished) {
                     stringResource(R.string.finished)
                 } else {
                     stringResource(R.string.game_in_progress)
@@ -176,7 +181,7 @@ fun LosingScoreAndGameStatus(
 
 @Composable
 private fun PlayerNamesAndScores(
-    players: List<PlayerUiModel>,
+    players: List<Player>,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -252,82 +257,94 @@ fun GamesHomeScreenPreview() {
     GamesHistoryScreen(
         gamesHistoryUiState = GamesHistoryUiState(
             listOf(
-                GameUiModel(
-                    gameId = 134,
+                Game(
+                    id = 134,
                     losingScore = 200,
                     date = LocalDateTime.now(),
-                    isFinished = false,
                     players = listOf(
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Niku",
                             score = 115
                         ),
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Anastasia",
                             score = 64
                         )
                     )
-                ), GameUiModel(
-                    gameId = 124,
+                ),
+                Game(
+                    id = 124,
                     losingScore = 300,
                     date = LocalDateTime.now(),
-                    isFinished = false,
                     players = listOf(
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Niku",
                             score = 115
                         ),
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Anastasia",
                             score = 64
                         ),
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Neka",
                             score = 198
                         )
                     )
-                ), GameUiModel(
-                    gameId = 104,
+                ),
+                Game(
+                    id = 104,
                     losingScore = 200,
                     date = LocalDateTime.now(),
-                    isFinished = false,
                     players = listOf(
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Niku",
                             score = 115
                         ),
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Anastasia",
                             score = 64
                         ),
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Neka",
                             score = 3
                         ),
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Wiko",
                             score = 89
                         )
                     )
-                ), GameUiModel(
-                    gameId = 104,
+                ),
+                Game(
+                    id = 104,
                     losingScore = 200,
                     date = LocalDateTime.now(),
-                    isFinished = false,
                     players = listOf(
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Niku",
                             score = 115
                         ),
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Anastasia",
                             score = 64
                         ),
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Neka",
                             score = 3
                         ),
-                        PlayerUiModel(
+                        Player(
+                            id = 0,
                             name = "Wiko",
                             score = 89
                         )
@@ -335,7 +352,8 @@ fun GamesHomeScreenPreview() {
                 )
             )
         ),
-        onEvent = {}
+        onEvent = {},
+        onStartNewGameNavigate = {}
     )
 }
 
@@ -343,25 +361,28 @@ fun GamesHomeScreenPreview() {
 @Composable
 fun GameCardPreview() {
     GameCard(
-        gameUiModel = GameUiModel(
-            gameId = 154,
+        game = Game(
+            id = 154,
             losingScore = 200,
             date = LocalDateTime.of(200, Month.NOVEMBER, 9, 17, 54),
-            isFinished = true,
             players = listOf(
-                PlayerUiModel(
+                Player(
+                    id = 0,
                     name = "Niku",
                     score = 115
                 ),
-                PlayerUiModel(
+                Player(
+                    id = 0,
                     name = "Anastasia",
                     score = 64
                 ),
-                PlayerUiModel(
+                Player(
+                    id = 0,
                     name = "Neka",
                     score = 203
                 ),
-                PlayerUiModel(
+                Player(
+                    id = 0,
                     name = "Wiko",
                     score = 89
                 )
