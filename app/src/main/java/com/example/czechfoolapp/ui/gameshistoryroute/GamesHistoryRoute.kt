@@ -74,9 +74,6 @@ fun GamesHistoryRoute(
             GameDetailScreen(
                 game = currentGame,
                 onEvent = viewModel::onEvent,
-                onNavigateUp = {
-                    viewModel.onEvent(GamesHistoryEvent.DetailScreenNavigateUp)
-                },
                 onContinueGameNavigate = onContinueGame,
                 modifier = Modifier
                     .fillMaxSize()

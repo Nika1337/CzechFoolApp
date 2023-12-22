@@ -1,6 +1,7 @@
 package com.example.czechfoolapp.ui.gameshistoryroute
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.dimensionResource
@@ -41,14 +43,19 @@ import java.time.Month
 fun GameDetailScreen(
     game: Game?,
     onEvent: (event: GamesHistoryEvent) -> Unit,
-    onNavigateUp: () -> Unit,
     onContinueGameNavigate: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNavigateUp: (() -> Unit)? = null
 ) {
-    BackHandler {
-        onNavigateUp()
+    if (onNavigateUp != null) {
+        BackHandler {
+            onNavigateUp()
+        }
     }
     if (game == null) {
+        NoGameSelected(
+            modifier = modifier
+        )
         return
     }
     Scaffold(
@@ -81,6 +88,23 @@ fun GameDetailScreen(
 
         )
     }
+}
+
+@Composable
+fun NoGameSelected(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ){
+        Text(
+            text = stringResource(R.string.no_game_selected),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier,
+            color = MaterialTheme.colorScheme.onBackground
+                .copy(alpha = 0.5f)
+        )
+    }
+
 }
 
 @Composable
@@ -191,8 +215,7 @@ fun GameDetailScreenPreview() {
     GameDetailScreen(
         game = gameUiModel,
         onEvent = {},
-        onNavigateUp = {},
-        onContinueGameNavigate = {}
+        onContinueGameNavigate = {},
     )
 }
 
