@@ -1,7 +1,7 @@
 package com.example.czechfoolapp.util
 
 import com.example.czechfoolapp.data.model.Player
-import com.example.czechfoolapp.ui.nameinputroute.PlayerNameState
+import com.example.czechfoolapp.ui.nameinputroute.states.PlayerNameState
 import java.util.Locale
 
 

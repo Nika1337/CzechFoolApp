@@ -43,7 +43,7 @@ fun GamesHistoryRoute(
             GamesHistoryScreen(
                 gamesHistoryUiState = gamesHistoryUiState,
                 onEvent = viewModel::onEvent,
-                onStartNewGameNavigate = onStartNewGame,
+                onNavigateStartNewGame = onStartNewGame,
                 modifier = Modifier
                     .fillMaxSize()
             )
@@ -54,7 +54,7 @@ fun GamesHistoryRoute(
                 onNavigateUp = {
                     viewModel.onEvent(GamesHistoryEvent.DetailScreenNavigateUp)
                 },
-                onContinueGameNavigate = onContinueGame,
+                onNavigateContinueGame = onContinueGame,
                 modifier = Modifier
                     .fillMaxSize()
             )
@@ -66,7 +66,7 @@ fun GamesHistoryRoute(
             GamesHistoryScreen(
                 gamesHistoryUiState = gamesHistoryUiState,
                 onEvent = viewModel::onEvent,
-                onStartNewGameNavigate = onStartNewGame,
+                onNavigateStartNewGame = onStartNewGame,
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(1f)
@@ -74,7 +74,7 @@ fun GamesHistoryRoute(
             GameDetailScreen(
                 game = currentGame,
                 onEvent = viewModel::onEvent,
-                onContinueGameNavigate = onContinueGame,
+                onNavigateContinueGame = onContinueGame,
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(1f)

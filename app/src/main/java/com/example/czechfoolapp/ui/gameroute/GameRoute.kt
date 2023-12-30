@@ -9,7 +9,7 @@ fun GameRoute(
     windowWidth: WindowWidthSizeClass,
     onCancel: () -> Unit
 ) {
-    BackHandler {
-        onCancel()
+    BackHandler{
+        // Shouldn't do anything
     }
 }

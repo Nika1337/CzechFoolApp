@@ -49,7 +49,7 @@ import java.time.Month
 fun GamesHistoryScreen(
     gamesHistoryUiState: GamesHistoryUiState,
     onEvent: (event: GamesHistoryEvent) -> Unit,
-    onStartNewGameNavigate: () -> Unit,
+    onNavigateStartNewGame: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -64,7 +64,7 @@ fun GamesHistoryScreen(
                 onClick = {
                     onEvent(
                         GamesHistoryEvent.StartNewGame(
-                            onStartNewGameNavigate = onStartNewGameNavigate
+                            onStartNewGameNavigate = onNavigateStartNewGame
                         )
                     )
                 },
@@ -353,7 +353,7 @@ fun GamesHomeScreenPreview() {
             )
         ),
         onEvent = {},
-        onStartNewGameNavigate = {}
+        onNavigateStartNewGame = {}
     )
 }
 

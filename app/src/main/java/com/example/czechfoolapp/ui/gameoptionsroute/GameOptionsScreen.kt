@@ -44,6 +44,8 @@ import androidx.compose.ui.unit.dp
 import com.example.czechfoolapp.R
 import com.example.czechfoolapp.data.DefaultValuesSource
 import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
+import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionState
+import com.example.czechfoolapp.ui.gameoptionsroute.states.GameOptionsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

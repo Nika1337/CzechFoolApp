@@ -43,7 +43,7 @@ import java.time.Month
 fun GameDetailScreen(
     game: Game?,
     onEvent: (event: GamesHistoryEvent) -> Unit,
-    onContinueGameNavigate: () -> Unit,
+    onNavigateContinueGame: () -> Unit,
     modifier: Modifier = Modifier,
     onNavigateUp: (() -> Unit)? = null
 ) {
@@ -70,7 +70,7 @@ fun GameDetailScreen(
                 onClick = {
                     onEvent(GamesHistoryEvent.ContinueGame(
                         gameId = game.id,
-                        onContinueGameNavigate = onContinueGameNavigate
+                        onContinueGameNavigate = onNavigateContinueGame
                     ))
                           },
                 enabled = game.isFinished.not()
@@ -215,7 +215,7 @@ fun GameDetailScreenPreview() {
     GameDetailScreen(
         game = gameUiModel,
         onEvent = {},
-        onContinueGameNavigate = {},
+        onNavigateContinueGame = {},
     )
 }
 
