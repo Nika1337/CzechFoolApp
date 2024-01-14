@@ -13,4 +13,6 @@
     <string name="continue_game">Continue</string>
     <string name="no_game_selected">No game selected</string>
     <string name="choose_cards">Choose Cards</string>
+    <string name="plus_button">Plus</string>
+    <string name="remove_button">Remove</string>
 </resources>

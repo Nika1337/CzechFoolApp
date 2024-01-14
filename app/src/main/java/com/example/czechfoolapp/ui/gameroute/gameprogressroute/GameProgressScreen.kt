@@ -9,14 +9,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.czechfoolapp.data.model.Player
 import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
 import com.example.czechfoolapp.ui.composables.Title
-import com.example.czechfoolapp.ui.gameroute.GameEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameProgressScreen(
     gameProgressState: GameProgressState,
     onNavigateCancel: () -> Unit,
-    onEvent: (event: GameEvent) -> Unit,
+    onEvent: (event: GameProgressEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -24,7 +23,7 @@ fun GameProgressScreen(
             CzechFoolSmallTopAppBar(
                 title = { Title(gameProgressState.nextUserStep.title) },
                 onNavigateUp = {
-                    onEvent(GameEvent.Cancel(onNavigateCancel))
+                    onEvent(GameProgressEvent.Cancel(onNavigateCancel))
                 }
             )
         },
@@ -32,7 +31,7 @@ fun GameProgressScreen(
     ) { innerPadding ->
         PlayersList(
             gameProgressState = gameProgressState,
-            onPlayerClicked = { onEvent(GameEvent.PlayerClicked(it)) },
+            onPlayerClicked = { onEvent(GameProgressEvent.PlayerClicked(it)) },
             modifier = Modifier
                 .padding(innerPadding)
         )

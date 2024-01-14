@@ -11,6 +11,6 @@ data class CardUiModel(
     val count: Int
 ) {
     init {
-        require(count < suits.size) { "Count must be less than the number of suits." }
+        require(count <= suits.size) { "Count must be less or equal to the number of suits." }
     }
 }
