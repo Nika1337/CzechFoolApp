@@ -9,14 +9,12 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.data.repository.CurrentGameManager
-import com.example.czechfoolapp.ui.gameoptionsroute.GameOptionsViewModel
 import com.example.czechfoolapp.ui.gameroute.cardchoiceroute.CardChoiceEvent
 import com.example.czechfoolapp.ui.gameroute.cardchoiceroute.CardUiModel
 import com.example.czechfoolapp.ui.gameroute.gameprogressroute.GameProgressEvent
 import com.example.czechfoolapp.ui.gameroute.gameprogressroute.GameProgressState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update

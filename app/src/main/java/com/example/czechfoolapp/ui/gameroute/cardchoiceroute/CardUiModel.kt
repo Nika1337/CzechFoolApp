@@ -16,11 +16,11 @@ data class CardUiModel(
     fun getScore() = getCardScore()*count
 
     private fun getCardScore() : Int {
-        if (rank == Rank.QUEEN) {
-            return if (suits.contains(Suit.HEARTS)) rank.point*2
+        return if (rank == Rank.QUEEN) {
+            if (suits.contains(Suit.HEARTS)) rank.point*2
             else rank.point
         } else {
-            return rank.point
+            rank.point
         }
     }
 }
