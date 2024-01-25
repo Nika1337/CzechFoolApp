@@ -21,7 +21,11 @@ fun CzechFoolSmallTopAppBar(
     modifier: Modifier = Modifier,
     onNavigateUp: (() -> Unit)? = null,
     title: @Composable () -> Unit = { Branding(modifier = modifier.height(dimensionResource(R.dimen.logo_height))) },
-    scrollBehavior: TopAppBarScrollBehavior? = null
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    navigationIcon: @Composable () -> Unit = { Icon(
+        imageVector = Icons.Filled.ArrowBack,
+        contentDescription = stringResource(R.string.back_button)
+    ) }
 ) {
     CenterAlignedTopAppBar(
         title = title,
@@ -29,10 +33,7 @@ fun CzechFoolSmallTopAppBar(
         navigationIcon = {
             if (onNavigateUp != null) {
                 IconButton(onClick = onNavigateUp) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back_button)
-                    )
+                    navigationIcon()
                 }
             }
         },

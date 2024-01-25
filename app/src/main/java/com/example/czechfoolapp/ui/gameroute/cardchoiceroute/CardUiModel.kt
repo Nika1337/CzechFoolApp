@@ -13,4 +13,14 @@ data class CardUiModel(
     init {
         require(count <= suits.size) { "Count must be less or equal to the number of suits." }
     }
+    fun getScore() = getCardScore()*count
+
+    private fun getCardScore() : Int {
+        if (rank == Rank.QUEEN) {
+            return if (suits.contains(Suit.HEARTS)) rank.point*2
+            else rank.point
+        } else {
+            return rank.point
+        }
+    }
 }

@@ -14,6 +14,9 @@ enum class Suit(
     ),
     SPADES(
         symbol = "♠"
+    ),
+    NOTHING(
+        symbol = ""
     )
 }
 
@@ -56,6 +59,10 @@ enum class Rank(
     ACE(
         point = 11,
         symbol = "A"
+    ),
+    OTHER(
+        point = 0,
+        symbol = "OTHER"
     )
 }
 

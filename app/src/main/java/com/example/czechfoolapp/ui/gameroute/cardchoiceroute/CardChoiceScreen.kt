@@ -2,10 +2,15 @@ package com.example.czechfoolapp.ui.gameroute.cardchoiceroute
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.czechfoolapp.R
@@ -36,12 +41,23 @@ fun CardChoiceScreen(
                 title = { Title(stringResource(R.string.choose_cards)) }
             )
         },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { onEvent(CardChoiceEvent.Done) },
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Done,
+                    contentDescription = stringResource(R.string.done)
+                )
+            }
+        },
         modifier = modifier
     ) { innerPadding ->
         val selectionButtons = if (isWinnerScreen) RadioSelectionButton() else PlusMinusSelectionButtons()
         CardsList(
             state = state,
-            onCountChange = { onEvent(CardChoiceEvent.CountChangeClicked(it))} ,
+            onCountChange = { index: Int, count: Int -> onEvent(CardChoiceEvent.CountChanged(index, count))} ,
             selectionButtons = selectionButtons,
             modifier = Modifier.padding(innerPadding)
         )

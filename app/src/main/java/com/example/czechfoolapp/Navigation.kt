@@ -26,10 +26,11 @@ object Destinations {
 fun CzechFoulNavHost(
     windowWidth: WindowWidthSizeClass,
     navController: NavHostController = rememberNavController(),
+    startDestination: String = GAMES_HISTORY_ROUTE
 ) {
     NavHost(
         navController = navController,
-        startDestination = GAMES_HISTORY_ROUTE
+        startDestination = startDestination
     ) {
         composable(GAMES_HISTORY_ROUTE) {
             GamesHistoryRoute(

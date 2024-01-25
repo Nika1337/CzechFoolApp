@@ -3,7 +3,7 @@ package com.example.czechfoolapp.ui.gameroute.cardchoiceroute.composables
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -20,21 +20,21 @@ import com.example.czechfoolapp.ui.gameroute.cardchoiceroute.SelectionButtons
 @Composable
 fun CardsList(
     state: List<CardUiModel>,
-    onCountChange: (Int) -> Unit,
+    onCountChange: (index: Int, count: Int) -> Unit,
     selectionButtons: SelectionButtons,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
         modifier = modifier
     ) {
-        items(state) {
+        itemsIndexed(state) {index, cardUiModel ->
             PlayingCardCard(
-                rank = it.rank,
-                suits = it.suits,
+                rank = cardUiModel.rank,
+                suits = cardUiModel.suits,
                 selectionButtons = {
                     selectionButtons(
-                        count = it.count,
-                        onCountChange = onCountChange,
+                        count = cardUiModel.count,
+                        onCountChange = { count -> onCountChange(index, count) },
                         modifier = Modifier
                     )
                 },
@@ -66,7 +66,7 @@ fun CardsListRadioPreview() {
     )
     CardsList(
         state = state,
-        onCountChange = {},
+        onCountChange = { i, j ->  },
         selectionButtons = RadioSelectionButton()
     )
 }
@@ -88,7 +88,7 @@ fun CardsListPlusMinusPreview() {
     )
     CardsList(
         state = state,
-        onCountChange = {},
+        onCountChange = { i, j -> },
         selectionButtons = PlusMinusSelectionButtons()
     )
 }
