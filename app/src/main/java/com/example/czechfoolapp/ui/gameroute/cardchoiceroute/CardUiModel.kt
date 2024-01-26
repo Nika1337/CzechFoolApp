@@ -8,7 +8,7 @@ import com.example.czechfoolapp.data.model.Suit
 data class CardUiModel(
     val rank: Rank,
     val suits: Set<Suit>,
-    val count: Int
+    val count: Int = 0
 ) {
     init {
         require(count <= suits.size) { "Count must be less or equal to the number of suits." }

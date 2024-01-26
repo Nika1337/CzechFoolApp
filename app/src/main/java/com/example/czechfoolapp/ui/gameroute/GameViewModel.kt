@@ -1,7 +1,10 @@
 package com.example.czechfoolapp.ui.gameroute
 
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -9,20 +12,27 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.czechfoolapp.CzechFoolApplication
 import com.example.czechfoolapp.data.repository.CurrentGameManager
+import com.example.czechfoolapp.domain.GetCardUIModelsUseCase
 import com.example.czechfoolapp.ui.gameroute.cardchoiceroute.CardChoiceEvent
 import com.example.czechfoolapp.ui.gameroute.cardchoiceroute.CardUiModel
 import com.example.czechfoolapp.ui.gameroute.gameprogressroute.GameProgressEvent
 import com.example.czechfoolapp.ui.gameroute.gameprogressroute.GameProgressState
+import com.example.czechfoolapp.ui.gameroute.util.GameCurrentScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class GameViewModel(
-    private val currentGameManager: CurrentGameManager
+    private val currentGameManager: CurrentGameManager,
+    private val getCardUIModelsUseCase: GetCardUIModelsUseCase
 ) : ViewModel() {
+    var currentScreen: GameCurrentScreen by mutableStateOf(GameCurrentScreen.PLAYER_LIST)
+        private set
+
     private val currentGameFlow = currentGameManager.getCurrentGame()
     private val currentWinnerIDFlow = MutableStateFlow<Int?>(null)
     private val currentRoundPlayerScoresFlow = MutableStateFlow(mapOf<Int, Int>())
@@ -48,6 +58,8 @@ class GameViewModel(
     private var currentChosenPlayerId: Int? = null
     private val _cardChoiceState = mutableStateListOf<CardUiModel>()
     val cardChoiceState = derivedStateOf { _cardChoiceState.toList() }
+
+
     fun onGameProgressEvent(event: GameProgressEvent) {
         when(event) {
             is GameProgressEvent.Cancel -> {
@@ -69,12 +81,6 @@ class GameViewModel(
             }
         }
     }
-
-    private fun selectWinner(id: Int) {
-        currentWinnerIDFlow.value = id
-        selectPlayer(id)
-    }
-
     fun onCardChoiceEvent(event: CardChoiceEvent) {
         when(event) {
             is CardChoiceEvent.CountChanged -> {
@@ -85,8 +91,21 @@ class GameViewModel(
             }
             is CardChoiceEvent.Done -> {
                 updatePlayerScore()
+                navigateUp()
+            }
+            is CardChoiceEvent.NavigateUp -> {
+                navigateUp()
             }
         }
+    }
+
+    private fun selectWinner(id: Int) {
+        currentWinnerIDFlow.value = id
+        selectPlayer(id)
+    }
+
+    private fun navigateUp() {
+        currentScreen = GameCurrentScreen.PLAYER_LIST
     }
 
     private fun updatePlayerScore() {
@@ -116,7 +135,7 @@ class GameViewModel(
     }
 
     private suspend fun updatePlayerScores() {
-        currentGameFlow.collect { game ->
+        currentGameFlow.first().let { game ->
             game.players.forEach { player ->
                 currentGameManager.updatePlayer(
                     player = player
@@ -126,13 +145,23 @@ class GameViewModel(
                 )
             }
         }
+
     }
 
     private fun selectPlayer(id: Int) {
         currentChosenPlayerId = id
+        resetCardChoiceState()
+        currentScreen = GameCurrentScreen.CARD_LIST
+    }
+
+    private fun resetCardChoiceState() {
+        val cardUIModels = getCardUIModelsUseCase(isWinnerState())
+        _cardChoiceState.clear()
+        _cardChoiceState.addAll(cardUIModels)
     }
 
     private fun cancelGame(onNavigateCancel: () -> Unit) {
+        currentGameManager.stopGame()
         onNavigateCancel()
     }
 
@@ -147,15 +176,15 @@ class GameViewModel(
             return
         }
         if (isWinnerState()) {
-            _cardChoiceState.map {
-                it.copy(count = 0)
+            for (index in _cardChoiceState.indices) {
+                _cardChoiceState[index] = _cardChoiceState[index].copy(count = 0)
             }
         }
         _cardChoiceState[index] = gameUiModel.copy(count = newCount)
 
     }
 
-    private fun isWinnerState() = currentWinnerIDFlow.value == currentChosenPlayerId
+    fun isWinnerState() = currentChosenPlayerId != null && currentWinnerIDFlow.value == currentChosenPlayerId
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
@@ -163,8 +192,10 @@ class GameViewModel(
             initializer {
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
                 val currentGameManager = application.container.currentGameManager
+                val getCardUIModelsUseCase = application.container.getCardUIModelsUseCase
                 GameViewModel(
-                    currentGameManager = currentGameManager
+                    currentGameManager = currentGameManager,
+                    getCardUIModelsUseCase = getCardUIModelsUseCase
                 )
             }
         }

@@ -1,6 +1,8 @@
 package com.example.czechfoolapp.util
 
+import com.example.czechfoolapp.data.model.Card
 import com.example.czechfoolapp.data.model.Player
+import com.example.czechfoolapp.data.model.Suit
 import com.example.czechfoolapp.ui.nameinputroute.states.PlayerNameState
 import java.util.Locale
 
@@ -34,4 +36,12 @@ fun String.capitalizeFirstCharacter(): String {
         return this
     }
     return this.substring(0, 1).uppercase(Locale.ROOT) + this.substring(1).lowercase(Locale.ROOT)
+}
+
+fun List<Card>.getSuits(): Set<Suit> {
+    val suits = mutableSetOf<Suit>()
+    this.forEach {
+        suits.add(it.suit)
+    }
+    return suits
 }

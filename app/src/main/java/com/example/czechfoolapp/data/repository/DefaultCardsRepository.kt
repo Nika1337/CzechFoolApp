@@ -1,11 +1,11 @@
-package com.example.czechfoolapp.data
+package com.example.czechfoolapp.data.repository
 
 import com.example.czechfoolapp.data.model.Card
 import com.example.czechfoolapp.data.model.Rank
 import com.example.czechfoolapp.data.model.Suit
 
-object CardsSource {
-    val winnerCards = listOf(
+class DefaultCardsRepository : CardsRepository {
+    override val winnerCards = listOf(
         listOf(
             Card(
                 rank = Rank.QUEEN,
@@ -34,7 +34,7 @@ object CardsSource {
         )
     )
 
-    val loserCards = listOf(
+    override val loserCards = listOf(
         listOf(
             Card(
                 rank = Rank.ACE,
@@ -74,10 +74,6 @@ object CardsSource {
         listOf(
             Card(
                 rank = Rank.QUEEN,
-                suit = Suit.HEARTS
-            ),
-            Card(
-                rank = Rank.QUEEN,
                 suit = Suit.DIAMONDS
             ),
             Card(
@@ -87,6 +83,12 @@ object CardsSource {
             Card(
                 rank = Rank.QUEEN,
                 suit = Suit.CLUBS
+            )
+        ),
+        listOf(
+            Card(
+                rank = Rank.QUEEN,
+                suit = Suit.HEARTS
             )
         ),
         listOf(

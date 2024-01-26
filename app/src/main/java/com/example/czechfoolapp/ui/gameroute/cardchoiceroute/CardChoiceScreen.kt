@@ -1,14 +1,19 @@
 package com.example.czechfoolapp.ui.gameroute.cardchoiceroute
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -33,6 +38,12 @@ fun CardChoiceScreen(
         BackHandler {
             onNavigateUp()
         }
+    }
+    if (state.isEmpty()) {
+        NoPlayerChosen(
+            modifier = modifier
+        )
+        return
     }
     Scaffold(
         topBar = {
@@ -60,6 +71,24 @@ fun CardChoiceScreen(
             onCountChange = { index: Int, count: Int -> onEvent(CardChoiceEvent.CountChanged(index, count))} ,
             selectionButtons = selectionButtons,
             modifier = Modifier.padding(innerPadding)
+        )
+    }
+}
+
+@Composable
+fun NoPlayerChosen(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ){
+        Text(
+            text = stringResource(R.string.no_player_selected),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier,
+            color = MaterialTheme.colorScheme.onBackground
+                .copy(alpha = 0.5f)
         )
     }
 }

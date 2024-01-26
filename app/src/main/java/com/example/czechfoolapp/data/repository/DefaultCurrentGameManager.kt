@@ -10,6 +10,8 @@ class DefaultCurrentGameManager(
     private val playersRepository: PlayersRepository
 ) : CurrentGameManager{
     private var currentGameID: Int = -1
+    override fun isGameInProgress() = currentGameID != -1
+
     override suspend fun startNewGame(game: Game) {
         if (game.id != 0) {
             throw IllegalArgumentException("New Game ID should always be zero")

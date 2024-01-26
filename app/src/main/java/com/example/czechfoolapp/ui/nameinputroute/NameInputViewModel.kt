@@ -62,6 +62,9 @@ class NameInputViewModel(
     }
 
     private fun submitPlayerNames(navigateToNext: () -> Unit) {
+        if (currentGameManager.isGameInProgress()) {
+            return
+        }
         viewModelScope.launch {
             val playerNamesValidationSuccess = validatePlayerNamesAndUpdateErrorMessages()
             if (playerNamesValidationSuccess.not()) {

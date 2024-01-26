@@ -56,7 +56,10 @@ class GamesHistoryViewModel(
                 chooseGame(event.gameId)
             }
             is GamesHistoryEvent.ContinueGame -> {
-                continueGame(event.gameId)
+                continueGame(
+                    gameId = event.gameId,
+                    onNavigateContinue = event.onContinueGameNavigate
+                )
             }
             is GamesHistoryEvent.StartNewGame -> {
                 event.onStartNewGameNavigate()
@@ -67,9 +70,13 @@ class GamesHistoryViewModel(
         }
     }
 
-    private fun continueGame(gameId: Int) {
+    private fun continueGame(gameId: Int, onNavigateContinue: () -> Unit) {
+        if (currentGameManager.isGameInProgress()) {
+            return
+        }
         viewModelScope.launch {
             currentGameManager.continueGame(gameId)
+            onNavigateContinue()
         }
     }
 

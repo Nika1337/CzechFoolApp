@@ -2,12 +2,14 @@ package com.example.czechfoolapp.di
 
 import android.content.Context
 import com.example.czechfoolapp.data.repository.CurrentGameManager
+import com.example.czechfoolapp.data.repository.DefaultCardsRepository
 import com.example.czechfoolapp.data.repository.DefaultCurrentGameManager
 import com.example.czechfoolapp.data.repository.GamesRepository
 import com.example.czechfoolapp.data.repository.OfflineGamesRepository
 import com.example.czechfoolapp.data.repository.OfflinePlayersRepository
 import com.example.czechfoolapp.data.repository.PlayersRepository
 import com.example.czechfoolapp.database.CzechFoolGameDatabase
+import com.example.czechfoolapp.domain.GetCardUIModelsUseCase
 import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.validation.ValidatePlayerNameUseCase
@@ -20,6 +22,7 @@ interface AppContainer {
     val gameBuilder: GameBuilder
     val currentGameManager: CurrentGameManager
     val gamesRepository: GamesRepository
+    val getCardUIModelsUseCase: GetCardUIModelsUseCase
 }
 
 class DefaultAppContainer(
@@ -53,6 +56,13 @@ class DefaultAppContainer(
     }
     override val gamesRepository by lazy {
         OfflineGamesRepository(gameDao = gameDao)
+    }
+
+    private val defaultCardsRepository by lazy {
+        DefaultCardsRepository()
+    }
+    override val getCardUIModelsUseCase: GetCardUIModelsUseCase by lazy {
+        GetCardUIModelsUseCase(cardsRepository = defaultCardsRepository)
     }
 
     override val currentGameManager: CurrentGameManager by lazy {

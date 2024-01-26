@@ -41,7 +41,7 @@ fun CzechFoulNavHost(
         }
         composable(GAME_OPTIONS_ROUTE) {
             GameOptionsRoute(
-                onNavigateUp = { navController.navigate(GAMES_HISTORY_ROUTE) },
+                onNavigateUp = navController::navigateUp,
                 onNavigateToNext = { navController.navigate(NAME_INPUT_ROUTE) }
             )
         }
@@ -55,7 +55,7 @@ fun CzechFoulNavHost(
         composable(GAME_ROUTE) {
             GameRoute(
                 windowWidth = windowWidth,
-                onCancel = { navController.navigate(GAMES_HISTORY_ROUTE) }
+                onCancel = { navController.popBackStack(GAMES_HISTORY_ROUTE, false)}
             )
         }
     }
