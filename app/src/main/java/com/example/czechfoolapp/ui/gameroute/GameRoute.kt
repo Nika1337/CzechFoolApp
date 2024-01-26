@@ -64,7 +64,7 @@ fun GameRoute(
                     .fillMaxSize()
             )
         }
-    } else if (gameContentType == GameContentType.PLAYER_AND_CARD_LISTS) {
+    } else {
         Row(
             modifier = Modifier.fillMaxSize()
         ) {
