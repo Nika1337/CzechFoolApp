@@ -176,8 +176,8 @@ class GameViewModel(
             return
         }
         if (isWinnerState()) {
-            for (index in _cardChoiceState.indices) {
-                _cardChoiceState[index] = _cardChoiceState[index].copy(count = 0)
+            for (i in _cardChoiceState.indices) {
+                _cardChoiceState[i] = _cardChoiceState[i].copy(count = 0)
             }
         }
         _cardChoiceState[index] = gameUiModel.copy(count = newCount)
