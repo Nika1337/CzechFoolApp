@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -174,5 +176,34 @@ class DefaultCurrentGameManagerTest {
         val actualPlayers = playersRepository.getAllPlayersInGameSpecified(1).first()
 
         assertEquals(expectedPlayers, actualPlayers)
+    }
+
+    @Test
+    fun defaultCurrentGameManager_isGameInProgressWhenGameNotSet_returnsFalse() = runTest {
+        assertFalse(currentGameManager.isGameInProgress())
+    }
+
+    @Test
+    fun defaultCurrentGameManager_isGameInProgressAfterGameStarted_returnsTrue() = runTest {
+        val testGame = FakeDataSource.games[0].copy(id = 0)
+        currentGameManager.startNewGame(testGame)
+        assertTrue(currentGameManager.isGameInProgress())
+    }
+
+    @Test
+    fun defaultCurrentGameManager_isGameInProgressAfterGameStopped_returnsFalse() = runTest {
+        val testGame = FakeDataSource.games[0].copy(id = 0)
+        currentGameManager.startNewGame(testGame)
+        currentGameManager.stopGame()
+        assertFalse(currentGameManager.isGameInProgress())
+    }
+
+    @Test
+    fun defaultCurrentGameManager_isGameInProgressAfterGameContinued_returnsTrue() = runTest {
+        val testGame = FakeDataSource.games[0].copy(id = 0)
+        currentGameManager.startNewGame(testGame)
+        currentGameManager.stopGame()
+        currentGameManager.continueGame(1)
+        assertTrue(currentGameManager.isGameInProgress())
     }
 }

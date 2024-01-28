@@ -9,6 +9,7 @@ import com.example.czechfoolapp.util.clearPlayers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -72,6 +73,21 @@ class OfflineGamesRepositoryTest {
         assertEquals(expectedValue, actualValue)
     }
 
+    @Test
+    fun offlineGamesRepository_doesGameExistByID_returnsTrue() = runTest {
+        val testGame = FakeDataSource.games[0].clearPlayers()
+        insertGame(testGame)
+        assertTrue(gamesRepository.doesGameExistByID(testGame.id))
+    }
+
+    @Test
+    fun offlineGamesRepository_getGame_returnsCorrectGame() = runTest {
+        val testGame = FakeDataSource.games[0]
+        insertGame(testGame)
+        val expectedValue = testGame.clearPlayers()
+        val actualValue = gamesRepository.getGame(testGame.id).first()
+        assertEquals(expectedValue, actualValue)
+    }
 }
 
 
