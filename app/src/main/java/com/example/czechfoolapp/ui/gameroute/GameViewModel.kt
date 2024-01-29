@@ -21,6 +21,7 @@ import com.example.czechfoolapp.ui.gameroute.util.GameCurrentScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -66,21 +67,37 @@ class GameViewModel(
                 cancelGame(onNavigateCancel = event.onNavigateCancel)
             }
             is GameProgressEvent.PlayerClicked -> {
-                if (currentWinnerIDFlow.value == null) {
-                    selectWinner(
-                        id = event.id
-                    )
-                } else {
-                    selectPlayer(
-                        id = event.id
-                    )
+                when (currentWinnerIDFlow.value) {
+                    null -> {
+                        selectWinner(
+                            id = event.id
+                        )
+                    }
+                    event.id -> {
+                        deselectWinnerAndClearPlayerScores()
+                    }
+                    else -> {
+                        selectPlayer(
+                            id = event.id
+                        )
+                    }
                 }
             }
             is GameProgressEvent.Done -> {
+                if (areAllPlayerCardsInputted().not()) {
+                    return
+                }
                 updatePlayerScoresAndStartNewRound()
             }
         }
     }
+
+    private fun areAllPlayerCardsInputted() =
+        currentRoundPlayerScoresFlow.value.filter {
+            it.key != currentWinnerIDFlow.value
+        }.size == gameProgressState.value.players.size - 1
+
+
     fun onCardChoiceEvent(event: CardChoiceEvent) {
         when(event) {
             is CardChoiceEvent.CountChanged -> {
@@ -90,13 +107,23 @@ class GameViewModel(
                 )
             }
             is CardChoiceEvent.Done -> {
+                if (isAtLeastOneCardSelected().not()) {
+                    return
+                }
                 updatePlayerScore()
                 navigateUp()
             }
             is CardChoiceEvent.NavigateUp -> {
+                if (isWinnerState()) {
+                    deselectWinnerAndClearPlayerScores()
+                }
                 navigateUp()
             }
         }
+    }
+
+    private fun isAtLeastOneCardSelected() = cardChoiceState.value.any {
+        it.count > 0
     }
 
     private fun selectWinner(id: Int) {
@@ -104,6 +131,9 @@ class GameViewModel(
         selectPlayer(id)
     }
 
+    private fun deselectWinnerAndClearPlayerScores() {
+        resetRound()
+    }
     private fun navigateUp() {
         currentScreen = GameCurrentScreen.PLAYER_LIST
     }
@@ -124,11 +154,11 @@ class GameViewModel(
     private fun updatePlayerScoresAndStartNewRound() {
         viewModelScope.launch {
             updatePlayerScores()
-            startNewRound()
+            resetRound()
         }
     }
 
-    private fun startNewRound() {
+    private fun resetRound() {
         currentWinnerIDFlow.value = null
         currentRoundPlayerScoresFlow.value = emptyMap()
         currentChosenPlayerId = null
