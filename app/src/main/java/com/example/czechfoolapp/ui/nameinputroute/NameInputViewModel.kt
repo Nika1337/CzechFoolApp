@@ -74,6 +74,7 @@ class NameInputViewModel(
                 .setPlayerNames(_playerNameState.toPlayersList())
                 .build()
             currentGameManager.startNewGame(game)
+            gameBuilder.reset()
             navigateToNext()
         }
     }

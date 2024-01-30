@@ -25,6 +25,11 @@ class GameBuilder {
         this.players = players
         return this
     }
+    fun reset() {
+        losingScore = null
+        numberOfPlayers = null
+        players = emptyList()
+    }
 
     fun build(): Game {
         if (losingScore == null) {
