@@ -57,7 +57,7 @@ fun GameRoute(
         } else if (currentScreen == GameCurrentScreen.CARD_LIST) {
             CardChoiceScreen(
                 state = cardChoiceState,
-                isWinnerScreen = viewModel.isWinnerState(),
+                isWinnerScreen = viewModel.isCandidateState(),
                 onEvent = viewModel::onCardChoiceEvent,
                 onNavigateUp = { viewModel.onCardChoiceEvent(CardChoiceEvent.NavigateUp) },
                 modifier = Modifier
@@ -78,7 +78,7 @@ fun GameRoute(
             )
             CardChoiceScreen(
                 state = cardChoiceState,
-                isWinnerScreen = viewModel.isWinnerState() ,
+                isWinnerScreen = viewModel.isCandidateState() ,
                 onEvent = viewModel::onCardChoiceEvent,
                 modifier = Modifier
                     .fillMaxSize()

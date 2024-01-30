@@ -62,7 +62,8 @@ fun PlayersListPreview() {
     val gameProgressState = GameProgressState(
         players = players,
         updatedPlayerIDs = emptySet(),
-        winnerID = null
+        winnerID = null,
+        isGameFinished = false
     )
     PlayersList(
         gameProgressState = gameProgressState,

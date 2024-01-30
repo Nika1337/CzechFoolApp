@@ -26,6 +26,10 @@ fun GameProgressScreen(
     onEvent: (event: GameProgressEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    if (gameProgressState.isGameFinished) {
+        onEvent(GameProgressEvent.Cancel(onNavigateCancel))
+    }
+
     Scaffold(
         topBar = {
             CzechFoolSmallTopAppBar(
@@ -90,7 +94,8 @@ fun GameProgressScreenPreview() {
     val gameProgressState = GameProgressState(
         players = players,
         winnerID = 2,
-        updatedPlayerIDs = setOf(1,3)
+        updatedPlayerIDs = setOf(1,3),
+        isGameFinished = false
     )
     GameProgressScreen(
         gameProgressState = gameProgressState,

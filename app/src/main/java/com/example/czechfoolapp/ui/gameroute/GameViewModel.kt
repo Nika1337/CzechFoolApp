@@ -36,6 +36,7 @@ class GameViewModel(
     private val currentGameFlow = currentGameManager.getCurrentGame()
     private val currentWinnerIDFlow = MutableStateFlow<Int?>(null)
     private val currentRoundPlayerScoresFlow = MutableStateFlow(mapOf<Int, Int>())
+    private var currentCandidateWinnerID: Int? = null
 
     val gameProgressState =
         combine(
@@ -46,12 +47,13 @@ class GameViewModel(
             GameProgressState(
                 players = game.players.map { it.copy(score = it.score + (currentRoundPlayerScores[it.id] ?: 0)) },
                 winnerID = winnerID,
-                updatedPlayerIDs = currentRoundPlayerScores.filter { it.value != 0 }.keys.toSet()
+                updatedPlayerIDs = currentRoundPlayerScores.filter { it.value != 0 }.keys.toSet(),
+                isGameFinished = game.isFinished
             )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-            initialValue = GameProgressState(emptyList(),null, emptySet())
+            initialValue = GameProgressState(emptyList(),null, emptySet(), false)
         )
 
 
@@ -68,12 +70,12 @@ class GameViewModel(
             is GameProgressEvent.PlayerClicked -> {
                 when (currentWinnerIDFlow.value) {
                     null -> {
-                        selectWinner(
+                        selectCandidate(
                             id = event.id
                         )
                     }
                     event.id -> {
-                        deselectWinnerAndClearPlayerScores()
+                        resetRound()
                     }
                     else -> {
                         selectPlayer(
@@ -91,10 +93,6 @@ class GameViewModel(
         }
     }
 
-    private fun areAllPlayerCardsInputted() =
-        currentRoundPlayerScoresFlow.value.filter {
-            it.key != currentWinnerIDFlow.value
-        }.size == gameProgressState.value.players.size - 1
 
 
     fun onCardChoiceEvent(event: CardChoiceEvent) {
@@ -110,29 +108,39 @@ class GameViewModel(
                     return
                 }
                 updatePlayerScore()
+                if (isCandidateState()) {
+                    selectWinner()
+                }
                 navigateUp()
+                resetCardChoiceState()
             }
             is CardChoiceEvent.NavigateUp -> {
-                if (isWinnerState()) {
-                    deselectWinnerAndClearPlayerScores()
-                }
                 navigateUp()
             }
         }
     }
 
+    private fun selectWinner() {
+        currentWinnerIDFlow.value = currentCandidateWinnerID
+    }
+
+    fun isCandidateState() = currentChosenPlayerId != null && currentCandidateWinnerID == currentChosenPlayerId
+
+    private fun areAllPlayerCardsInputted() =
+        currentRoundPlayerScoresFlow.value.filter {
+            it.key != currentWinnerIDFlow.value
+        }.size == gameProgressState.value.players.size - 1
+
+
     private fun isAtLeastOneCardSelected() = cardChoiceState.value.any {
         it.count > 0
     }
 
-    private fun selectWinner(id: Int) {
-        currentWinnerIDFlow.value = id
+    private fun selectCandidate(id: Int) {
+        currentCandidateWinnerID = id
         selectPlayer(id)
     }
 
-    private fun deselectWinnerAndClearPlayerScores() {
-        resetRound()
-    }
     private fun navigateUp() {
         currentScreen = GameCurrentScreen.PLAYER_LIST
     }
@@ -142,7 +150,7 @@ class GameViewModel(
             throw IllegalStateException("No player chosen")
         }
         val score = _cardChoiceState.sumOf { it.getScore() }
-        val actualScore = if (isWinnerState()) -score else score
+        val actualScore = if (isCandidateState()) -score else score
         currentRoundPlayerScoresFlow.update { currentState ->
             currentState.toMutableMap().apply {
                 this[currentChosenPlayerId!!] = actualScore
@@ -161,6 +169,8 @@ class GameViewModel(
         currentWinnerIDFlow.value = null
         currentRoundPlayerScoresFlow.value = emptyMap()
         currentChosenPlayerId = null
+        currentCandidateWinnerID = null
+        resetCardChoiceState()
     }
 
     private suspend fun updatePlayerScores() {
@@ -179,17 +189,24 @@ class GameViewModel(
 
     private fun selectPlayer(id: Int) {
         currentChosenPlayerId = id
-        resetCardChoiceState()
+        setCardChoiceState()
         currentScreen = GameCurrentScreen.CARD_LIST
     }
 
-    private fun resetCardChoiceState() {
-        val cardUIModels = getCardUIModelsUseCase(isWinnerState())
-        _cardChoiceState.clear()
+    private fun setCardChoiceState() {
+        val cardUIModels = getCardUIModelsUseCase(isCandidateState())
+        resetCardChoiceState()
         _cardChoiceState.addAll(cardUIModels)
     }
 
+    private fun resetCardChoiceState() {
+        _cardChoiceState.clear()
+    }
+
     private fun cancelGame(onNavigateCancel: () -> Unit) {
+        if (currentGameManager.isGameInProgress().not()) {
+            return
+        }
         currentGameManager.stopGame()
         onNavigateCancel()
     }
@@ -201,10 +218,9 @@ class GameViewModel(
         }
         val gameUiModel = _cardChoiceState[index]
         if (gameUiModel.suits.size < newCount ) {
-            // some pop up or something could be added
             return
         }
-        if (isWinnerState()) {
+        if (isCandidateState()) {
             for (i in _cardChoiceState.indices) {
                 _cardChoiceState[i] = _cardChoiceState[i].copy(count = 0)
             }
@@ -213,7 +229,7 @@ class GameViewModel(
 
     }
 
-    fun isWinnerState() = currentChosenPlayerId != null && currentWinnerIDFlow.value == currentChosenPlayerId
+
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
