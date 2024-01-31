@@ -1,6 +1,8 @@
 package com.example.czechfoolapp.ui.gameoptionsroute
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
@@ -9,7 +11,7 @@ fun GameOptionsRoute(
     onNavigateToNext: () -> Unit
 ) {
     val viewModel: GameOptionsViewModel = viewModel(factory = GameOptionsViewModel.factory)
-    val gameOptionState = viewModel.gameOptionsState
+    val gameOptionState by viewModel.gameOptionsState.collectAsStateWithLifecycle()
     GameOptionsScreen(
         onNavigateUp = onNavigateUp,
         onNavigateToNext = onNavigateToNext,

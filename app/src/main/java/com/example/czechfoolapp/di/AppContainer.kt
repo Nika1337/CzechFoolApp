@@ -1,6 +1,7 @@
 package com.example.czechfoolapp.di
 
 import android.content.Context
+import com.example.czechfoolapp.data.DefaultValuesSource
 import com.example.czechfoolapp.data.repository.CurrentGameManager
 import com.example.czechfoolapp.data.repository.DefaultCardsRepository
 import com.example.czechfoolapp.data.repository.DefaultCurrentGameManager
@@ -23,6 +24,7 @@ interface AppContainer {
     val currentGameManager: CurrentGameManager
     val gamesRepository: GamesRepository
     val getCardUIModelsUseCase: GetCardUIModelsUseCase
+    val defaultValuesSource: DefaultValuesSource
 }
 
 class DefaultAppContainer(
@@ -63,6 +65,9 @@ class DefaultAppContainer(
     }
     override val getCardUIModelsUseCase: GetCardUIModelsUseCase by lazy {
         GetCardUIModelsUseCase(cardsRepository = defaultCardsRepository)
+    }
+    override val defaultValuesSource: DefaultValuesSource by lazy {
+        DefaultValuesSource
     }
 
     override val currentGameManager: CurrentGameManager by lazy {

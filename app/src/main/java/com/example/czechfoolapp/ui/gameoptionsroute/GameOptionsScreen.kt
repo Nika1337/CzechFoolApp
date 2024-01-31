@@ -36,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -98,7 +97,7 @@ private fun MenusColumn(
         verticalArrangement = Arrangement.Center
     ) {
         TextFieldMenu(
-            onEvent = { value: TextFieldValue -> onEvent(GameOptionEvent.NumberOfPlayersChanged(value)) },
+            onEvent = { value: String -> onEvent(GameOptionEvent.NumberOfPlayersChanged(value)) },
             state = gameOptionsState.numberOfPlayersState,
             items = DefaultValuesSource.numbersOfPlayers,
             label = R.string.number_of_players,
@@ -111,7 +110,7 @@ private fun MenusColumn(
             )
         )
         TextFieldMenu(
-            onEvent = { value: TextFieldValue -> onEvent(GameOptionEvent.LosingScoreChanged(value)) },
+            onEvent = { value: String -> onEvent(GameOptionEvent.LosingScoreChanged(value)) },
             state = gameOptionsState.losingScoreState,
             items = DefaultValuesSource.scores,
             label = R.string.losing_score,
@@ -130,9 +129,9 @@ private fun MenusColumn(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextFieldMenu(
-    onEvent: (TextFieldValue) -> Unit,
+    onEvent: (String) -> Unit,
     state: GameOptionState,
-    items: List<TextFieldValue>,
+    items: List<String>,
     @StringRes label: Int,
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -175,7 +174,7 @@ private fun TextFieldMenu(
                         DropdownMenuItem(
                             text = {
                                 Text(
-                                    text = item.text,
+                                    text = item,
                                     textAlign = TextAlign.Start,
                                     modifier = Modifier.fillMaxWidth()
                                 )
