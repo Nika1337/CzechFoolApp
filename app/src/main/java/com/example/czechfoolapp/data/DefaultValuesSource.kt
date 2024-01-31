@@ -1,6 +1,5 @@
 package com.example.czechfoolapp.data
 
-import androidx.compose.ui.text.input.TextFieldValue
 
 object DefaultValuesSource {
     val numbersOfPlayers = listOf(

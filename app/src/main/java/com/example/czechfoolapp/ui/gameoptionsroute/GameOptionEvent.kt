@@ -1,6 +1,5 @@
 package com.example.czechfoolapp.ui.gameoptionsroute
 
-import androidx.compose.ui.text.input.TextFieldValue
 
 sealed interface GameOptionEvent {
     data class NumberOfPlayersChanged(val numberOfPlayers: String) : GameOptionEvent
