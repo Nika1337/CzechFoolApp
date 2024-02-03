@@ -8,7 +8,6 @@ import java.util.Locale
 
 
 fun Map<Int, PlayerNameState>.toPlayersList() = this
-    .toMap()
     .toList()
     .map { (id: Int, playerNameState: PlayerNameState) ->
         Player(
