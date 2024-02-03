@@ -14,13 +14,11 @@ import com.example.czechfoolapp.domain.GetCardUIModelsUseCase
 import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.validation.ValidatePlayerNameUseCase
-import com.example.czechfoolapp.ui.routes.gameoptionsroute.GameBuilder
 
 interface AppContainer {
     val validateLosingScoreUseCase: ValidateLosingScoreUseCase
     val validateNumberOfPlayersUseCase: ValidateNumberOfPlayersUseCase
     val validatePlayerNameUseCase: ValidatePlayerNameUseCase
-    val gameBuilder: GameBuilder
     val currentGameManager: CurrentGameManager
     val gamesRepository: GamesRepository
     val getCardUIModelsUseCase: GetCardUIModelsUseCase
@@ -47,10 +45,6 @@ class DefaultAppContainer(
     }
     private val playersRepository: PlayersRepository by lazy {
         OfflinePlayersRepository(playerDao = playerDao)
-    }
-
-    override val gameBuilder: GameBuilder by lazy {
-        GameBuilder()
     }
 
     private val gameDao by lazy {
