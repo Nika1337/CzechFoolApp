@@ -14,7 +14,7 @@ import com.example.czechfoolapp.domain.GetCardUIModelsUseCase
 import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.validation.ValidatePlayerNameUseCase
-import com.example.czechfoolapp.ui.gameoptionsroute.GameBuilder
+import com.example.czechfoolapp.ui.routes.gameoptionsroute.GameBuilder
 
 interface AppContainer {
     val validateLosingScoreUseCase: ValidateLosingScoreUseCase

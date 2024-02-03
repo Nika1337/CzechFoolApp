@@ -3,7 +3,7 @@ package com.example.czechfoolapp.util
 import com.example.czechfoolapp.data.model.Card
 import com.example.czechfoolapp.data.model.Player
 import com.example.czechfoolapp.data.model.Suit
-import com.example.czechfoolapp.ui.nameinputroute.states.PlayerNameState
+import com.example.czechfoolapp.ui.routes.nameinputroute.states.PlayerNameState
 import java.util.Locale
 
 
