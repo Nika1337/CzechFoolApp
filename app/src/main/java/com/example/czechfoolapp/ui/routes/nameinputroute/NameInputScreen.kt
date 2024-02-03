@@ -85,7 +85,6 @@ fun TextFieldsColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
-
         nameInputState.forEach { (id: Int, playerNameState: PlayerNameState) ->
             NameTextField(
                 id = id,
@@ -94,7 +93,7 @@ fun TextFieldsColumn(
                     onValueChange(id, value)
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = if (id <= nameInputState.size) ImeAction.Next else ImeAction.Done
+                    imeAction = if (id < nameInputState.size) ImeAction.Next else ImeAction.Done
                 ),
                 modifier = Modifier
                     .padding(
