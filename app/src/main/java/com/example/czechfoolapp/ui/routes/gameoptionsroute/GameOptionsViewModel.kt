@@ -16,7 +16,7 @@ import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionStat
 import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionsState
 import kotlinx.coroutines.launch
 
-const val GAME_OPTIONS_STATE_ID = "gameOptionsStateID"
+const val GAME_OPTIONS_STATE = "gameOptionsStateID"
 
 class GameOptionsViewModel(
     private val savedStateHandle: SavedStateHandle,
@@ -29,14 +29,14 @@ class GameOptionsViewModel(
             numberOfPlayersState = GameOptionState(value = defaultValuesSource.defaultNumberOfPlayers),
             losingScoreState = GameOptionState(value = defaultValuesSource.defaultScore)
         )
-    val gameOptionsState = savedStateHandle.getStateFlow(GAME_OPTIONS_STATE_ID, defaultGameOptionsState)
+    val gameOptionsState = savedStateHandle.getStateFlow(GAME_OPTIONS_STATE, defaultGameOptionsState)
     fun onEvent(event: GameOptionEvent) {
         when (event) {
             is GameOptionEvent.LosingScoreChanged -> {
-                savedStateHandle[GAME_OPTIONS_STATE_ID] = gameOptionsState.value.copy(losingScoreState = gameOptionsState.value.losingScoreState.copy(value = event.losingScore))
+                savedStateHandle[GAME_OPTIONS_STATE] = gameOptionsState.value.copy(losingScoreState = gameOptionsState.value.losingScoreState.copy(value = event.losingScore))
             }
             is GameOptionEvent.NumberOfPlayersChanged -> {
-                savedStateHandle[GAME_OPTIONS_STATE_ID] = gameOptionsState.value.copy(numberOfPlayersState = gameOptionsState.value.numberOfPlayersState.copy(value = event.numberOfPlayers))
+                savedStateHandle[GAME_OPTIONS_STATE] = gameOptionsState.value.copy(numberOfPlayersState = gameOptionsState.value.numberOfPlayersState.copy(value = event.numberOfPlayers))
             }
             is GameOptionEvent.Next -> {
                 submitGameOptions(navigateToNext = event.navigateToNext)
@@ -56,7 +56,7 @@ class GameOptionsViewModel(
                 losingScoreResult
             ).any { it.successful.not() }
 
-            savedStateHandle[GAME_OPTIONS_STATE_ID] = gameOptionsState.value.copy(
+            savedStateHandle[GAME_OPTIONS_STATE] = gameOptionsState.value.copy(
                 losingScoreState = gameOptionsState.value.losingScoreState.copy(errorMessage = losingScoreResult.errorMessage),
                 numberOfPlayersState = gameOptionsState.value.numberOfPlayersState.copy(errorMessage = numberOfPlayersResult.errorMessage)
             )
