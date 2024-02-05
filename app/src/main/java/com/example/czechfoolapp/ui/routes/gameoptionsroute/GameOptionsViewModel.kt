@@ -16,7 +16,7 @@ import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionStat
 import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionsState
 import kotlinx.coroutines.launch
 
-const val GAME_OPTIONS_STATE = "gameOptionsStateID"
+private const val GAME_OPTIONS_STATE = "gameOptionsStateID"
 
 class GameOptionsViewModel(
     private val savedStateHandle: SavedStateHandle,
