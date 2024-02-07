@@ -40,9 +40,9 @@ fun GameRoute(
     }
 
     val viewModel: GameViewModel = viewModel(factory = GameViewModel.factory)
-    val currentScreen = viewModel.currentScreen
+    val currentScreen by viewModel.currentScreenFlow.collectAsStateWithLifecycle()
     val gameProgressState by viewModel.gameProgressState.collectAsStateWithLifecycle()
-    val cardChoiceState by viewModel.cardChoiceState
+    val cardChoiceState by viewModel.cardChoiceState.collectAsStateWithLifecycle()
 
 
     if (gameContentType == GameContentType.PLAYER_LIST_ONLY) {

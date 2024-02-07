@@ -1,15 +1,18 @@
 package com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.example.czechfoolapp.data.model.Rank
 import com.example.czechfoolapp.data.model.Suit
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Immutable
 data class CardUiModel(
     val rank: Rank,
     val suits: Set<Suit>,
     val count: Int = 0
-) {
+) : Parcelable {
     init {
         require(count <= suits.size) { "Count must be less or equal to the number of suits." }
     }
