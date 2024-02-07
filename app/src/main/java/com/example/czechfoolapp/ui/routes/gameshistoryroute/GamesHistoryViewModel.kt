@@ -1,10 +1,9 @@
 package com.example.czechfoolapp.ui.routes.gameshistoryroute
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -15,7 +14,6 @@ import com.example.czechfoolapp.data.repository.GamesRepository
 import com.example.czechfoolapp.ui.routes.gameshistoryroute.states.GamesHistoryUiState
 import com.example.czechfoolapp.ui.routes.gameshistoryroute.util.GamesHistoryCurrentScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -23,8 +21,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+
+private const val CURRENT_CHOSEN_GAME_ID = "currentChosenGameID"
+private const val CURRENT_SCREEN = "currentScreen"
 @OptIn(ExperimentalCoroutinesApi::class)
 class GamesHistoryViewModel(
+    private val savedStateHandle: SavedStateHandle,
     private val currentGameManager: CurrentGameManager,
     private val gamesRepository: GamesRepository
 ): ViewModel() {
@@ -37,9 +39,13 @@ class GamesHistoryViewModel(
             )
 
 
-    private var currentChosenGameIdFlow = MutableStateFlow(-1)
+    private val currentChosenGameIDFlow =
+        savedStateHandle.getStateFlow(
+            key = CURRENT_CHOSEN_GAME_ID,
+            -1
+        )
     val currentChosenGame: StateFlow<Game?> =
-        currentChosenGameIdFlow.flatMapLatest {
+        currentChosenGameIDFlow.flatMapLatest {
             gamesRepository.getGame(it)
         }.stateIn(
             scope = viewModelScope,
@@ -47,9 +53,11 @@ class GamesHistoryViewModel(
             initialValue = null
         )
 
-    var currentScreen: GamesHistoryCurrentScreen by mutableStateOf(GamesHistoryCurrentScreen.LIST)
-        private set
-
+    val currentScreen =
+        savedStateHandle.getStateFlow(
+            key = CURRENT_SCREEN,
+            GamesHistoryCurrentScreen.LIST
+        )
     fun onEvent(event: GamesHistoryEvent) {
         when(event) {
             is GamesHistoryEvent.ViewGameDetails -> {
@@ -65,7 +73,7 @@ class GamesHistoryViewModel(
                 event.onStartNewGameNavigate()
             }
             is GamesHistoryEvent.DetailScreenNavigateUp -> {
-                currentScreen = GamesHistoryCurrentScreen.LIST
+                savedStateHandle[CURRENT_SCREEN] = GamesHistoryCurrentScreen.LIST
             }
         }
     }
@@ -80,18 +88,20 @@ class GamesHistoryViewModel(
         }
     }
 
-    private fun chooseGame(gameId: Int) {
-        currentChosenGameIdFlow.value = gameId
-        currentScreen = GamesHistoryCurrentScreen.DETAIL
+    private fun chooseGame(gameID: Int) {
+        savedStateHandle[CURRENT_CHOSEN_GAME_ID] = gameID
+        savedStateHandle[CURRENT_SCREEN] = GamesHistoryCurrentScreen.DETAIL
     }
 
     companion object {
         val factory : ViewModelProvider.Factory = viewModelFactory {
             initializer {
+                val savedStateHandle = this.createSavedStateHandle()
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
                 val currentGameManager = application.container.currentGameManager
                 val gamesRepository = application.container.gamesRepository
                 GamesHistoryViewModel(
+                    savedStateHandle = savedStateHandle,
                     currentGameManager = currentGameManager,
                     gamesRepository = gamesRepository
                 )
