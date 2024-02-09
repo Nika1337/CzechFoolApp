@@ -34,7 +34,7 @@ fun GamesHistoryRoute(
 
     val viewModel: GamesHistoryViewModel = viewModel(factory = GamesHistoryViewModel.factory)
 
-    val currentScreen = viewModel.currentScreen
+    val currentScreen by viewModel.currentScreen.collectAsStateWithLifecycle()
     val gamesHistoryUiState by viewModel.gamesHistoryUiState.collectAsStateWithLifecycle()
     val currentGame by viewModel.currentChosenGame.collectAsStateWithLifecycle()
 
