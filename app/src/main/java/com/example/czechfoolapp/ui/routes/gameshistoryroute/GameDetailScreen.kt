@@ -166,6 +166,7 @@ fun GameDetailContent(
                 .fillMaxWidth()
                 .alpha(0.85f)
         )
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacer_large)))
     }
 }
 

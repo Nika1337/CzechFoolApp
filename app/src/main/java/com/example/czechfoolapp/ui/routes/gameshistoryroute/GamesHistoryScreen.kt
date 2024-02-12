@@ -109,6 +109,9 @@ fun GamesList(
                     )
             )
         }
+        item {
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacer_large)))
+        }
     }
 }
 

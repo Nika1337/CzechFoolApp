@@ -1,5 +1,7 @@
 package com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,6 +33,9 @@ fun PlayersList(
                         vertical = dimensionResource(R.dimen.padding_small)
                     )
             )
+        }
+        item {
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacer_large)))
         }
     }
 }
