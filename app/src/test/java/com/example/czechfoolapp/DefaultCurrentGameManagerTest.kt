@@ -4,6 +4,8 @@ import com.example.czechfoolapp.data.repository.CurrentGameManager
 import com.example.czechfoolapp.data.repository.DefaultCurrentGameManager
 import com.example.czechfoolapp.data.repository.GamesRepository
 import com.example.czechfoolapp.data.repository.PlayersRepository
+import com.example.czechfoolapp.datastore.CurrentGameDataSource
+import com.example.czechfoolapp.fake.FakeCurrentGameDataSource
 import com.example.czechfoolapp.fake.FakeDataSource
 import com.example.czechfoolapp.fake.FakeGamesRepository
 import com.example.czechfoolapp.fake.FakePlayersRepository
@@ -20,15 +22,18 @@ import org.junit.Test
 class DefaultCurrentGameManagerTest {
     private lateinit var currentGameManager: CurrentGameManager
     private lateinit var gamesRepository: GamesRepository
+    private lateinit var currentGameDataSource: CurrentGameDataSource
     private lateinit var playersRepository: PlayersRepository
 
     @Before
     fun createCurrentGameRepository() {
         playersRepository = FakePlayersRepository()
         gamesRepository = FakeGamesRepository()
+        currentGameDataSource = FakeCurrentGameDataSource()
         currentGameManager = DefaultCurrentGameManager(
             gamesRepository = gamesRepository,
-            playersRepository = playersRepository
+            playersRepository = playersRepository,
+            currentGameDataSource = currentGameDataSource
         )
     }
 
@@ -38,7 +43,7 @@ class DefaultCurrentGameManagerTest {
         currentGameManager.startNewGame(testGame)
 
         val expectedValue = testGame.copy(id = 1)
-        val actualValue = currentGameManager.getCurrentGame().first()
+        val actualValue = currentGameManager.getCurrentGameFlow().first()
 
         assertEquals(expectedValue, actualValue)
     }
@@ -75,7 +80,7 @@ class DefaultCurrentGameManagerTest {
 
         currentGameManager.continueGame(1)
         val expectedValue = FakeDataSource.games[0].copy(id = 1)
-        val actualValue = currentGameManager.getCurrentGame().first()
+        val actualValue = currentGameManager.getCurrentGameFlow().first()
 
         assertEquals(expectedValue, actualValue)
     }
@@ -109,7 +114,7 @@ class DefaultCurrentGameManagerTest {
 
         assertThrows(IllegalStateException::class.java) {
             runBlocking {
-                currentGameManager.getCurrentGame()
+                currentGameManager.getCurrentGameFlow()
             }
         }
     }
@@ -128,7 +133,7 @@ class DefaultCurrentGameManagerTest {
         val testGame = FakeDataSource.games[0].copy(id = 0)
         currentGameManager.startNewGame(testGame)
         val expectedValue = FakeDataSource.games[0].copy(id = 1)
-        val actualValue = currentGameManager.getCurrentGame().first()
+        val actualValue = currentGameManager.getCurrentGameFlow().first()
 
         assertEquals(expectedValue, actualValue)
     }
@@ -137,7 +142,7 @@ class DefaultCurrentGameManagerTest {
     fun defaultCurrentGameManager_getCurrentGameWhenNoGameInProgress_throwsException() = runTest {
         assertThrows(IllegalStateException::class.java) {
             runBlocking {
-                currentGameManager.getCurrentGame()
+                currentGameManager.getCurrentGameFlow()
             }
         }
     }
@@ -205,5 +210,26 @@ class DefaultCurrentGameManagerTest {
         currentGameManager.stopGame()
         currentGameManager.continueGame(1)
         assertTrue(currentGameManager.isGameInProgress())
+    }
+
+    @Test
+    fun defaultCurrentGameManager_restoreGameWhenGameIsAlreadySet_changesNothing() = runTest {
+        val testGame = FakeDataSource.games[0].copy(id = 0)
+        currentGameManager.startNewGame(testGame)
+        currentGameManager.restoreLastSavedGame()
+        val expectedValue = testGame.copy(1)
+        val actualValue = currentGameManager.getCurrentGameFlow().first()
+        assertEquals(expectedValue, actualValue)
+    }
+
+    @Test
+    fun defaultCurrentGameManager_restoreGameWhenGameWasSet_restoresOldGame() = runTest {
+        val testGame = FakeDataSource.games[0].copy(id = 0)
+        gamesRepository.insertWithoutPlayers(testGame)
+        currentGameDataSource.setCurrentGameID(gamesRepository.getMaxGameID())
+        currentGameManager.restoreLastSavedGame()
+        val expectedValue = testGame.copy(id = 1)
+        val actualValue = currentGameManager.getCurrentGameFlow().first()
+        assertEquals(expectedValue, actualValue)
     }
 }

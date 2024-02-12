@@ -9,8 +9,9 @@ interface CurrentGameManager {
     suspend fun startNewGame(game: Game)
 
     suspend fun continueGame(gameID: Int)
-    fun stopGame()
-    fun getCurrentGame(): Flow<Game>
+    suspend fun stopGame()
+    fun getCurrentGameFlow(): Flow<Game>
     suspend fun updatePlayer(player: Player)
+    suspend fun restoreLastSavedGame()
 
 }

@@ -1,6 +1,9 @@
 package com.example.czechfoolapp.di
 
 import android.content.Context
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStore
+import androidx.datastore.dataStoreFile
 import com.example.czechfoolapp.data.DefaultValuesSource
 import com.example.czechfoolapp.data.repository.CurrentGameManager
 import com.example.czechfoolapp.data.repository.DefaultCardsRepository
@@ -10,10 +13,15 @@ import com.example.czechfoolapp.data.repository.OfflineGamesRepository
 import com.example.czechfoolapp.data.repository.OfflinePlayersRepository
 import com.example.czechfoolapp.data.repository.PlayersRepository
 import com.example.czechfoolapp.database.CzechFoolGameDatabase
+import com.example.czechfoolapp.datastore.CurrentGameDataSerializer
+import com.example.czechfoolapp.datastore.CurrentGameDataSource
+import com.example.czechfoolapp.datastore.DefaultCurrentGameDataSource
+import com.example.czechfoolapp.datastore.currentGameDataStore
 import com.example.czechfoolapp.domain.GetCardUIModelsUseCase
 import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.domain.validation.ValidatePlayerNameUseCase
+import kotlinx.coroutines.CoroutineScope
 
 interface AppContainer {
     val validateLosingScoreUseCase: ValidateLosingScoreUseCase
@@ -23,6 +31,7 @@ interface AppContainer {
     val gamesRepository: GamesRepository
     val getCardUIModelsUseCase: GetCardUIModelsUseCase
     val defaultValuesSource: DefaultValuesSource
+    val currentGameDataSource: CurrentGameDataSource
 }
 
 class DefaultAppContainer(
@@ -63,11 +72,19 @@ class DefaultAppContainer(
     override val defaultValuesSource: DefaultValuesSource by lazy {
         DefaultValuesSource
     }
-
+    private val currentGameDataStore by lazy {
+        context.currentGameDataStore
+    }
+    override val currentGameDataSource: CurrentGameDataSource by lazy {
+        DefaultCurrentGameDataSource(
+            currentGameDataStore
+        )
+    }
     override val currentGameManager: CurrentGameManager by lazy {
         DefaultCurrentGameManager(
             gamesRepository = gamesRepository,
-            playersRepository = playersRepository
+            playersRepository = playersRepository,
+            currentGameDataSource = currentGameDataSource
         )
     }
 }
