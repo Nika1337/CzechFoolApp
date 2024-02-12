@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 private const val CURRENT_SCREEN = "currentScreen"
 private const val CURRENT_WINNER_ID = "currentWinnerID"
@@ -38,7 +39,11 @@ class GameViewModel(
             GameCurrentScreen.PLAYER_LIST
         )
 
-    private val currentGameFlow = currentGameManager.getCurrentGame()
+    private val currentGameFlow =
+        runBlocking {
+            currentGameManager.restoreLastSavedGame()
+            currentGameManager.getCurrentGameFlow()
+        }
     private val currentWinnerIDFlow =
         savedStateHandle.getStateFlow<Int?>(
             key = CURRENT_WINNER_ID,
@@ -84,6 +89,7 @@ class GameViewModel(
             key = CARD_CHOICE_STATE,
             listOf<CardUiModel>()
         )
+
 
 
     fun onGameProgressEvent(event: GameProgressEvent) {
@@ -228,11 +234,13 @@ class GameViewModel(
     }
 
     private fun cancelGame(onNavigateCancel: () -> Unit) {
-        if (currentGameManager.isGameInProgress().not()) {
-            return
+        viewModelScope.launch {
+            if (currentGameManager.isGameInProgress().not()) {
+                return@launch
+            }
+            currentGameManager.stopGame()
+            onNavigateCancel()
         }
-        currentGameManager.stopGame()
-        onNavigateCancel()
     }
 
 
