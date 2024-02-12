@@ -1,13 +1,10 @@
 package com.example.czechfoolapp.data.repository
 
-import android.util.Log
 import com.example.czechfoolapp.data.model.Game
 import com.example.czechfoolapp.data.model.Player
 import com.example.czechfoolapp.datastore.CurrentGameDataSource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 /**
