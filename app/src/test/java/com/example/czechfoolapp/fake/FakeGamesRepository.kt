@@ -18,7 +18,7 @@ class FakeGamesRepository() : GamesRepository {
         currentGames.remove(game)
     }
 
-    override fun getGame(gameId: Int): Flow<Game> = flowOf(currentGames.find { it.id == gameId }!! )
+    override fun getGame(gameId: Int): Flow<Game?> = flowOf(currentGames.find { it.id == gameId })
 
     override fun getAllGames(): Flow<List<Game>> {
         return flowOf(
