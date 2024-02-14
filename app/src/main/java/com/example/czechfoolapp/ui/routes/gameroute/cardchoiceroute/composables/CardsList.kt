@@ -1,5 +1,6 @@
 package com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.composables
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,7 +38,7 @@ fun CardsList(
                     selectionButtons(
                         count = cardUiModel.count,
                         onCountChange = { count -> onCountChange(index, count) },
-                        modifier = Modifier
+                        modifier = Modifier.animateContentSize()
                     )
                 },
                 modifier = Modifier

@@ -1,5 +1,6 @@
 package com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.composables
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -51,7 +52,8 @@ fun PlayingCardCard(
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(R.dimen.padding_medium)))
                 Suits(
-                    suits = suits
+                    suits = suits,
+                    modifier = Modifier.animateContentSize()
                 )
             }
             Spacer(
