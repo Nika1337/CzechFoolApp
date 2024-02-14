@@ -25,7 +25,7 @@ interface GameDao {
     fun getGame(id: Int): Flow<GameWithPlayers?>
     @Transaction
     @Query(
-        "SELECT * FROM game"
+        "SELECT * FROM game ORDER BY game_id DESC"
     )
     fun getAllGames(): Flow<List<GameWithPlayers>>
 
