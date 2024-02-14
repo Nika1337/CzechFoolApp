@@ -14,6 +14,7 @@ data class GameProgressState(
 }
 
 
+@Immutable
 enum class NextUserStep(val title: String) {
     SELECT_WINNER("Select Winner"),
     INPUT_PLAYER_CARDS("Input Player Cards")
