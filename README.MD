@@ -3,7 +3,7 @@
 Czech Fool is an app used for tracking card game "Czech fool". This app was created for personal use and practice. Czech fool app is optimized for all types of devices, including both larger and smaller screens (foldables too). The app is fully process death safe. Moreover, Data layer is fully tested. 
 Czech Fool app architecture closely follows [Guide to android app architecture](https://developer.android.com/topic/architecture).
 
-###### Technologies
+### Technologies
 - [Jetpack Compose](https://developer.android.com/jetpack/compose)
 - [Room Library](https://developer.android.com/jetpack/androidx/releases/room)
 - [Proto DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
