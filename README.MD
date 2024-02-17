@@ -78,6 +78,10 @@ Data layer consists of model classes, which will be used in UI and repositories,
 All repositories are defined as an interface and then default implementations are provided, which is useful for dependency injection and testing.
 [`CurrentGameManager.kt`](app/src/main/java/com/example/czechfoolapp/data/repository/DefaultCurrentGameManager.kt) is responsible for storing current game (using datastore) and managing changes to current game. 
 
+## Domain
+Package [`com.example.czechfoolapp.domain`](app/src/main/java/com/example/czechfoolapp/domain)
+Package [`validation`](app/src/main/java/com/example/czechfoolapp/domain/validation) has use cases for validating user input.
+[`GetCardUiModelsUseCase`](app/src/main/java/com/example/czechfoolapp/domain/GetCardUiModelsUseCase.kt) retrieves static data from data layer 
 
 
 
