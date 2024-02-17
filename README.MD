@@ -8,6 +8,15 @@ Czech Fool app architecture closely follows [Guide to android app architecture](
 - [Room Library](https://developer.android.com/jetpack/androidx/releases/room)
 - [Proto DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
 
+### Challenges Faced
+- How to share data between ViewModels
+- Should dynamically connected screens have one or multiple ViewModel
+- How to join tables using Room library
+- How to save state using SavedStateHandle
+- How to implement CurrentGameManager
+- How to stop compose from recomposing TextFields which didn't change
+- Database normalization
+
 ## Features
 This app contains four main routes: <u>Games History</u>, <u>Game Options</u>, <u>Name Input</u>, <u>Game</u>. Some routes have two screens, which are connected using dynamic navigation (for different screen sizes), while others have one screen.
 
