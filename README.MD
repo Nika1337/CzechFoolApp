@@ -22,7 +22,7 @@ Package [`com.example.czechfoolapp.ui.routes.gameshistoryroute`](app/src/main/ja
 <p style=float:left">
   <img src="Screenshots/GamesHistoryCompact.jpg" width="200" />
   <img src="Screenshots/GameDetailCompact.jpg" width="200" />
-  <img src="Screenshots/GamesHistoryMedium.jpg" width="200" />
+  <img src="Screenshots/GamesHistoryMedium.jpg" width="400" />
 </p>
 
 #### Game Options Route
@@ -47,14 +47,14 @@ Package [`com.example.czechfoolapp.ui.routes.gameroute`](app/src/main/java/com/e
 <p style=float:left">
   <img src="Screenshots/GameProgressCompact.jpg" width="200" />
   <img src="Screenshots/CardChoiceCompact.jpg" width="200" />
-  <img src="Screenshots/GameProgress_CardChoice.jpg" width="200" />
-  <img src="Screenshots/GameProgressMedium.jpg" width="200" />
+  <img src="Screenshots/GameProgress_CardChoice.jpg" width="400" />
+  <img src="Screenshots/GameProgressMedium.jpg" width="400" />
 </p>
 
 
 ## Database
 Package [`com.example.czechfoolapp.database`](app/src/main/java/com/example/czechfoolapp/database)
-Database has two entities, [`GameEntity`](app/src/main/java/com/example/czechfoolapp/database/model/GamEntity.kt) and a weak entity [`PlayerEntity`](app/src/main/java/com/example/czechfoolapp/database/model/PlayerEntity.kt) dependent on [`GameEntity`](app/src/main/java/com/example/czechfoolapp/database/model/GamEntity.kt). [`GameWithPlayers`](app/src/main/java/com/example/czechfoolapp/database/model/GameWithPlayers.kt) represents natural join between [`GameEntity`](app/src/main/java/com/example/czechfoolapp/database/model/GamEntity.kt) and [`PlayerEntity`](app/src/main/java/com/example/czechfoolapp/database/model/PlayerEntity.kt) which is used for querying game table.
+Database has two entities, [`GameEntity`](app/src/main/java/com/example/czechfoolapp/database/model/GameEntity.kt) and a weak entity [`PlayerEntity`](app/src/main/java/com/example/czechfoolapp/database/model/PlayerEntity.kt) dependent on [`GameEntity`](app/src/main/java/com/example/czechfoolapp/database/model/GameEntity.kt). [`GameWithPlayers`](app/src/main/java/com/example/czechfoolapp/database/model/GameWithPlayers.kt) represents natural join between [`GameEntity`](app/src/main/java/com/example/czechfoolapp/database/model/GameEntity.kt) and [`PlayerEntity`](app/src/main/java/com/example/czechfoolapp/database/model/PlayerEntity.kt) which is used for querying game table.
 
 ## Datastore
 Package [`com.example.czechfoolapp.datastore`](app/src/main/java/com/example/czechfoolapp/datastore)
@@ -64,7 +64,7 @@ Package [`com.example.czechfoolapp.datastore`](app/src/main/java/com/example/cze
 Package [`com.example.czechfoolapp.data`](app/src/main/java/com/example/czechfoolapp/data)
 Data layer consists of model classes, which will be used in UI and repositories, which are responsible for communicating with data sources.
 All repositories are defined as an interface and then default implementations are provided, which is useful for dependency injection and testing.
-[`CurrentGameManager.kt`](app/src/main/java/com/example/czechfoolapp/data/repository/DefaultCurrentGameManager) is responsible for storing current game (using datastore) and managing changes to current game. 
+[`CurrentGameManager.kt`](app/src/main/java/com/example/czechfoolapp/data/repository/DefaultCurrentGameManager.kt) is responsible for storing current game (using datastore) and managing changes to current game. 
 
 
 
