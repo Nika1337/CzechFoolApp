@@ -6,8 +6,8 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.czechfoolapp.ui.routes.gameshistoryroute.util.GamesHistoryContentType
 import com.example.czechfoolapp.ui.routes.gameshistoryroute.util.GamesHistoryCurrentScreen
 
@@ -32,7 +32,7 @@ fun GamesHistoryRoute(
         }
     }
 
-    val viewModel: GamesHistoryViewModel = viewModel(factory = GamesHistoryViewModel.factory)
+    val viewModel: GamesHistoryViewModel = hiltViewModel()
 
     val currentScreen by viewModel.currentScreen.collectAsStateWithLifecycle()
     val gamesHistoryUiState by viewModel.gamesHistoryUiState.collectAsStateWithLifecycle()

@@ -13,6 +13,7 @@ import com.example.czechfoolapp.data.repository.CurrentGameManager
 import com.example.czechfoolapp.data.repository.GamesRepository
 import com.example.czechfoolapp.ui.routes.gameshistoryroute.states.GamesHistoryUiState
 import com.example.czechfoolapp.ui.routes.gameshistoryroute.util.GamesHistoryCurrentScreen
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -20,12 +21,14 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 private const val CURRENT_CHOSEN_GAME_ID = "currentChosenGameID"
 private const val CURRENT_SCREEN = "currentScreen"
 @OptIn(ExperimentalCoroutinesApi::class)
-class GamesHistoryViewModel(
+@HiltViewModel
+class GamesHistoryViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val currentGameManager: CurrentGameManager,
     private val gamesRepository: GamesRepository
@@ -94,19 +97,6 @@ class GamesHistoryViewModel(
     }
 
     companion object {
-        val factory : ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val savedStateHandle = this.createSavedStateHandle()
-                val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
-                val currentGameManager = application.container.currentGameManager
-                val gamesRepository = application.container.gamesRepository
-                GamesHistoryViewModel(
-                    savedStateHandle = savedStateHandle,
-                    currentGameManager = currentGameManager,
-                    gamesRepository = gamesRepository
-                )
-            }
-        }
         private const val TIMEOUT_MILLIS = 5_000L
     }
 }
