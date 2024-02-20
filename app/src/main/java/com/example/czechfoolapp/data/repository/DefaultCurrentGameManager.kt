@@ -6,12 +6,13 @@ import com.example.czechfoolapp.datastore.CurrentGameDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 /**
  * Default value of CurrentGameData.id
  */
 private const val NO_GAME_ID = 0
-class DefaultCurrentGameManager(
+class DefaultCurrentGameManager @Inject constructor(
     private val gamesRepository: GamesRepository,
     private val playersRepository: PlayersRepository,
     private val currentGameDataSource: CurrentGameDataSource

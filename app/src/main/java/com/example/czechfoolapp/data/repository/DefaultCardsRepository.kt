@@ -3,8 +3,9 @@ package com.example.czechfoolapp.data.repository
 import com.example.czechfoolapp.data.model.Card
 import com.example.czechfoolapp.data.model.Rank
 import com.example.czechfoolapp.data.model.Suit
+import javax.inject.Inject
 
-class DefaultCardsRepository : CardsRepository {
+class DefaultCardsRepository @Inject constructor() : CardsRepository {
     override val winnerCards = listOf(
         listOf(
             Card(

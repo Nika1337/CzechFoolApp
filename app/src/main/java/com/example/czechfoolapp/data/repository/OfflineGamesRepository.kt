@@ -6,8 +6,9 @@ import com.example.czechfoolapp.database.dao.GameDao
 import com.example.czechfoolapp.database.model.toGame
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class OfflineGamesRepository(
+class OfflineGamesRepository @Inject constructor(
     private val gameDao: GameDao
 ) : GamesRepository{
     override suspend fun insertWithoutPlayers(game: Game) {

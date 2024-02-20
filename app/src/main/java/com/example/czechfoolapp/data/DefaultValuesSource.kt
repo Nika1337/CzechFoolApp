@@ -1,7 +1,9 @@
 package com.example.czechfoolapp.data
 
+import javax.inject.Inject
 
-object DefaultValuesSource {
+
+class DefaultValuesSource @Inject constructor() {
     val numbersOfPlayers = listOf(
         "2",
         "3",

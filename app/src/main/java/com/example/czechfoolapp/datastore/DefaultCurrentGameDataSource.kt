@@ -3,8 +3,9 @@ package com.example.czechfoolapp.datastore
 import android.util.Log
 import androidx.datastore.core.DataStore
 import java.io.IOException
+import javax.inject.Inject
 
-class DefaultCurrentGameDataSource(
+class DefaultCurrentGameDataSource @Inject constructor(
     private val currentGameData: DataStore<CurrentGameData>
 ) : CurrentGameDataSource {
     override fun getCurrentGameDataFlow()= currentGameData.data
