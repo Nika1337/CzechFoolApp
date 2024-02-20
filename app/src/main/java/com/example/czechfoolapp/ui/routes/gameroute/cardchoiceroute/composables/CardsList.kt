@@ -72,7 +72,7 @@ fun CardsListRadioPreview() {
     )
     CardsList(
         state = state,
-        onCountChange = { i, j ->  },
+        onCountChange = { _, _ ->  },
         selectionButtons = RadioSelectionButton()
     )
 }
@@ -94,7 +94,7 @@ fun CardsListPlusMinusPreview() {
     )
     CardsList(
         state = state,
-        onCountChange = { i, j -> },
+        onCountChange = { _, _ -> },
         selectionButtons = PlusMinusSelectionButtons()
     )
 }
