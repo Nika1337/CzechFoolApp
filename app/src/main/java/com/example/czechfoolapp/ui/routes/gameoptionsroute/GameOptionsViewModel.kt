@@ -14,11 +14,14 @@ import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
 import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
 import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionState
 import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionsState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val GAME_OPTIONS_STATE = "gameOptionsStateID"
 
-class GameOptionsViewModel(
+@HiltViewModel
+class GameOptionsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val validateNumberOfPlayersUseCase: ValidateNumberOfPlayersUseCase,
     private val validateLosingScoreUseCase: ValidateLosingScoreUseCase,
@@ -67,25 +70,6 @@ class GameOptionsViewModel(
                 gameOptionsState.value.losingScoreState.value.toInt(),
                 gameOptionsState.value.numberOfPlayersState.value.toInt()
             )
-        }
-    }
-
-
-    companion object {
-        val factory : ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val savedStateHandle = this.createSavedStateHandle()
-                val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
-                val validateNumberOfPlayersUseCase = application.container.validateNumberOfPlayersUseCase
-                val validateLosingScoreUseCase = application.container.validateLosingScoreUseCase
-                val defaultValuesSource = application.container.defaultValuesSource
-                GameOptionsViewModel(
-                    savedStateHandle = savedStateHandle,
-                    validateNumberOfPlayersUseCase = validateNumberOfPlayersUseCase,
-                    validateLosingScoreUseCase = validateLosingScoreUseCase,
-                    defaultValuesSource = defaultValuesSource
-                )
-            }
         }
     }
 }
