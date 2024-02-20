@@ -15,7 +15,9 @@ import com.example.czechfoolapp.domain.validation.ValidatePlayerNameUseCase
 import com.example.czechfoolapp.ui.routes.nameinputroute.navigation.LOSING_SCORE_ARG
 import com.example.czechfoolapp.ui.routes.nameinputroute.navigation.NUMBER_OF_PLAYERS_ARG
 import com.example.czechfoolapp.ui.routes.nameinputroute.states.PlayerNameState
+import com.example.czechfoolapp.util.capitalizeAndTrim
 import com.example.czechfoolapp.util.getDuplicates
+import com.example.czechfoolapp.util.resetNameErrors
 import com.example.czechfoolapp.util.toPlayersList
 import kotlinx.coroutines.launch
 
@@ -38,12 +40,12 @@ class NameInputViewModel(
     }
 
     private fun restoreOrSetPlayerNamesState() {
-        val newPlayersNamesState = mutableMapOf<Int, PlayerNameState>()
+        val newPlayerNamesState = mutableMapOf<Int, PlayerNameState>()
         val currentPlayerNamesState = playerNamesState.value
         repeat(numberOfPlayers) {
-            newPlayersNamesState[it + 1] = currentPlayerNamesState[it + 1] ?: PlayerNameState()
+            newPlayerNamesState[it + 1] = currentPlayerNamesState[it + 1] ?: PlayerNameState()
         }
-        savedStateHandle[PLAYER_NAMES_STATE] = newPlayersNamesState
+        updatePlayerNameState(newPlayerNamesState)
     }
 
     fun onEvent(event: NameInputEvent) {
@@ -64,8 +66,8 @@ class NameInputViewModel(
 
 
     private fun changePlayerName(id: Int, value: String) {
-        val newPlayerNameState = playerNamesState.value.toMutableMap()
-        newPlayerNameState[id] = newPlayerNameState[id].let {
+        val newPlayerNamesState = playerNamesState.value.toMutableMap()
+        newPlayerNamesState[id] = newPlayerNamesState[id].let {
             if (it == null) {
                 Log.e("PlayerIDNull", id.toString())
                 PlayerNameState()
@@ -73,64 +75,67 @@ class NameInputViewModel(
                 it.copy(name = value)
             }
         }
-        savedStateHandle[PLAYER_NAMES_STATE] = newPlayerNameState
+        updatePlayerNameState(newPlayerNamesState)
     }
 
     private fun submitPlayerNames(navigateToNext: () -> Unit) {
         if (currentGameManager.isGameInProgress()) {
             return
         }
+        val playerNamesValidationSuccess = validatePlayerNamesAndUpdateErrorMessages()
+        if (playerNamesValidationSuccess.not()) {
+            return
+        }
+        val game = Game.Builder()
+            .losingScore(losingScore)
+            .players(playerNamesState.value.toPlayersList())
+            .build()
         viewModelScope.launch {
-            val playerNamesValidationSuccess = validatePlayerNamesAndUpdateErrorMessages()
-            if (playerNamesValidationSuccess.not()) {
-                return@launch
-            }
-            val game = Game.Builder()
-                .numberOfPlayers(numberOfPlayers)
-                .losingScore(losingScore)
-                .players(playerNamesState.value.toPlayersList())
-                .build()
             currentGameManager.startNewGame(game)
             navigateToNext()
         }
     }
 
-    private fun validatePlayerNamesAndUpdateErrorMessages() : Boolean {
-        val hasError = validateNameStructureAndUpdateMessages() || validateNameUniqueness()
-        return hasError.not()
+    private fun validatePlayerNamesAndUpdateErrorMessages(): Boolean {
+        val areNamesUnique = validateNameUniquenessAndUpdateMessages()
+        val areNamesStructureValid = validateNameStructureAndUpdateMessages()
+        return areNamesUnique && areNamesStructureValid
     }
 
-    private fun validateNameUniqueness(): Boolean {
-        val currentPlayerNamesState = playerNamesState.value
-        val duplicateKeys = currentPlayerNamesState.getDuplicates()
-        val newPlayerNamesState = mutableMapOf<Int, PlayerNameState>()
-        duplicateKeys.forEach {
-           newPlayerNamesState[it] = currentPlayerNamesState.getOrDefault(it, PlayerNameState()).copy(
-                nameError = "Name should be unique"
-            )
+    private fun validateNameUniquenessAndUpdateMessages(): Boolean {
+        val currentPlayerNamesState = playerNamesState.value.resetNameErrors()
+        val capitalizedAndTrimmedState = currentPlayerNamesState.capitalizeAndTrim()
+        val duplicateKeys = capitalizedAndTrimmedState.getDuplicates()
+        val newPlayerNamesState = currentPlayerNamesState.toMutableMap()
+        duplicateKeys.forEach { id ->
+            newPlayerNamesState[id] =
+                currentPlayerNamesState
+                    .getOrDefault(id, PlayerNameState())
+                    .copy(nameError = "Name Should Be Unique")
         }
-        return duplicateKeys.isNotEmpty()
+        updatePlayerNameState(newPlayerNamesState)
+        return duplicateKeys.isEmpty()
     }
+
 
     private fun validateNameStructureAndUpdateMessages(): Boolean {
-        var hasError = false
         val currentPlayerNamesState = playerNamesState.value
-        val newPlayerNamesState = mutableMapOf<Int, PlayerNameState>()
+        val newPlayerNamesState = currentPlayerNamesState.toMutableMap()
+        var hasError = false
         currentPlayerNamesState.forEach { entry ->
             val validationResult = validatePlayerNameUseCase(entry.value.name)
             if (validationResult.successful.not()) {
                 hasError = true
-                newPlayerNamesState[entry.key] =
-                    entry.value.copy(nameError = validationResult.errorMessage)
-            } else {
-                newPlayerNamesState[entry.key] =
-                    entry.value.copy(nameError = validationResult.errorMessage)
+                newPlayerNamesState[entry.key] = entry.value.copy(nameError = validationResult.errorMessage)
             }
         }
-        savedStateHandle[PLAYER_NAMES_STATE] = newPlayerNamesState
-        return hasError
+        updatePlayerNameState(newPlayerNamesState)
+        return hasError.not()
     }
 
+    private fun updatePlayerNameState(newPlayerNamesState: Map<Int, PlayerNameState>) {
+        savedStateHandle[PLAYER_NAMES_STATE] = newPlayerNamesState
+    }
     companion object {
         val factory : ViewModelProvider.Factory = viewModelFactory {
             initializer {

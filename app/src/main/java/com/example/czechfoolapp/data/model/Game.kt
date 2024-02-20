@@ -16,12 +16,7 @@ data class Game(
     val isFinished = players.any { it.score >= losingScore }
     class Builder {
         private var losingScore: Int? = null
-        private var numberOfPlayers: Int? = null
         private var players: List<Player> = listOf()
-        fun numberOfPlayers(numberOfPlayers: Int): Builder {
-            this.numberOfPlayers = numberOfPlayers
-            return this
-        }
 
         fun losingScore(losingScore: Int): Builder {
             this.losingScore = losingScore
@@ -35,12 +30,6 @@ data class Game(
         fun build(): Game {
             if (losingScore == null) {
                 throw IllegalStateException("Losing score not set")
-            }
-            if (numberOfPlayers == null) {
-                throw IllegalStateException("Number of players not set")
-            }
-            if (players.size != numberOfPlayers) {
-                throw IllegalStateException("Number of players variable and number of player list size don't match")
             }
             return Game(
                 id = 0,

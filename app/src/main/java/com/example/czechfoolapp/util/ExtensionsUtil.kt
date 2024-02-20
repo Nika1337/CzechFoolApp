@@ -7,15 +7,24 @@ import com.example.czechfoolapp.ui.routes.nameinputroute.states.PlayerNameState
 import java.util.Locale
 
 
-fun Map<Int, PlayerNameState>.toPlayersList() = this
-    .toList()
-    .map { (id: Int, playerNameState: PlayerNameState) ->
-        Player(
-            id = id,
-            name = playerNameState.name.trim()
+fun Map<Int, PlayerNameState>.toPlayersList() =
+    this.toList()
+        .map { (id: Int, playerNameState: PlayerNameState) ->
+            Player(
+                id = id,
+                name = playerNameState.name.trim()
+            )
+        }
+fun Map<Int, PlayerNameState>.resetNameErrors() =
+    this.mapValues { (_: Int, playerNameState: PlayerNameState) ->
+        playerNameState.copy(nameError = null)
+    }
+fun Map<Int, PlayerNameState>.capitalizeAndTrim() =
+    this.mapValues { (_: Int, playerNameState: PlayerNameState) ->
+        playerNameState.copy(
+            name = playerNameState.name.trim().capitalizeFirstCharacter()
         )
     }
-
 
 fun Map<Int, PlayerNameState>.getDuplicates(): List<Int> {
     val seenValues: MutableList<String> = mutableListOf()

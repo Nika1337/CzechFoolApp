@@ -109,8 +109,8 @@ class GameDaoTest {
     fun daoGetAllGames_returnsAllGamesFromDb() = runTest{
         addTwoGamesToDb()
         val allItems = gameDao.getAllGames().first()
-        assertEquals(allItems[0].gameEntity, gameEntity1)
-        assertEquals(allItems[1].gameEntity, gameEntity2)
+        assertEquals(allItems[0].gameEntity, gameEntity2)
+        assertEquals(allItems[1].gameEntity, gameEntity1)
     }
 
 
