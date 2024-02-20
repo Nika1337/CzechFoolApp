@@ -19,10 +19,14 @@ import com.example.czechfoolapp.util.capitalizeAndTrim
 import com.example.czechfoolapp.util.getDuplicates
 import com.example.czechfoolapp.util.resetNameErrors
 import com.example.czechfoolapp.util.toPlayersList
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val PLAYER_NAMES_STATE = "playerNamesState"
-class NameInputViewModel(
+
+@HiltViewModel
+class NameInputViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val validatePlayerNameUseCase: ValidatePlayerNameUseCase,
     private val currentGameManager: CurrentGameManager
@@ -135,20 +139,5 @@ class NameInputViewModel(
 
     private fun updatePlayerNameState(newPlayerNamesState: Map<Int, PlayerNameState>) {
         savedStateHandle[PLAYER_NAMES_STATE] = newPlayerNamesState
-    }
-    companion object {
-        val factory : ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val savedStateHandle = this.createSavedStateHandle()
-                val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
-                val validatePlayerNameUseCase = application.container.validatePlayerNameUseCase
-                val currentGameManager = application.container.currentGameManager
-                NameInputViewModel(
-                    savedStateHandle = savedStateHandle,
-                    validatePlayerNameUseCase = validatePlayerNameUseCase,
-                    currentGameManager = currentGameManager
-                )
-            }
-        }
     }
 }
