@@ -20,7 +20,7 @@ class GameOptionsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val validateNumberOfPlayersUseCase: ValidateNumberOfPlayersUseCase,
     private val validateLosingScoreUseCase: ValidateLosingScoreUseCase,
-    private val defaultValuesSource: DefaultValuesSource
+    defaultValuesSource: DefaultValuesSource
 ) : ViewModel() {
     private val defaultGameOptionsState =
         GameOptionsState(
