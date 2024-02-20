@@ -91,6 +91,7 @@ private fun MenusColumn(
     gameOptionsState: GameOptionsState,
     onEvent: (event: GameOptionEvent) -> Unit
 ) {
+    val defaultValuesSource = DefaultValuesSource()
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -99,7 +100,7 @@ private fun MenusColumn(
         TextFieldMenu(
             onEvent = { value: String -> onEvent(GameOptionEvent.NumberOfPlayersChanged(value)) },
             state = gameOptionsState.numberOfPlayersState,
-            items = DefaultValuesSource.numbersOfPlayers,
+            items = defaultValuesSource.numbersOfPlayers,
             label = R.string.number_of_players,
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Next
@@ -112,7 +113,7 @@ private fun MenusColumn(
         TextFieldMenu(
             onEvent = { value: String -> onEvent(GameOptionEvent.LosingScoreChanged(value)) },
             state = gameOptionsState.losingScoreState,
-            items = DefaultValuesSource.scores,
+            items = defaultValuesSource.scores,
             label = R.string.losing_score,
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done,
@@ -212,7 +213,7 @@ private fun TextFieldError(textError: String) {
 fun GameOptionsScreenPreview() {
     GameOptionsScreen(
         onNavigateUp = {},
-        onNavigateToNext = {i,j -> },
+        onNavigateToNext = { _, _ -> },
         gameOptionsState = GameOptionsState()
     ) {}
 }
@@ -222,7 +223,7 @@ fun GameOptionsScreenPreview() {
 fun GameOptionsScreenPreviewLandscape() {
     GameOptionsScreen(
         onNavigateUp = {},
-        onNavigateToNext = {i,j -> },
+        onNavigateToNext = { _, _ -> },
         gameOptionsState = GameOptionsState()
     ) {}
 }
