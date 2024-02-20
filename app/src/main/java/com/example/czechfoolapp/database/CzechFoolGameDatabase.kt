@@ -23,20 +23,6 @@ import com.example.czechfoolapp.database.model.PlayerEntity
 abstract class CzechFoolGameDatabase : RoomDatabase() {
     abstract fun gameDao(): GameDao
     abstract fun playerDao(): PlayerDao
-
-    companion object {
-        @Volatile
-        private var Instance: CzechFoolGameDatabase? = null
-
-        fun getDatabase(context: Context): CzechFoolGameDatabase {
-            return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context, CzechFoolGameDatabase::class.java, "czech_fool_database")
-                    .fallbackToDestructiveMigration()
-                    .build()
-                    .also { Instance = it }
-            }
-        }
-    }
 }
 
 
