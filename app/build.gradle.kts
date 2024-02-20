@@ -4,6 +4,8 @@ plugins {
     id("com.google.devtools.ksp") version "1.9.0-1.0.13"
     id("kotlin-parcelize")
     id("com.google.protobuf") version "0.9.4"
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -77,6 +79,10 @@ dependencies {
     implementation("androidx.datastore:datastore:1.0.0")
     implementation("com.google.protobuf:protobuf-javalite:3.24.4")
 
+    // dagger-hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
 
@@ -106,4 +112,8 @@ protobuf {
             }
         }
     }
+}
+
+kapt {
+    correctErrorTypes = true
 }
