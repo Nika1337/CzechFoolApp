@@ -1,8 +1,10 @@
 package com.example.czechfoolapp.domain.validation
 
+import javax.inject.Inject
+
 
 private const val MAX_LENGTH_OF_NAME = 16
-class ValidatePlayerNameUseCase {
+class ValidatePlayerNameUseCase @Inject constructor() {
     operator fun invoke(name: String) : ValidationResult {
         if (name.isBlank()) {
             return ValidationResult(

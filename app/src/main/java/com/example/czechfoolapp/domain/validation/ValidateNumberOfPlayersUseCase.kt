@@ -1,8 +1,10 @@
 package com.example.czechfoolapp.domain.validation
 
+import javax.inject.Inject
+
 
 private const val MAX_NUMBER_OF_PLAYERS = 16
-class ValidateNumberOfPlayersUseCase {
+class ValidateNumberOfPlayersUseCase @Inject constructor() {
     operator fun invoke(numberOfPlayers: String) : ValidationResult {
         if (numberOfPlayers.isBlank()) {
             return ValidationResult(

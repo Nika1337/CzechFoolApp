@@ -1,9 +1,11 @@
 package com.example.czechfoolapp.domain.validation
 
+import javax.inject.Inject
+
 
 private const val MAX_LOSING_SCORE = 1000
 
-class ValidateLosingScoreUseCase {
+class ValidateLosingScoreUseCase @Inject constructor() {
     operator fun invoke(score: String) : ValidationResult {
         if (score.isBlank()) {
             return ValidationResult(

@@ -3,8 +3,9 @@ package com.example.czechfoolapp.domain
 import com.example.czechfoolapp.data.repository.CardsRepository
 import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.CardUiModel
 import com.example.czechfoolapp.util.getSuits
+import javax.inject.Inject
 
-class GetCardUIModelsUseCase(
+class GetCardUIModelsUseCase @Inject constructor(
     private val cardsRepository: CardsRepository
 ) {
     operator fun invoke(
