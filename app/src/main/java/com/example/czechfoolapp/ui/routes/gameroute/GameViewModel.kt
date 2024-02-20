@@ -15,12 +15,14 @@ import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.CardUiModel
 import com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute.GameProgressEvent
 import com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute.GameProgressState
 import com.example.czechfoolapp.ui.routes.gameroute.util.GameCurrentScreen
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 private const val CURRENT_SCREEN = "currentScreen"
 private const val CURRENT_WINNER_ID = "currentWinnerID"
@@ -28,7 +30,9 @@ private const val CURRENT_CANDIDATE_WINNER_ID = "currentCandidateWinnerID"
 private const val CURRENT_CHOSEN_PLAYER_ID = "currentChosenPlayerID"
 private const val CURRENT_ROUND_PLAYER_SCORES = "currentRoundPlayerScores"
 private const val CARD_CHOICE_STATE = "cardChoiceState"
-class GameViewModel(
+
+@HiltViewModel
+class GameViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val currentGameManager: CurrentGameManager,
     private val getCardUIModelsUseCase: GetCardUIModelsUseCase
@@ -263,21 +267,7 @@ class GameViewModel(
     }
 
 
-
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
-        val factory : ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val savedStateHandle = this.createSavedStateHandle()
-                val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CzechFoolApplication)
-                val currentGameManager = application.container.currentGameManager
-                val getCardUIModelsUseCase = application.container.getCardUIModelsUseCase
-                GameViewModel(
-                    savedStateHandle = savedStateHandle,
-                    currentGameManager = currentGameManager,
-                    getCardUIModelsUseCase = getCardUIModelsUseCase
-                )
-            }
-        }
     }
 }

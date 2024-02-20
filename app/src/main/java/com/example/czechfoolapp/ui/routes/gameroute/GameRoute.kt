@@ -7,8 +7,8 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.CardChoiceEvent
 import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.CardChoiceScreen
 import com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute.GameProgressScreen
@@ -39,7 +39,7 @@ fun GameRoute(
         }
     }
 
-    val viewModel: GameViewModel = viewModel(factory = GameViewModel.factory)
+    val viewModel: GameViewModel = hiltViewModel()
     val currentScreen by viewModel.currentScreenFlow.collectAsStateWithLifecycle()
     val gameProgressState by viewModel.gameProgressState.collectAsStateWithLifecycle()
     val cardChoiceState by viewModel.cardChoiceState.collectAsStateWithLifecycle()
