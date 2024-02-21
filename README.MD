@@ -6,8 +6,7 @@ Czech Fool app architecture closely follows [Guide to android app architecture](
 ### Technologies
 - [Jetpack Compose](https://developer.android.com/jetpack/compose)
 - [Room Library](https://developer.android.com/jetpack/androidx/releases/room)
-- [Proto DataStore]
-(https://developer.android.com/topic/libraries/architecture/datastore)
+- [Proto DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
 - [Hilt](https://dagger.dev/hilt/) (master branch has manual di, see branch dagger-hilt)
 
 ### Challenges Faced
