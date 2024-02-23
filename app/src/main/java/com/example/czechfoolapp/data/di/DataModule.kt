@@ -12,6 +12,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 
 @Module
@@ -24,6 +25,7 @@ abstract class DataModule {
     ): CardsRepository
 
     @Binds
+    @Singleton
     internal abstract fun bindsCurrentGameManager(
         currentGameManager: DefaultCurrentGameManager
     ): CurrentGameManager
