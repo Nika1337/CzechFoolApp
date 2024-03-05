@@ -1,6 +1,9 @@
 [versions]
+androidGradlePlugin = "8.2.2"
 
 [libraries]
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 
 [plugins]
 

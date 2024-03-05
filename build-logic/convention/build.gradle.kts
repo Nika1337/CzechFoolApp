@@ -15,3 +15,7 @@ tasks.withType<KotlinCompile>().configureEach {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
+
+dependencies {
+    compileOnly(libs.android.gradlePlugin)
+}
