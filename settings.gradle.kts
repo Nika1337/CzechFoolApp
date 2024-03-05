@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Czech Fool App"
 include(":app")
+include(":core:database")

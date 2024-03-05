@@ -11,6 +11,9 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="core.database">
+        <State />
+      </entry>
       <entry key="daoGetAllGames_returnsAllGamesFromDb()">
         <State />
       </entry>
