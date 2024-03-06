@@ -26,3 +26,5 @@ room = { id = "androidx.room", version.ref = "room" }
 
 # Plugins defined by this project
 czechfoolapp-android-library = { id = "czechfoolapp.android.library", version = "unspecified" }
+czechfoolapp-android-hilt = { id = "czechfoolapp.android.hilt", version = "unspecified" }
+czechfoolapp-android-room = { id = "czechfoolapp.android.room", version = "unspecified" }
