@@ -8,5 +8,6 @@ android {
     namespace = "com.example.czechfoolapp.core.database"
 }
 
+
 dependencies {
 }
