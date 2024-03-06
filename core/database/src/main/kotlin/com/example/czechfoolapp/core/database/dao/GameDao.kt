@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.database.dao
+package com.example.czechfoolapp.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,8 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.czechfoolapp.database.model.GameEntity
-import com.example.czechfoolapp.database.model.GameWithPlayers
+import com.example.czechfoolapp.core.database.model.GameEntity
+import com.example.czechfoolapp.core.database.model.GameWithPlayers
 import kotlinx.coroutines.flow.Flow
 
 @Dao

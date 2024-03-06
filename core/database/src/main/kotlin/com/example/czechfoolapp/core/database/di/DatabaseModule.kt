@@ -1,8 +1,8 @@
-package com.example.czechfoolapp.database.di
+package com.example.czechfoolapp.core.database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.czechfoolapp.database.CzechFoolGameDatabase
+import com.example.czechfoolapp.core.database.CzechFoolGameDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

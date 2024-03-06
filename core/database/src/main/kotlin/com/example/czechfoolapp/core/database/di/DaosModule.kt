@@ -1,8 +1,8 @@
-package com.example.czechfoolapp.database.di
+package com.example.czechfoolapp.core.database.di
 
-import com.example.czechfoolapp.database.CzechFoolGameDatabase
-import com.example.czechfoolapp.database.dao.GameDao
-import com.example.czechfoolapp.database.dao.PlayerDao
+import com.example.czechfoolapp.core.database.CzechFoolGameDatabase
+import com.example.czechfoolapp.core.database.dao.GameDao
+import com.example.czechfoolapp.core.database.dao.PlayerDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.database.model
+package com.example.czechfoolapp.core.database.model
 
 import androidx.room.TypeConverter
 import java.time.LocalDateTime
