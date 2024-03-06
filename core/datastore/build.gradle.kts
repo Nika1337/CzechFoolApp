@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.czechfoolapp.android.library)
     alias(libs.plugins.czechfoolapp.android.hilt)
 }
 
@@ -8,4 +8,6 @@ android {
 }
 
 dependencies {
+    api(libs.androidx.dataStore.core)
+    api(project(":core:datastore-proto"))
 }

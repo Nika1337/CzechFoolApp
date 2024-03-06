@@ -6,6 +6,7 @@ hilt = "2.50"
 kotlin = "1.9.22"
 protobufPlugin = "0.9.4"
 protobuf = "3.24.4"
+androidxDataStore = "1.0.0"
 
 [libraries]
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -15,6 +16,8 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
+androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
+
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }

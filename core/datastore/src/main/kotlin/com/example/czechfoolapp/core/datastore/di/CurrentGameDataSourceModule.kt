@@ -1,7 +1,7 @@
-package com.example.czechfoolapp.datastore.di
+package com.example.czechfoolapp.core.datastore.di
 
-import com.example.czechfoolapp.datastore.CurrentGameDataSource
-import com.example.czechfoolapp.datastore.DefaultCurrentGameDataSource
+import com.example.czechfoolapp.core.datastore.CurrentGameDataSource
+import com.example.czechfoolapp.core.datastore.DefaultCurrentGameDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.datastore
+package com.example.czechfoolapp.core.datastore
 
 import android.util.Log
 import androidx.datastore.core.DataStore

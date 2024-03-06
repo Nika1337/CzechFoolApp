@@ -1,9 +1,9 @@
-package com.example.czechfoolapp.datastore.di
+package com.example.czechfoolapp.core.datastore.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import com.example.czechfoolapp.datastore.CurrentGameData
-import com.example.czechfoolapp.datastore.currentGameDataStore
+import com.example.czechfoolapp.core.datastore.CurrentGameData
+import com.example.czechfoolapp.core.datastore.currentGameDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
