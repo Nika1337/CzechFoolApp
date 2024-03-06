@@ -20,3 +20,20 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.room.gradlePlugin)
 }
+
+gradlePlugin {
+    plugins {
+        register("androidLibrary") {
+            id = "czechfoolapp.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
+        register("androidRoom") {
+            id = "czechfoolapp.android.room"
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
+        register("androidHilt") {
+            id = "czechfoolapp.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
+    }
+}
