@@ -18,3 +18,4 @@ rootProject.name = "Czech Fool App"
 include(":app")
 include(":core:database")
 include(":core:datastore-proto")
+include(":core:datastore")
