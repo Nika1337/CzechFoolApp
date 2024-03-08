@@ -28,6 +28,7 @@
             <option value="$PROJECT_DIR$/core/database" />
             <option value="$PROJECT_DIR$/core/datastore" />
             <option value="$PROJECT_DIR$/core/datastore-proto" />
+            <option value="$PROJECT_DIR$/core/model" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
