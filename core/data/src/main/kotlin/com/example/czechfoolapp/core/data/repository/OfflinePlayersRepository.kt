@@ -2,6 +2,7 @@ package com.example.czechfoolapp.core.data.repository
 
 import com.example.czechfoolapp.core.data.model.toPlayerEntity
 import com.example.czechfoolapp.core.database.dao.PlayerDao
+import com.example.czechfoolapp.core.database.model.toPlayers
 import com.example.czechfoolapp.core.model.Player
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -17,14 +18,13 @@ class OfflinePlayersRepository @Inject constructor(
         playerDao.delete(player.toPlayerEntity(gameID))
     }
 
-    override suspend fun update(player: Player, gameID: Int) =
-        playerDao.update(player.toPlayerEntity(gameID))
+    override suspend fun update(player: Player, gameID: Int) = playerDao.update(player.toPlayerEntity(gameID))
+
 
     override fun getAllPlayersInGameSpecified(gameID: Int): Flow<List<Player>> =
         playerDao.getAllPlayersInGameSpecified(gameID)
             .map {
-//                it.toPlayers()
-                TODO()
+                it.toPlayers()
             }
 
 
