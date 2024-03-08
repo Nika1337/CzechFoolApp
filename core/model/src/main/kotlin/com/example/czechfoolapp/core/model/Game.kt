@@ -1,6 +1,5 @@
-package com.example.czechfoolapp.data.model
+package com.example.czechfoolapp.core.model
 
-import com.example.czechfoolapp.database.model.GameEntity
 import java.time.LocalDateTime
 
 data class Game(
@@ -42,9 +41,3 @@ data class Game(
     }
 }
 
-fun Game.toGameEntity() =
-    GameEntity(
-        gameId = this.id,
-        losingScore = this.losingScore,
-        date = this.date,
-    )

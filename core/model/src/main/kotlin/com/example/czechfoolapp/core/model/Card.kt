@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.data.model
+package com.example.czechfoolapp.core.model
 
 enum class Suit(
     val symbol: String
