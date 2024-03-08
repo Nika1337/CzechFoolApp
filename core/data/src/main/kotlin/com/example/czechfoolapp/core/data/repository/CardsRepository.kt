@@ -1,6 +1,7 @@
-package com.example.czechfoolapp.data.repository
+package com.example.czechfoolapp.core.data.repository
 
-import com.example.czechfoolapp.data.model.Card
+import com.example.czechfoolapp.core.model.Card
+
 
 interface CardsRepository {
     val winnerCards: List<List<Card>>

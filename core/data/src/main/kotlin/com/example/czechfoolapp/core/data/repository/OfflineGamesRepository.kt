@@ -1,16 +1,15 @@
-package com.example.czechfoolapp.data.repository
+package com.example.czechfoolapp.core.data.repository
 
-import com.example.czechfoolapp.data.model.Game
-import com.example.czechfoolapp.data.model.toGameEntity
-import com.example.czechfoolapp.database.dao.GameDao
-import com.example.czechfoolapp.database.model.toGame
+import com.example.czechfoolapp.core.data.model.toGameEntity
+import com.example.czechfoolapp.core.database.dao.GameDao
+import com.example.czechfoolapp.core.model.Game
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class OfflineGamesRepository @Inject constructor(
     private val gameDao: GameDao
-) : GamesRepository{
+) : GamesRepository {
     override suspend fun insertWithoutPlayers(game: Game) {
         gameDao.insert(game.toGameEntity())
     }
@@ -21,7 +20,8 @@ class OfflineGamesRepository @Inject constructor(
 
     override fun getGame(gameId: Int): Flow<Game?> =
         gameDao.getGame(gameId).map {
-            it?.toGame()
+//            it?.toGame()
+            TODO()
         }
 
 
@@ -29,7 +29,8 @@ class OfflineGamesRepository @Inject constructor(
     override fun getAllGames(): Flow<List<Game>> =
         gameDao.getAllGames().map {
             it.map { gameWithPlayers ->
-                gameWithPlayers.toGame()
+//                gameWithPlayers.toGame()
+                TODO()
             }
         }
 

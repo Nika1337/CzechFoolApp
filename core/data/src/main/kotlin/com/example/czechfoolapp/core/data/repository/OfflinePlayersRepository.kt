@@ -1,9 +1,8 @@
-package com.example.czechfoolapp.data.repository
+package com.example.czechfoolapp.core.data.repository
 
-import com.example.czechfoolapp.data.model.Player
-import com.example.czechfoolapp.data.model.toPlayerEntity
-import com.example.czechfoolapp.database.dao.PlayerDao
-import com.example.czechfoolapp.database.model.toPlayers
+import com.example.czechfoolapp.core.data.model.toPlayerEntity
+import com.example.czechfoolapp.core.database.dao.PlayerDao
+import com.example.czechfoolapp.core.model.Player
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -24,7 +23,8 @@ class OfflinePlayersRepository @Inject constructor(
     override fun getAllPlayersInGameSpecified(gameID: Int): Flow<List<Player>> =
         playerDao.getAllPlayersInGameSpecified(gameID)
             .map {
-                it.toPlayers()
+//                it.toPlayers()
+                TODO()
             }
 
 

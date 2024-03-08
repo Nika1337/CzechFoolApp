@@ -1,8 +1,8 @@
-package com.example.czechfoolapp.data.repository
+package com.example.czechfoolapp.core.data.repository
 
-import com.example.czechfoolapp.data.model.Game
-import com.example.czechfoolapp.data.model.Player
-import com.example.czechfoolapp.datastore.CurrentGameDataSource
+import com.example.czechfoolapp.core.datastore.CurrentGameDataSource
+import com.example.czechfoolapp.core.model.Game
+import com.example.czechfoolapp.core.model.Player
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map

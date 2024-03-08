@@ -1,13 +1,13 @@
 package com.example.czechfoolapp.data.di
 
-import com.example.czechfoolapp.data.repository.CardsRepository
-import com.example.czechfoolapp.data.repository.CurrentGameManager
-import com.example.czechfoolapp.data.repository.DefaultCardsRepository
-import com.example.czechfoolapp.data.repository.DefaultCurrentGameManager
-import com.example.czechfoolapp.data.repository.GamesRepository
-import com.example.czechfoolapp.data.repository.OfflineGamesRepository
-import com.example.czechfoolapp.data.repository.OfflinePlayersRepository
-import com.example.czechfoolapp.data.repository.PlayersRepository
+import com.example.czechfoolapp.core.data.repository.CardsRepository
+import com.example.czechfoolapp.core.data.repository.CurrentGameManager
+import com.example.czechfoolapp.core.data.repository.DefaultCardsRepository
+import com.example.czechfoolapp.core.data.repository.DefaultCurrentGameManager
+import com.example.czechfoolapp.core.data.repository.GamesRepository
+import com.example.czechfoolapp.core.data.repository.OfflineGamesRepository
+import com.example.czechfoolapp.core.data.repository.OfflinePlayersRepository
+import com.example.czechfoolapp.core.data.repository.PlayersRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

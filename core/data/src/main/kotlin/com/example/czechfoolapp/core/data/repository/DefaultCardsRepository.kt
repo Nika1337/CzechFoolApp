@@ -1,8 +1,8 @@
-package com.example.czechfoolapp.data.repository
+package com.example.czechfoolapp.core.data.repository
 
-import com.example.czechfoolapp.data.model.Card
-import com.example.czechfoolapp.data.model.Rank
-import com.example.czechfoolapp.data.model.Suit
+import com.example.czechfoolapp.core.model.Card
+import com.example.czechfoolapp.core.model.Rank
+import com.example.czechfoolapp.core.model.Suit
 import javax.inject.Inject
 
 class DefaultCardsRepository @Inject constructor() : CardsRepository {
