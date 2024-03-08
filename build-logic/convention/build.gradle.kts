@@ -35,5 +35,9 @@ gradlePlugin {
             id = "czechfoolapp.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+        register("jvmLibrary") {
+            id = "czechfoolapp.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
     }
 }

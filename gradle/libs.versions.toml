@@ -25,7 +25,7 @@ room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", vers
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
@@ -36,3 +36,4 @@ protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 czechfoolapp-android-library = { id = "czechfoolapp.android.library", version = "unspecified" }
 czechfoolapp-android-hilt = { id = "czechfoolapp.android.hilt", version = "unspecified" }
 czechfoolapp-android-room = { id = "czechfoolapp.android.room", version = "unspecified" }
+czechfoolapp-jvm-library = { id = "czechfoolapp.jvm.library", version = "unspecified" }
