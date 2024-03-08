@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import com.example.czechfoolapp.core.model.Player
 
-//import com.example.czechfoolapp.data.model.Player
 
 @Entity(
     tableName = "player",
@@ -35,11 +35,11 @@ data class PlayerEntity(
     val score: Int,
 )
 
-//fun List<PlayerEntity>.toPlayers() =
-//    this.map {
-//        Player(
-//            id = it.playerId,
-//            name = it.name,
-//            score = it.score
-//        )
-//    }
+fun List<PlayerEntity>.toPlayers() =
+    this.map {
+        Player(
+            id = it.playerId,
+            name = it.name,
+            score = it.score
+        )
+    }
