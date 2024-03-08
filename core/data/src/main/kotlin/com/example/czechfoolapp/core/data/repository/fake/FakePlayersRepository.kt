@@ -1,7 +1,7 @@
-package com.example.czechfoolapp.fake
+package com.example.czechfoolapp.core.data.repository.fake
 
-import com.example.czechfoolapp.data.model.Player
-import com.example.czechfoolapp.data.repository.PlayersRepository
+import com.example.czechfoolapp.core.data.repository.PlayersRepository
+import com.example.czechfoolapp.core.model.Player
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

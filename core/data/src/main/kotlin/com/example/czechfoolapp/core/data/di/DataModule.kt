@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.data.di
+package com.example.czechfoolapp.core.data.di
 
 import com.example.czechfoolapp.core.data.repository.CardsRepository
 import com.example.czechfoolapp.core.data.repository.CurrentGameManager

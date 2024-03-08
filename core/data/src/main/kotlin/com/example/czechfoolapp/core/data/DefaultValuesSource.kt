@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.data
+package com.example.czechfoolapp.core.data
 
 import javax.inject.Inject
 
