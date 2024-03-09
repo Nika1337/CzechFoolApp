@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.domain.validation
+package com.example.czechfoolapp.core.domain.validation
 
 import javax.inject.Inject
 
