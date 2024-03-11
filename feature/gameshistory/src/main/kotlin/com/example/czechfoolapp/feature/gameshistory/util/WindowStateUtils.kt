@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameshistoryroute.util
+package com.example.czechfoolapp.feature.gameshistory.util
 
 
 
