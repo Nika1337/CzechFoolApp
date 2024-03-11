@@ -10,7 +10,8 @@ androidxDataStore = "1.0.0"
 kotlin1922 = "1.9.22"
 androidxComposeBom = "2024.02.02"
 androidxComposeCompiler = "1.5.10"
-
+androidxHiltNavigationCompose = "1.2.0"
+androidxLifecycle = "2.7.0"
 
 [libraries]
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -23,6 +24,9 @@ protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref 
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
 javax-inject = { module = "javax.inject:javax.inject", version = "1" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
+androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 
 
 # Dependencies of the included build-logic
@@ -44,3 +48,4 @@ czechfoolapp-android-hilt = { id = "czechfoolapp.android.hilt", version = "unspe
 czechfoolapp-android-room = { id = "czechfoolapp.android.room", version = "unspecified" }
 czechfoolapp-jvm-library = { id = "czechfoolapp.jvm.library", version = "unspecified" }
 czechfoolapp-android-library-compose = { id = "czechfoolapp.android.library.compose", version = "unspecified" }
+czechfoolapp-android-feature = { id = "czechfoolapp.android.feature", version = "unspecified" }

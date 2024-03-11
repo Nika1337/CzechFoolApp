@@ -43,5 +43,9 @@ gradlePlugin {
             id = "czechfoolapp.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
+        register("androidFeature") {
+            id = "czechfoolapp.android.feature"
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
     }
 }
