@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.theme
+package com.example.czechfoolapp.core.designsystem.theme
 
 import android.app.Activity
 import android.os.Build
@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.example.czechfoolapp.ui.theme.Typography
 
 private val LightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,

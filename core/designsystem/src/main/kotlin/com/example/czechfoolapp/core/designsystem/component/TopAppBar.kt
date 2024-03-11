@@ -1,31 +1,21 @@
-package com.example.czechfoolapp.ui.composables
+package com.example.czechfoolapp.core.designsystem.component
 
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.czechfoolapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CzechFoolSmallTopAppBar(
+fun CzechFoolTopAppBar(
     modifier: Modifier = Modifier,
     onNavigateUp: (() -> Unit)? = null,
-    title: @Composable () -> Unit = { Branding(modifier = modifier.height(dimensionResource(R.dimen.logo_height))) },
+    title: @Composable () -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    navigationIcon: @Composable () -> Unit = { Icon(
-        imageVector = Icons.Filled.ArrowBack,
-        contentDescription = stringResource(R.string.back_button)
-    ) }
+    navigationIcon: @Composable () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         title = title,
@@ -48,7 +38,7 @@ fun CzechFoolSmallTopAppBar(
 @Preview
 @Composable
 fun SmallBarPreview() {
-    CzechFoolSmallTopAppBar()
+    CzechFoolTopAppBar()
 }
 
 
