@@ -39,5 +39,9 @@ gradlePlugin {
             id = "czechfoolapp.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
         }
+        register("androidLibraryCompose") {
+            id = "czechfoolapp.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
     }
 }
