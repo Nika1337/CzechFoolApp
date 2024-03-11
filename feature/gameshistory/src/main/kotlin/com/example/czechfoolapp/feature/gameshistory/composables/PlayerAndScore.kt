@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameshistoryroute.composables
+package com.example.czechfoolapp.feature.gameshistory.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import com.example.czechfoolapp.R
+import com.example.czechfoolapp.feature.gameshistory.R
 
 @Composable
 fun PlayerAndScore(
