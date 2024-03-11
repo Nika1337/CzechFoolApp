@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameshistoryroute.composables
+package com.example.czechfoolapp.feature.gameshistory.composables
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
