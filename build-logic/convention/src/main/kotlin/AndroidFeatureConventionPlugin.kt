@@ -16,6 +16,10 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())
                 add("implementation", libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
                 add("implementation", libs.findLibrary("androidx.lifecycle.viewModelCompose").get())
+                add("api", libs.findLibrary("androidx.compose.material3").get())
+                add("api", libs.findLibrary("androidx.compose.foundation").get())
+                add("api", libs.findLibrary("androidx.compose.ui.tooling.preview").get())
+                add("api", libs.findLibrary("androidx.compose.runtime").get())
             }
         }
     }
