@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameshistoryroute.navigation
+package com.example.czechfoolapp.feature.gameshistory.navigation
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.navigation.NavController
