@@ -1,7 +1,7 @@
-package com.example.czechfoolapp.ui.routes.gameshistoryroute.states
+package com.example.czechfoolapp.feature.gameshistory.states
 
 import androidx.compose.runtime.Immutable
-import com.example.czechfoolapp.data.model.Game
+import com.example.czechfoolapp.core.model.Game
 
 
 @Immutable
