@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameshistoryroute
+package com.example.czechfoolapp.feature.gameshistory
 
 sealed interface GamesHistoryEvent {
     data class ViewGameDetails(val gameId: Int) : GamesHistoryEvent

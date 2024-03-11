@@ -4,7 +4,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.GamesHistoryRoute
+import com.example.czechfoolapp.feature.gameshistory.GamesHistoryRoute
 
 const val GAMES_HISTORY_ROUTE = "games_history_route"
 

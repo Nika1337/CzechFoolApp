@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameshistoryroute
+package com.example.czechfoolapp.feature.gameshistory
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,8 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.util.GamesHistoryContentType
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.util.GamesHistoryCurrentScreen
+import com.example.czechfoolapp.feature.gameshistory.util.GamesHistoryContentType
+import com.example.czechfoolapp.feature.gameshistory.util.GamesHistoryCurrentScreen
 
 @Composable
 fun GamesHistoryRoute(

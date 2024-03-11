@@ -1,13 +1,13 @@
-package com.example.czechfoolapp.ui.routes.gameshistoryroute
+package com.example.czechfoolapp.feature.gameshistory
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.czechfoolapp.data.model.Game
-import com.example.czechfoolapp.data.repository.CurrentGameManager
-import com.example.czechfoolapp.data.repository.GamesRepository
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.states.GamesHistoryUiState
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.util.GamesHistoryCurrentScreen
+import com.example.czechfoolapp.core.data.repository.CurrentGameManager
+import com.example.czechfoolapp.core.data.repository.GamesRepository
+import com.example.czechfoolapp.core.model.Game
+import com.example.czechfoolapp.feature.gameshistory.states.GamesHistoryUiState
+import com.example.czechfoolapp.feature.gameshistory.util.GamesHistoryCurrentScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted

@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameshistoryroute
+package com.example.czechfoolapp.feature.gameshistory
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,14 +33,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.czechfoolapp.R
-import com.example.czechfoolapp.data.model.Game
-import com.example.czechfoolapp.data.model.Player
-import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.composables.Date
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.composables.LosingScore
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.composables.PlayerAndScore
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.states.GamesHistoryUiState
+import com.example.czechfoolapp.core.model.Game
+import com.example.czechfoolapp.core.model.Player
+import com.example.czechfoolapp.feature.gameshistory.composables.LosingScore
+import com.example.czechfoolapp.feature.gameshistory.composables.PlayerAndScore
+import com.example.czechfoolapp.feature.gameshistory.states.GamesHistoryUiState
 import java.time.LocalDateTime
 import java.time.Month
 
