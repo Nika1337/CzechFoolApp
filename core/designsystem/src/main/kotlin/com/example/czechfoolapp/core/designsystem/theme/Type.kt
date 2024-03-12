@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.theme
+package com.example.czechfoolapp.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -10,11 +10,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,8 +31,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolTopAppBar
+import com.example.czechfoolapp.core.designsystem.component.Title
 import com.example.czechfoolapp.core.model.Game
 import com.example.czechfoolapp.core.model.Player
+import com.example.czechfoolapp.feature.gameshistory.composables.Date
 import com.example.czechfoolapp.feature.gameshistory.composables.LosingScore
 import com.example.czechfoolapp.feature.gameshistory.composables.PlayerAndScore
 import java.time.LocalDateTime
@@ -56,9 +63,15 @@ fun GameDetailScreen(
     }
     Scaffold(
         topBar = {
-            CzechFoolSmallTopAppBar(
+            CzechFoolTopAppBar(
                 onNavigateUp = onNavigateUp,
-                title = { Title(text = stringResource(R.string.game_title, game.id)) }
+                title = { Title(text = stringResource(R.string.game_title, game.id)) },
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.navigate_up)
+                    )
+                }
             )
         },
         floatingActionButton = {
@@ -68,7 +81,7 @@ fun GameDetailScreen(
                         GamesHistoryEvent.ContinueGame(
                         gameId = game.id,
                         onContinueGameNavigate = onNavigateContinueGame
-                    )
+                        )
                     )
                           },
                 enabled = game.isFinished.not()
@@ -176,11 +189,11 @@ private fun PlayerNamesAndScores(
     ) {
         players.forEachIndexed { index: Int, player: Player ->
             if (index != 0) {
-                Divider(
-                    thickness = dimensionResource(R.dimen.divider_small),
-                    color = MaterialTheme.colorScheme.onBackground,
+                HorizontalDivider(
                     modifier = Modifier
-                        .padding(vertical = dimensionResource(id = R.dimen.padding_large))
+                        .padding(vertical = dimensionResource(id = R.dimen.padding_large)),
+                    thickness = dimensionResource(R.dimen.divider_small),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
             PlayerAndScore(

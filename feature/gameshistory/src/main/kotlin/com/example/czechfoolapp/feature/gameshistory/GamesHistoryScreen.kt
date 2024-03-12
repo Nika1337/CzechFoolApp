@@ -14,9 +14,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -33,8 +32,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.czechfoolapp.core.designsystem.component.Branding
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolFloatingActionButton
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolTopAppBar
+import com.example.czechfoolapp.core.designsystem.theme.CzechFoolAppTheme
 import com.example.czechfoolapp.core.model.Game
 import com.example.czechfoolapp.core.model.Player
+import com.example.czechfoolapp.feature.gameshistory.composables.Date
 import com.example.czechfoolapp.feature.gameshistory.composables.LosingScore
 import com.example.czechfoolapp.feature.gameshistory.composables.PlayerAndScore
 import com.example.czechfoolapp.feature.gameshistory.states.GamesHistoryUiState
@@ -52,12 +56,15 @@ fun GamesHistoryScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         topBar = {
-                 CzechFoolSmallTopAppBar(
-                     scrollBehavior = scrollBehavior
+                 CzechFoolTopAppBar(
+                     scrollBehavior = scrollBehavior,
+                     title = {
+                         Branding(modifier = Modifier.height(dimensionResource(R.dimen.logo_height)))
+                     }
                  )
         },
         floatingActionButton = {
-            FloatingActionButton(
+            CzechFoolFloatingActionButton(
                 onClick = {
                     onEvent(
                         GamesHistoryEvent.StartNewGame(
@@ -194,11 +201,11 @@ private fun PlayerNamesAndScores(
                 .copy(fontWeight = FontWeight.SemiBold),
             modifier = Modifier.fillMaxWidth()
         )
-        Divider(
-            thickness = 2.dp,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
+        HorizontalDivider(
             modifier = Modifier
-                .padding(vertical = 2.dp)
+                .padding(vertical = 2.dp),
+            thickness = 2.dp,
+            color = MaterialTheme.colorScheme.onPrimaryContainer
         )
         players.forEach {
             PlayerAndScore(
@@ -254,142 +261,146 @@ fun TitleAndDate(
 @Preview
 @Composable
 fun GamesHomeScreenPreview() {
-    GamesHistoryScreen(
-        gamesHistoryUiState = GamesHistoryUiState(
-            listOf(
-                Game(
-                    id = 134,
-                    losingScore = 200,
-                    date = LocalDateTime.now(),
-                    players = listOf(
-                        Player(
-                            id = 0,
-                            name = "Niku",
-                            score = 115
-                        ),
-                        Player(
-                            id = 0,
-                            name = "Anastasia",
-                            score = 64
+    CzechFoolAppTheme(darkTheme = true) {
+        GamesHistoryScreen(
+            gamesHistoryUiState = GamesHistoryUiState(
+                listOf(
+                    Game(
+                        id = 134,
+                        losingScore = 200,
+                        date = LocalDateTime.now(),
+                        players = listOf(
+                            Player(
+                                id = 0,
+                                name = "Niku",
+                                score = 115
+                            ),
+                            Player(
+                                id = 0,
+                                name = "Anastasia",
+                                score = 64
+                            )
                         )
-                    )
-                ),
-                Game(
-                    id = 124,
-                    losingScore = 300,
-                    date = LocalDateTime.now(),
-                    players = listOf(
-                        Player(
-                            id = 0,
-                            name = "Niku",
-                            score = 115
-                        ),
-                        Player(
-                            id = 0,
-                            name = "Anastasia",
-                            score = 64
-                        ),
-                        Player(
-                            id = 0,
-                            name = "Neka",
-                            score = 198
+                    ),
+                    Game(
+                        id = 124,
+                        losingScore = 300,
+                        date = LocalDateTime.now(),
+                        players = listOf(
+                            Player(
+                                id = 0,
+                                name = "Niku",
+                                score = 115
+                            ),
+                            Player(
+                                id = 0,
+                                name = "Anastasia",
+                                score = 64
+                            ),
+                            Player(
+                                id = 0,
+                                name = "Neka",
+                                score = 198
+                            )
                         )
-                    )
-                ),
-                Game(
-                    id = 104,
-                    losingScore = 200,
-                    date = LocalDateTime.now(),
-                    players = listOf(
-                        Player(
-                            id = 0,
-                            name = "Niku",
-                            score = 115
-                        ),
-                        Player(
-                            id = 0,
-                            name = "Anastasia",
-                            score = 64
-                        ),
-                        Player(
-                            id = 0,
-                            name = "Neka",
-                            score = 3
-                        ),
-                        Player(
-                            id = 0,
-                            name = "Wiko",
-                            score = 89
+                    ),
+                    Game(
+                        id = 104,
+                        losingScore = 200,
+                        date = LocalDateTime.now(),
+                        players = listOf(
+                            Player(
+                                id = 0,
+                                name = "Niku",
+                                score = 115
+                            ),
+                            Player(
+                                id = 0,
+                                name = "Anastasia",
+                                score = 64
+                            ),
+                            Player(
+                                id = 0,
+                                name = "Neka",
+                                score = 3
+                            ),
+                            Player(
+                                id = 0,
+                                name = "Wiko",
+                                score = 89
+                            )
                         )
-                    )
-                ),
-                Game(
-                    id = 104,
-                    losingScore = 200,
-                    date = LocalDateTime.now(),
-                    players = listOf(
-                        Player(
-                            id = 0,
-                            name = "Niku",
-                            score = 115
-                        ),
-                        Player(
-                            id = 0,
-                            name = "Anastasia",
-                            score = 64
-                        ),
-                        Player(
-                            id = 0,
-                            name = "Neka",
-                            score = 3
-                        ),
-                        Player(
-                            id = 0,
-                            name = "Wiko",
-                            score = 89
+                    ),
+                    Game(
+                        id = 104,
+                        losingScore = 200,
+                        date = LocalDateTime.now(),
+                        players = listOf(
+                            Player(
+                                id = 0,
+                                name = "Niku",
+                                score = 115
+                            ),
+                            Player(
+                                id = 0,
+                                name = "Anastasia",
+                                score = 64
+                            ),
+                            Player(
+                                id = 0,
+                                name = "Neka",
+                                score = 3
+                            ),
+                            Player(
+                                id = 0,
+                                name = "Wiko",
+                                score = 89
+                            )
                         )
                     )
                 )
-            )
-        ),
-        onEvent = {},
-        onNavigateStartNewGame = {}
-    )
+            ),
+            onEvent = {},
+            onNavigateStartNewGame = {}
+        )
+    }
 }
 
 @Preview
 @Composable
 fun GameCardPreview() {
-    GameCard(
-        game = Game(
-            id = 154,
-            losingScore = 200,
-            date = LocalDateTime.of(200, Month.NOVEMBER, 9, 17, 54),
-            players = listOf(
-                Player(
-                    id = 0,
-                    name = "Niku",
-                    score = 115
-                ),
-                Player(
-                    id = 0,
-                    name = "Anastasia",
-                    score = 64
-                ),
-                Player(
-                    id = 0,
-                    name = "Neka",
-                    score = 203
-                ),
-                Player(
-                    id = 0,
-                    name = "Wiko",
-                    score = 89
+    CzechFoolAppTheme(darkTheme = true) {
+        GameCard(
+            game = Game(
+                id = 154,
+                losingScore = 200,
+                date = LocalDateTime.of(200, Month.NOVEMBER, 9, 17, 54),
+                players = listOf(
+                    Player(
+                        id = 0,
+                        name = "Niku",
+                        score = 115
+                    ),
+                    Player(
+                        id = 0,
+                        name = "Anastasia",
+                        score = 64
+                    ),
+                    Player(
+                        id = 0,
+                        name = "Neka",
+                        score = 203
+                    ),
+                    Player(
+                        id = 0,
+                        name = "Wiko",
+                        score = 89
+                    )
                 )
-            )
-        ),
-        onGameClicked = {}
-    )
+            ),
+            onGameClicked = {}
+        )
+    }
 }
 
 

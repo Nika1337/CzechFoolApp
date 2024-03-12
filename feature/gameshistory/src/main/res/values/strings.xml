@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="game_title">Game %1$s</string>
+    <string name="navigate_up">Navigate up</string>
+    <string name="no_game_selected">No game selected</string>
+    <string name="continue_game">Continue game</string>
+    <string name="start_new_game">Start new game</string>
+    <string name="finished">Finished</string>
+    <string name="game_in_progress">In Progress</string>
+</resources>
