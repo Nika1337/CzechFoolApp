@@ -1,14 +1,14 @@
-package com.example.czechfoolapp.ui.routes.gameoptionsroute
+package com.example.czechfoolapp.feature.gameoptions
 
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.czechfoolapp.data.DefaultValuesSource
-import com.example.czechfoolapp.domain.validation.ValidateLosingScoreUseCase
-import com.example.czechfoolapp.domain.validation.ValidateNumberOfPlayersUseCase
-import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionState
-import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionsState
+import com.example.czechfoolapp.core.data.DefaultValuesSource
+import com.example.czechfoolapp.core.domain.validation.ValidateLosingScoreUseCase
+import com.example.czechfoolapp.core.domain.validation.ValidateNumberOfPlayersUseCase
+import com.example.czechfoolapp.feature.gameoptions.states.GameOptionState
+import com.example.czechfoolapp.feature.gameoptions.states.GameOptionsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
