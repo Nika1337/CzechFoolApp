@@ -51,7 +51,10 @@ fun GameProgressScreen(
                 onClick = { onEvent(GameProgressEvent.Done) },
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
             ) {
-                
+                Icon(
+                    imageVector = Icons.Default.Done,
+                    contentDescription = stringResource(R.string.done)
+                )
             }
         },
         modifier = modifier
