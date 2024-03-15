@@ -1,9 +1,9 @@
-package com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute
+package com.example.czechfoolapp.feature.game.cardchoiceroute
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import com.example.czechfoolapp.data.model.Rank
-import com.example.czechfoolapp.data.model.Suit
+import com.example.czechfoolapp.core.model.Rank
+import com.example.czechfoolapp.core.model.Suit
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

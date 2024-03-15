@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute
+package com.example.czechfoolapp.feature.game.gameprogressroute
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -13,10 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.czechfoolapp.R
-import com.example.czechfoolapp.data.model.Player
-import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
-import com.example.czechfoolapp.ui.composables.Title
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolFloatingActionButton
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolTopAppBar
+import com.example.czechfoolapp.core.designsystem.component.Title
+import com.example.czechfoolapp.core.model.Player
+import com.example.czechfoolapp.feature.game.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +33,7 @@ fun GameProgressScreen(
 
     Scaffold(
         topBar = {
-            CzechFoolSmallTopAppBar(
+            CzechFoolTopAppBar(
                 title = { Title(gameProgressState.nextUserStep.title) },
                 onNavigateUp = {
                     onEvent(GameProgressEvent.Cancel(onNavigateCancel))
@@ -40,20 +41,17 @@ fun GameProgressScreen(
                 navigationIcon = {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = stringResource(R.string.close_game)
+                        contentDescription = stringResource(R.string.cancel_game)
                     )
                 }
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
+            CzechFoolFloatingActionButton(
                 onClick = { onEvent(GameProgressEvent.Done) },
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
             ) {
-                Icon(
-                    imageVector = Icons.Default.Done,
-                    contentDescription = stringResource(R.string.done)
-                )
+                
             }
         },
         modifier = modifier

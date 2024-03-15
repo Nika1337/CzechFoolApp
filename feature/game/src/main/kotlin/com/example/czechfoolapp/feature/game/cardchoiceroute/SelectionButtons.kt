@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute
+package com.example.czechfoolapp.feature.game.cardchoiceroute
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,7 +19,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.czechfoolapp.R
+import com.example.czechfoolapp.feature.game.R
 
 interface SelectionButtons {
     

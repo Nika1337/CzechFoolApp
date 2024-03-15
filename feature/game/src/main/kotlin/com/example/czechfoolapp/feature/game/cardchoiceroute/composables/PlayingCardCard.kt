@@ -19,11 +19,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.czechfoolapp.R
-import com.example.czechfoolapp.data.model.Rank
-import com.example.czechfoolapp.data.model.Suit
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.PlusMinusSelectionButtons
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.RadioSelectionButton
+import com.example.czechfoolapp.core.model.Rank
+import com.example.czechfoolapp.core.model.Suit
+import com.example.czechfoolapp.feature.game.R
+import com.example.czechfoolapp.feature.game.cardchoiceroute.PlusMinusSelectionButtons
+import com.example.czechfoolapp.feature.game.cardchoiceroute.RadioSelectionButton
 
 @Composable
 fun PlayingCardCard(

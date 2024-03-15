@@ -7,12 +7,10 @@ kotlin = "1.9.22"
 protobufPlugin = "0.9.4"
 protobuf = "3.24.4"
 androidxDataStore = "1.0.0"
-kotlin1922 = "1.9.22"
 androidxComposeBom = "2024.02.02"
 androidxComposeCompiler = "1.5.10"
 androidxHiltNavigationCompose = "1.2.0"
 androidxLifecycle = "2.7.0"
-kotlin19222 = "1.9.22"
 androidxCore = "1.12.0"
 
 [libraries]

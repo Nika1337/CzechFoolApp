@@ -1,15 +1,17 @@
-package com.example.czechfoolapp.ui.routes.gameroute
+package com.example.czechfoolapp.feature.game
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.czechfoolapp.data.repository.CurrentGameManager
-import com.example.czechfoolapp.domain.GetCardUIModelsUseCase
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.CardChoiceEvent
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.CardUiModel
-import com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute.GameProgressEvent
-import com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute.GameProgressState
-import com.example.czechfoolapp.ui.routes.gameroute.util.GameCurrentScreen
+import com.example.czechfoolapp.core.data.repository.CardsRepository
+import com.example.czechfoolapp.core.data.repository.CurrentGameManager
+import com.example.czechfoolapp.core.model.Card
+import com.example.czechfoolapp.core.model.Suit
+import com.example.czechfoolapp.feature.game.cardchoiceroute.CardChoiceEvent
+import com.example.czechfoolapp.feature.game.cardchoiceroute.CardUiModel
+import com.example.czechfoolapp.feature.game.gameprogressroute.GameProgressEvent
+import com.example.czechfoolapp.feature.game.gameprogressroute.GameProgressState
+import com.example.czechfoolapp.feature.game.util.GameCurrentScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -30,7 +32,7 @@ private const val CARD_CHOICE_STATE = "cardChoiceState"
 class GameViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val currentGameManager: CurrentGameManager,
-    private val getCardUIModelsUseCase: GetCardUIModelsUseCase
+    private val cardsRepository: CardsRepository
 ) : ViewModel() {
     val currentScreenFlow=
         savedStateHandle.getStateFlow(
@@ -223,7 +225,7 @@ class GameViewModel @Inject constructor(
     }
 
     private fun setCardChoiceState() {
-        val cardUIModels = getCardUIModelsUseCase(isCandidateState())
+        val cardUIModels = getCardUIModels(isCandidateState())
         resetCardChoiceState()
         savedStateHandle[CARD_CHOICE_STATE] =  cardChoiceState.value.toMutableList().apply { this.addAll(cardUIModels) }.toList()
     }
@@ -262,7 +264,26 @@ class GameViewModel @Inject constructor(
     }
 
 
+    private fun getCardUIModels(isWinner: Boolean) = if (isWinner) getWinnerCardUIModels() else getLoserCardUIModels()
+    private fun getLoserCardUIModels() = cardsRepository.loserCards.toCardsUIModels()
+
+    private fun getWinnerCardUIModels() = cardsRepository.winnerCards.toCardsUIModels()
+
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
+}
+
+private fun List<List<Card>>.toCardsUIModels() = this.map {
+    CardUiModel(
+        rank = it[0].rank,
+        suits = it.getSuits()
+    )
+}
+private fun List<Card>.getSuits(): Set<Suit> {
+    val suits = mutableSetOf<Suit>()
+    this.forEach {
+        suits.add(it.suit)
+    }
+    return suits
 }

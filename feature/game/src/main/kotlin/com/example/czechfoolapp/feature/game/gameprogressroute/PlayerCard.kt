@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute
+package com.example.czechfoolapp.feature.game.gameprogressroute
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -25,8 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.czechfoolapp.R
-import com.example.czechfoolapp.data.model.Player
+import com.example.czechfoolapp.core.model.Player
+import com.example.czechfoolapp.feature.game.R
 
 
 @Composable
@@ -122,7 +122,7 @@ fun PlayerButton(
         modifier = modifier
     ) {
        Icon(
-           imageVector = Icons.Default.KeyboardArrowRight,
+           imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
            contentDescription = null
        )
     }

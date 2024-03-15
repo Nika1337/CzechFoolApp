@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute
+package com.example.czechfoolapp.feature.game.gameprogressroute
 
 sealed interface GameProgressEvent {
     data class PlayerClicked(val id: Int): GameProgressEvent

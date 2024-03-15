@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute
+package com.example.czechfoolapp.feature.game.gameprogressroute
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.czechfoolapp.R
-import com.example.czechfoolapp.data.model.Player
+import com.example.czechfoolapp.core.model.Player
+import com.example.czechfoolapp.feature.game.R
 
 @Composable
 fun PlayersList(

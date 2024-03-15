@@ -1,12 +1,12 @@
-package com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute
+package com.example.czechfoolapp.feature.game.cardchoiceroute
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -17,12 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.czechfoolapp.R
-import com.example.czechfoolapp.data.model.Rank
-import com.example.czechfoolapp.data.model.Suit
-import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
-import com.example.czechfoolapp.ui.composables.Title
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.composables.CardsList
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolFloatingActionButton
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolTopAppBar
+import com.example.czechfoolapp.core.designsystem.component.Title
+import com.example.czechfoolapp.core.model.Rank
+import com.example.czechfoolapp.core.model.Suit
+import com.example.czechfoolapp.feature.game.R
+import com.example.czechfoolapp.feature.game.cardchoiceroute.composables.CardsList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,13 +47,19 @@ fun CardChoiceScreen(
     }
     Scaffold(
         topBar = {
-            CzechFoolSmallTopAppBar(
+            CzechFoolTopAppBar(
                 onNavigateUp = onNavigateUp,
-                title = { Title(stringResource(R.string.choose_cards)) }
+                title = { Title(stringResource(R.string.choose_cards)) },
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.navigate_up)
+                    )
+                }
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
+            CzechFoolFloatingActionButton(
                 onClick = { onEvent(CardChoiceEvent.Done) },
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
             ) {
@@ -67,7 +74,12 @@ fun CardChoiceScreen(
         val selectionButtons = if (isWinnerScreen) RadioSelectionButton() else PlusMinusSelectionButtons()
         CardsList(
             state = state,
-            onCountChange = { index: Int, count: Int -> onEvent(CardChoiceEvent.CountChanged(index, count))} ,
+            onCountChange = { index: Int, count: Int -> onEvent(
+                CardChoiceEvent.CountChanged(
+                    index,
+                    count
+                )
+            )} ,
             selectionButtons = selectionButtons,
             modifier = Modifier.padding(innerPadding)
         )

@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.composables
+package com.example.czechfoolapp.feature.game.cardchoiceroute.composables
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Spacer
@@ -11,13 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.czechfoolapp.R
-import com.example.czechfoolapp.data.model.Rank
-import com.example.czechfoolapp.data.model.Suit
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.CardUiModel
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.PlusMinusSelectionButtons
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.RadioSelectionButton
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.SelectionButtons
+import com.example.czechfoolapp.core.model.Rank
+import com.example.czechfoolapp.core.model.Suit
+import com.example.czechfoolapp.feature.game.R
+import com.example.czechfoolapp.feature.game.cardchoiceroute.CardUiModel
+import com.example.czechfoolapp.feature.game.cardchoiceroute.PlusMinusSelectionButtons
+import com.example.czechfoolapp.feature.game.cardchoiceroute.RadioSelectionButton
+import com.example.czechfoolapp.feature.game.cardchoiceroute.SelectionButtons
+import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.composables.PlayingCardCard
 
 
 @Composable

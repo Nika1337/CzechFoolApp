@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel_game">Cancel game</string>
+    <string name="done">Done</string>
+    <string name="plus_button">Plus</string>
+    <string name="remove_button">Remove</string>
+    <string name="no_player_selected">No player selected</string>
+    <string name="choose_cards">Choose cards</string>
+    <string name="navigate_up">Navigate up</string>
+</resources>

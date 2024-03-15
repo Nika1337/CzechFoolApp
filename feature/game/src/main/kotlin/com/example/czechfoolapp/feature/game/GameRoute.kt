@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameroute
+package com.example.czechfoolapp.feature.game
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
@@ -9,11 +9,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.CardChoiceEvent
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.CardChoiceScreen
-import com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute.GameProgressScreen
-import com.example.czechfoolapp.ui.routes.gameroute.util.GameContentType
-import com.example.czechfoolapp.ui.routes.gameroute.util.GameCurrentScreen
+import com.example.czechfoolapp.feature.game.cardchoiceroute.CardChoiceEvent
+import com.example.czechfoolapp.feature.game.cardchoiceroute.CardChoiceScreen
+import com.example.czechfoolapp.feature.game.gameprogressroute.GameProgressScreen
+import com.example.czechfoolapp.feature.game.util.GameContentType
+import com.example.czechfoolapp.feature.game.util.GameCurrentScreen
 
 @Composable
 fun GameRoute(

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="score_height">32dp</dimen>
+    <dimen name="score_width">64dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="spacer_large">116dp</dimen>
+    <dimen name="padding_large">20dp</dimen>
+    <dimen name="count_size">32dp</dimen>
+    <dimen name="padding_mini">4dp</dimen>
+</resources>

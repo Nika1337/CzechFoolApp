@@ -1,10 +1,10 @@
-package com.example.czechfoolapp.ui.routes.gameroute.navigation
+package com.example.czechfoolapp.feature.game.navigation
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.czechfoolapp.ui.routes.gameroute.GameRoute
+import com.example.czechfoolapp.feature.game.GameRoute
 
 const val GAME_ROUTE = "game"
 

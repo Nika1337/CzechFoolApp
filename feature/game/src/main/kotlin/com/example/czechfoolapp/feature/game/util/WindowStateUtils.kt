@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameroute.util
+package com.example.czechfoolapp.feature.game.util
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,7 +1,7 @@
-package com.example.czechfoolapp.ui.routes.gameroute.gameprogressroute
+package com.example.czechfoolapp.feature.game.gameprogressroute
 
 import androidx.compose.runtime.Immutable
-import com.example.czechfoolapp.data.model.Player
+import com.example.czechfoolapp.core.model.Player
 
 @Immutable
 data class GameProgressState(
