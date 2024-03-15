@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.nameinputroute.navigation
+package com.example.czechfoolapp.feature.nameinput.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
