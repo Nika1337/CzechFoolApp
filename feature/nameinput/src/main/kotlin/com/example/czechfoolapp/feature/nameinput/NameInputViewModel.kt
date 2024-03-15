@@ -1,19 +1,16 @@
-package com.example.czechfoolapp.ui.routes.nameinputroute
+package com.example.czechfoolapp.feature.nameinput
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.czechfoolapp.data.model.Game
-import com.example.czechfoolapp.data.repository.CurrentGameManager
-import com.example.czechfoolapp.domain.validation.ValidatePlayerNameUseCase
-import com.example.czechfoolapp.ui.routes.nameinputroute.navigation.LOSING_SCORE_ARG
-import com.example.czechfoolapp.ui.routes.nameinputroute.navigation.NUMBER_OF_PLAYERS_ARG
-import com.example.czechfoolapp.ui.routes.nameinputroute.states.PlayerNameState
-import com.example.czechfoolapp.util.capitalizeAndTrim
-import com.example.czechfoolapp.util.getDuplicates
-import com.example.czechfoolapp.util.resetNameErrors
-import com.example.czechfoolapp.util.toPlayersList
+import com.example.czechfoolapp.core.data.repository.CurrentGameManager
+import com.example.czechfoolapp.core.domain.validation.ValidatePlayerNameUseCase
+import com.example.czechfoolapp.core.model.Game
+import com.example.czechfoolapp.core.model.Player
+import com.example.czechfoolapp.feature.nameinput.navigation.LOSING_SCORE_ARG
+import com.example.czechfoolapp.feature.nameinput.navigation.NUMBER_OF_PLAYERS_ARG
+import com.example.czechfoolapp.feature.nameinput.states.PlayerNameState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -136,3 +133,13 @@ class NameInputViewModel @Inject constructor(
         savedStateHandle[PLAYER_NAMES_STATE] = newPlayerNamesState
     }
 }
+
+private fun Map<Int, PlayerNameState>.toPlayersList() =
+    this.toList()
+        .map { (id: Int, playerNameState: PlayerNameState) ->
+            Player(
+                id = id,
+                name = playerNameState.name.trim()
+            )
+        }
+

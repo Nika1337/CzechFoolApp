@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.nameinputroute
+package com.example.czechfoolapp.feature.nameinput
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable

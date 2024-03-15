@@ -1,6 +1,5 @@
-package com.example.czechfoolapp.ui.routes.nameinputroute
+package com.example.czechfoolapp.feature.nameinput
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,9 +28,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.czechfoolapp.R
-import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
-import com.example.czechfoolapp.ui.routes.nameinputroute.states.PlayerNameState
+import com.example.czechfoolapp.core.designsystem.component.Branding
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolTopAppBar
+import com.example.czechfoolapp.feature.nameinput.states.PlayerNameState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,8 +42,11 @@ fun NameInputScreen(
 ) {
     Scaffold(
         topBar = {
-            CzechFoolSmallTopAppBar(
-                onNavigateUp = onNavigateUp
+            CzechFoolTopAppBar(
+                onNavigateUp = onNavigateUp,
+                title = {
+                    Branding(modifier = Modifier.height(dimensionResource(R.dimen.logo_height)))
+                }
             )
         },
         floatingActionButton = {
@@ -107,7 +109,6 @@ fun TextFieldsColumn(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NameTextField(
     id: Int,
@@ -116,7 +117,6 @@ fun NameTextField(
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions,
 ) {
-    Log.d("recomposedNameTextField", playerNameState.name)
     Column(
         modifier = modifier
     ){

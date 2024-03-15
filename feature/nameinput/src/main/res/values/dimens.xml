@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="logo_height">28dp</dimen>
+    <dimen name="padding_large">20dp</dimen>
+    <dimen name="textField_horizontal">48dp</dimen>
+    <dimen name="textField_vertical_small">12dp</dimen>
+    <dimen name="spacer_large">116dp</dimen>
+    <dimen name="textFieldError">16dp</dimen>
+</resources>

@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.czechfoolapp.ui.routes.nameinputroute.NameInputRoute
+import com.example.czechfoolapp.feature.nameinput.NameInputRoute
 
 const val NAME_INPUT_ROUTE= "name_input"
 
