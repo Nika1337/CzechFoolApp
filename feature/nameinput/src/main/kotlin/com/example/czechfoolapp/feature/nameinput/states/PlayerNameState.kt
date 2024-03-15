@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.nameinputroute.states
+package com.example.czechfoolapp.feature.nameinput.states
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
