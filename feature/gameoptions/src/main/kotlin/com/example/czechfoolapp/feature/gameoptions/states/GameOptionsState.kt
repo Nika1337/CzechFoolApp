@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameoptionsroute.states
+package com.example.czechfoolapp.feature.gameoptions.states
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
