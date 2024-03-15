@@ -33,6 +33,7 @@
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/model" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/gameoptions" />
             <option value="$PROJECT_DIR$/feature/gameshistory" />
           </set>
         </option>
