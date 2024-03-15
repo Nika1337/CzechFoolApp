@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameoptionsroute
+package com.example.czechfoolapp.feature.gameoptions
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -15,12 +15,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -40,11 +40,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.czechfoolapp.R
-import com.example.czechfoolapp.data.DefaultValuesSource
-import com.example.czechfoolapp.ui.composables.CzechFoolSmallTopAppBar
-import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionState
-import com.example.czechfoolapp.ui.routes.gameoptionsroute.states.GameOptionsState
+import com.example.czechfoolapp.core.data.DefaultValuesSource
+import com.example.czechfoolapp.core.designsystem.component.Branding
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolFloatingActionButton
+import com.example.czechfoolapp.core.designsystem.component.CzechFoolTopAppBar
+import com.example.czechfoolapp.feature.gameoptions.states.GameOptionState
+import com.example.czechfoolapp.feature.gameoptions.states.GameOptionsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,17 +57,27 @@ fun GameOptionsScreen(
 ) {
     Scaffold(
         topBar = {
-            CzechFoolSmallTopAppBar(
-                onNavigateUp = onNavigateUp
+            CzechFoolTopAppBar(
+                onNavigateUp = onNavigateUp,
+                title = {
+                    Branding(modifier = Modifier.height(dimensionResource(R.dimen.logo_height)))
+                },
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.navigate_up)
+                    )
+                }
+
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
+            CzechFoolFloatingActionButton(
                 onClick = { onEvent(GameOptionEvent.Next(onNavigateToNext)) },
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
             ) {
                 Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = stringResource(R.string.next_button)
                 )
             }

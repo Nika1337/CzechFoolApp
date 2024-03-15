@@ -1,9 +1,10 @@
-package com.example.czechfoolapp.ui.routes.gameoptionsroute
+package com.example.czechfoolapp.feature.gameoptions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.navigation.compose.hiltViewModel
+
 @Composable
 fun GameOptionsRoute(
     onNavigateUp: () -> Unit,
