@@ -6,7 +6,7 @@ android {
     namespace = "com.example.czechfoolapp.core.domain"
 }
 dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:data"))
+    api(project(":core:model"))
+    api(project(":core:data"))
     implementation(libs.javax.inject)
 }
