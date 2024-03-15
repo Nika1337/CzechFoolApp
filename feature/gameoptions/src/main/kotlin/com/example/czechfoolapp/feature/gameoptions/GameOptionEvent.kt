@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameoptionsroute
+package com.example.czechfoolapp.feature.gameoptions
 
 
 sealed interface GameOptionEvent {
