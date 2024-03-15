@@ -5,15 +5,15 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.example.czechfoolapp.ui.routes.gameoptionsroute.navigation.gameOptionsRoute
-import com.example.czechfoolapp.ui.routes.gameoptionsroute.navigation.navigateToGameOptions
-import com.example.czechfoolapp.ui.routes.gameroute.navigation.gameRoute
-import com.example.czechfoolapp.ui.routes.gameroute.navigation.navigateToGame
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.navigation.GAMES_HISTORY_ROUTE
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.navigation.gamesHistoryRoute
-import com.example.czechfoolapp.ui.routes.gameshistoryroute.navigation.popBackStackUpToGamesHistory
-import com.example.czechfoolapp.ui.routes.nameinputroute.navigation.nameInputRoute
-import com.example.czechfoolapp.ui.routes.nameinputroute.navigation.navigateToNameInputRoute
+import com.example.czechfoolapp.feature.game.navigation.gameRoute
+import com.example.czechfoolapp.feature.game.navigation.navigateToGame
+import com.example.czechfoolapp.feature.gameoptions.navigation.gameOptionsRoute
+import com.example.czechfoolapp.feature.gameoptions.navigation.navigateToGameOptions
+import com.example.czechfoolapp.feature.gameshistory.navigation.GAMES_HISTORY_ROUTE
+import com.example.czechfoolapp.feature.gameshistory.navigation.gamesHistoryRoute
+import com.example.czechfoolapp.feature.gameshistory.navigation.popBackStackUpToGamesHistory
+import com.example.czechfoolapp.feature.nameinput.navigation.nameInputRoute
+import com.example.czechfoolapp.feature.nameinput.navigation.navigateToNameInputRoute
 
 
 @Composable

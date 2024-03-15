@@ -1,13 +1,37 @@
-//plugins {
-//    id("com.android.application")
-//    id("org.jetbrains.kotlin.android")
-//    id("com.google.devtools.ksp")
-//    id("kotlin-parcelize")
-//    id("com.google.protobuf") version "0.9.4"
-//    kotlin("kapt")
-//    id("com.google.dagger.hilt.android")
-//}
-//
+plugins {
+    alias(libs.plugins.czechfoolapp.android.application)
+    alias(libs.plugins.czechfoolapp.android.application.compose)
+    alias(libs.plugins.czechfoolapp.android.hilt)
+}
+android {
+    namespace = "com.example.czechfoolapp"
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+
+    defaultConfig {
+        applicationId = "com.example.czechfoolapp"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJunitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+}
+
+dependencies {
+    implementation(project(":feature:gameshistory"))
+    implementation(project(":feature:gameoptions"))
+    implementation(project(":feature:nameinput"))
+    implementation(project(":feature:game"))
+
+    implementation(project(":core:designsystem"))
+
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.material3.windowSizeClass)
+}
 //android {
 //    namespace = "com.example.czechfoolapp"
 //    compileSdk = 34
