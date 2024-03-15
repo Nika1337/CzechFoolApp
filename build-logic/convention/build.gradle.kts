@@ -23,6 +23,10 @@ dependencies {
 
 gradlePlugin {
     plugins {
+        register("androidApplicationCompose") {
+            id = "czechfoolapp.android.application.compose"
+            implementationClass = "AndroidApplicationComposeConventionPlugin"
+        }
         register("androidApplication") {
             id = "czechfoolapp.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
