@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameoptionsroute.navigation
+package com.example.czechfoolapp.feature.gameoptions.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
