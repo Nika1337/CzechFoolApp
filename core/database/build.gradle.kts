@@ -5,10 +5,18 @@ plugins {
 }
 
 android {
+    defaultConfig {
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
     namespace = "com.example.czechfoolapp.core.database"
 }
 
 
 dependencies {
     api(project(":core:model"))
+
+    androidTestImplementation(kotlin("test"))
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.test.ext)
+    androidTestImplementation(libs.androidx.test.runner)
 }

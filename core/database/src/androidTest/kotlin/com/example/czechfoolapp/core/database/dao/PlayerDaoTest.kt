@@ -1,23 +1,22 @@
-package com.example.czechfoolapp
+package com.example.czechfoolapp.core.database.dao
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import com.example.czechfoolapp.core.database.CzechFoolGameDatabase
+import com.example.czechfoolapp.core.database.model.GameEntity
+import com.example.czechfoolapp.core.database.model.PlayerEntity
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.czechfoolapp.database.CzechFoolGameDatabase
-import com.example.czechfoolapp.database.dao.PlayerDao
-import com.example.czechfoolapp.database.model.GameEntity
-import com.example.czechfoolapp.database.model.PlayerEntity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.LocalDateTime
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class PlayerDaoTest {
