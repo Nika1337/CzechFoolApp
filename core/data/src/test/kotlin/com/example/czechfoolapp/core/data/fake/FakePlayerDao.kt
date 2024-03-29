@@ -1,7 +1,7 @@
-package com.example.czechfoolapp.fake
+package com.example.czechfoolapp.core.data.fake
 
-import com.example.czechfoolapp.database.dao.PlayerDao
-import com.example.czechfoolapp.database.model.PlayerEntity
+import com.example.czechfoolapp.core.database.dao.PlayerDao
+import com.example.czechfoolapp.core.database.model.PlayerEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -16,7 +16,7 @@ class FakePlayerDao : PlayerDao {
     }
 
     override suspend fun update(player: PlayerEntity) {
-        currentPlayers.forEachIndexed() { index: Int, it: PlayerEntity ->
+        currentPlayers.forEachIndexed { index: Int, it: PlayerEntity ->
             if (it.gameId == player.gameId && it.name == player.name) {
                 currentPlayers[index] = player
             }

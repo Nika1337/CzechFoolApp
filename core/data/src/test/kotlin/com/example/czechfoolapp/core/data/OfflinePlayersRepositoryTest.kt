@@ -1,10 +1,9 @@
-package com.example.czechfoolapp
+package com.example.czechfoolapp.core.data
 
-import com.example.czechfoolapp.data.model.Player
-import com.example.czechfoolapp.data.repository.OfflinePlayersRepository
-import com.example.czechfoolapp.data.repository.PlayersRepository
-import com.example.czechfoolapp.fake.FakeDataSource
-import com.example.czechfoolapp.fake.FakePlayerDao
+import com.example.czechfoolapp.core.data.fake.FakePlayerDao
+import com.example.czechfoolapp.core.data.repository.OfflinePlayersRepository
+import com.example.czechfoolapp.core.data.repository.PlayersRepository
+import com.example.czechfoolapp.core.model.Player
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -27,7 +26,7 @@ class OfflinePlayersRepositoryTest {
             gameID = gameID
         )
 
-    private suspend fun insertAllPlayers() = FakeDataSource.players.forEach {
+    private suspend fun insertAllPlayers() = com.example.czechfoolapp.core.data.fake.FakeDataSource.players.forEach {
         playersRepository.insertAll(
             players = it.value.toTypedArray(),
             gameID = it.key
@@ -35,8 +34,8 @@ class OfflinePlayersRepositoryTest {
     }
     @Test
     fun offlinePlayersRepository_insertPlayer_insertsPlayerInDatabase() = runTest {
-        val gameID = FakeDataSource.gameId1
-        val testPlayer = FakeDataSource.players[gameID]!![0]
+        val gameID = com.example.czechfoolapp.core.data.fake.FakeDataSource.gameId1
+        val testPlayer = com.example.czechfoolapp.core.data.fake.FakeDataSource.players[gameID]!![0]
         insertPlayer(testPlayer, gameID)
 
         val allPlayers = playersRepository.getAllPlayersInGameSpecified(gameID = gameID).first()
@@ -49,17 +48,17 @@ class OfflinePlayersRepositoryTest {
     @Test
     fun offlinePlayersRepository_getAllPlayersInGameSpecified_returnsAllPlayersInAGivenGame() = runTest {
         insertAllPlayers()
-        val expectedPlayersInFirstGame = FakeDataSource.players[FakeDataSource.gameId1]!!
-        val expectedPlayersInSecondGame = FakeDataSource.players[FakeDataSource.gameId2]!!
+        val expectedPlayersInFirstGame = com.example.czechfoolapp.core.data.fake.FakeDataSource.players[com.example.czechfoolapp.core.data.fake.FakeDataSource.gameId1]!!
+        val expectedPlayersInSecondGame = com.example.czechfoolapp.core.data.fake.FakeDataSource.players[com.example.czechfoolapp.core.data.fake.FakeDataSource.gameId2]!!
 
         val actualPlayersInFirstGame =
             playersRepository
-                .getAllPlayersInGameSpecified(FakeDataSource.gameId1)
+                .getAllPlayersInGameSpecified(com.example.czechfoolapp.core.data.fake.FakeDataSource.gameId1)
                 .first()
 
         val actualPlayersInSecondGame =
             playersRepository
-                .getAllPlayersInGameSpecified(FakeDataSource.gameId2)
+                .getAllPlayersInGameSpecified(com.example.czechfoolapp.core.data.fake.FakeDataSource.gameId2)
                 .first()
 
         assertEquals(expectedPlayersInFirstGame, actualPlayersInFirstGame)
@@ -68,8 +67,8 @@ class OfflinePlayersRepositoryTest {
 
     @Test
     fun offlinePlayersRepository_getPlayer_returnsPlayer() = runTest {
-        val gameID = FakeDataSource.gameId2
-        val testPlayer = FakeDataSource.players[gameID]!!.first()
+        val gameID = com.example.czechfoolapp.core.data.fake.FakeDataSource.gameId2
+        val testPlayer = com.example.czechfoolapp.core.data.fake.FakeDataSource.players[gameID]!!.first()
         insertPlayer(testPlayer, gameID)
 
         val expectedPlayer = testPlayer
@@ -80,8 +79,8 @@ class OfflinePlayersRepositoryTest {
 
     @Test
     fun offlinePlayersRepository_updatePlayer_updatesPlayer() = runTest {
-        val gameID = FakeDataSource.gameId2
-        val testPlayer = FakeDataSource.players[gameID]!![0]
+        val gameID = com.example.czechfoolapp.core.data.fake.FakeDataSource.gameId2
+        val testPlayer = com.example.czechfoolapp.core.data.fake.FakeDataSource.players[gameID]!![0]
         insertPlayer(testPlayer, gameID)
         val updatedTestPlayer = testPlayer.let {
             it.copy(score = it.score + 33)
@@ -96,8 +95,8 @@ class OfflinePlayersRepositoryTest {
 
     @Test
     fun offlinePlayersRepository_deletePlayer_deletesPlayer() = runTest {
-        val gameID = FakeDataSource.gameId1
-        val testPlayer = FakeDataSource.players[gameID]!![0]
+        val gameID = com.example.czechfoolapp.core.data.fake.FakeDataSource.gameId1
+        val testPlayer = com.example.czechfoolapp.core.data.fake.FakeDataSource.players[gameID]!![0]
         insertPlayer(testPlayer, gameID)
 
         playersRepository.delete(testPlayer, gameID)

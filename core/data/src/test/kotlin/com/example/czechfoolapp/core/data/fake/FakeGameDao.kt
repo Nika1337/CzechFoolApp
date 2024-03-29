@@ -1,8 +1,8 @@
-package com.example.czechfoolapp.fake
+package com.example.czechfoolapp.core.data.fake
 
-import com.example.czechfoolapp.database.dao.GameDao
-import com.example.czechfoolapp.database.model.GameEntity
-import com.example.czechfoolapp.database.model.GameWithPlayers
+import com.example.czechfoolapp.core.database.dao.GameDao
+import com.example.czechfoolapp.core.database.model.GameEntity
+import com.example.czechfoolapp.core.database.model.GameWithPlayers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

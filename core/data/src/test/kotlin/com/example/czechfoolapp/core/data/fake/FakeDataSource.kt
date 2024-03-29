@@ -1,7 +1,7 @@
-package com.example.czechfoolapp.fake
+package com.example.czechfoolapp.core.data.fake
 
-import com.example.czechfoolapp.data.model.Game
-import com.example.czechfoolapp.data.model.Player
+import com.example.czechfoolapp.core.model.Game
+import com.example.czechfoolapp.core.model.Player
 import java.time.LocalDateTime
 
 object FakeDataSource {
