@@ -2,19 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="All Tests">
-        <State />
-      </entry>
-      <entry key="GameDaoTest">
-        <State />
-      </entry>
-      <entry key="PlayerDaoTest">
+      <entry key="DefaultCurrentGameDataSourceTest">
         <State />
       </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="daoInsert_insertsGameIntoDb()">
+      <entry key="defaultCurrentGameDataSource_idZeroByDefault()">
         <State />
       </entry>
     </value>

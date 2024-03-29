@@ -147,6 +147,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="142850835">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="207" />
+                  <entry key="Pixel_3a_API_30" value="236" />
+                  <entry key="Tests" value="476" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="300652030">
           <value>
             <AndroidTestResultsTableState>
@@ -161,6 +174,19 @@
           </value>
         </entry>
         <entry key="359586199">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_3a_API_30" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="499559133">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
