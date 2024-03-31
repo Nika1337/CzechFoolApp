@@ -11,9 +11,7 @@ import javax.inject.Inject
 class OfflineGamesRepository @Inject constructor(
     private val gameDao: GameDao
 ) : GamesRepository {
-    override suspend fun insertWithoutPlayers(game: Game) {
-        gameDao.insert(game.toGameEntity())
-    }
+    override suspend fun insertWithoutPlayers(game: Game) = gameDao.insert(game.toGameEntity()).toInt()
 
     override suspend fun delete(game: Game) {
         gameDao.delete(game.toGameEntity())
