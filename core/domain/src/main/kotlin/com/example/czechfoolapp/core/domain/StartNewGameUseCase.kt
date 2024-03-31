@@ -3,8 +3,9 @@ package com.example.czechfoolapp.core.domain
 import com.example.czechfoolapp.core.data.repository.GamesRepository
 import com.example.czechfoolapp.core.data.repository.PlayersRepository
 import com.example.czechfoolapp.core.model.Game
+import javax.inject.Inject
 
-class StartNewGameUseCase(
+class StartNewGameUseCase @Inject constructor(
     private val gamesRepository: GamesRepository,
     private val playersRepository: PlayersRepository
 ) {
