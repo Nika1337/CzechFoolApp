@@ -9,4 +9,6 @@ dependencies {
     api(project(":core:model"))
     api(project(":core:data"))
     implementation(libs.javax.inject)
+
+    testImplementation(libs.kotlinx.coroutines.test)
 }
