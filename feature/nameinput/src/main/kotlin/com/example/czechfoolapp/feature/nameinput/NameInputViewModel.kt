@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.czechfoolapp.core.data.repository.CurrentGameManager
+import com.example.czechfoolapp.core.domain.StartNewGameUseCase
 import com.example.czechfoolapp.core.domain.validation.ValidatePlayerNameUseCase
 import com.example.czechfoolapp.core.model.Game
 import com.example.czechfoolapp.core.model.Player
@@ -21,7 +21,7 @@ private const val PLAYER_NAMES_STATE = "playerNamesState"
 class NameInputViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val validatePlayerNameUseCase: ValidatePlayerNameUseCase,
-    private val currentGameManager: CurrentGameManager
+    private val startNewGameUseCase: StartNewGameUseCase
 ) : ViewModel() {
     val playerNamesState =
         savedStateHandle.getStateFlow<Map<Int, PlayerNameState>>(
@@ -74,10 +74,7 @@ class NameInputViewModel @Inject constructor(
         updatePlayerNameState(newPlayerNamesState)
     }
 
-    private fun submitPlayerNames(navigateToNext: () -> Unit) {
-        if (currentGameManager.isGameInProgress()) {
-            return
-        }
+    private fun submitPlayerNames(navigateToNext: (Int) -> Unit) {
         val playerNamesValidationSuccess = validatePlayerNamesAndUpdateErrorMessages()
         if (playerNamesValidationSuccess.not()) {
             return
@@ -87,8 +84,8 @@ class NameInputViewModel @Inject constructor(
             .players(playerNamesState.value.toPlayersList())
             .build()
         viewModelScope.launch {
-            currentGameManager.startNewGame(game)
-            navigateToNext()
+            val newGameId = startNewGameUseCase(game)
+            navigateToNext(newGameId)
         }
     }
 

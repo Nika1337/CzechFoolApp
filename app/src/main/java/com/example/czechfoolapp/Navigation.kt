@@ -28,7 +28,7 @@ fun CzechFoulNavHost(
     ) {
         gamesHistoryRoute(
             onNavigateStartNewGame = { navController.navigateToGameOptions() },
-            onNavigateContinueNewGame = { navController.navigateToGame() },
+            onNavigateContinueNewGame = { gameId -> navController.navigateToGame(gameId) },
             windowWidth = windowWidth
         )
         gameOptionsRoute(
@@ -42,7 +42,7 @@ fun CzechFoulNavHost(
         )
         nameInputRoute(
             onNavigateUp = navController::navigateUp,
-            onNavigateToNext = { navController.navigateToGame() }
+            onNavigateToNext = { gameId -> navController.navigateToGame(gameId) }
         )
         gameRoute(
             onNavigateCancel = { navController.popBackStackUpToGamesHistory(false) },

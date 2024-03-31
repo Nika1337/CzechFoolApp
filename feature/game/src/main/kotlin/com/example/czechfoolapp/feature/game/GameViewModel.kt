@@ -4,21 +4,23 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.czechfoolapp.core.data.repository.CardsRepository
-import com.example.czechfoolapp.core.data.repository.CurrentGameManager
+import com.example.czechfoolapp.core.data.repository.GamesRepository
+import com.example.czechfoolapp.core.data.repository.PlayersRepository
 import com.example.czechfoolapp.core.model.Card
 import com.example.czechfoolapp.core.model.Suit
 import com.example.czechfoolapp.feature.game.cardchoiceroute.CardChoiceEvent
 import com.example.czechfoolapp.feature.game.cardchoiceroute.CardUiModel
 import com.example.czechfoolapp.feature.game.gameprogressroute.GameProgressEvent
 import com.example.czechfoolapp.feature.game.gameprogressroute.GameProgressState
+import com.example.czechfoolapp.feature.game.navigation.GAME_ID_ARG
 import com.example.czechfoolapp.feature.game.util.GameCurrentScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 private const val CURRENT_SCREEN = "currentScreen"
@@ -31,8 +33,9 @@ private const val CARD_CHOICE_STATE = "cardChoiceState"
 @HiltViewModel
 class GameViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val currentGameManager: CurrentGameManager,
-    private val cardsRepository: CardsRepository
+    private val cardsRepository: CardsRepository,
+    private val playersRepository: PlayersRepository,
+    gamesRepository: GamesRepository
 ) : ViewModel() {
     val currentScreenFlow=
         savedStateHandle.getStateFlow(
@@ -40,11 +43,9 @@ class GameViewModel @Inject constructor(
             GameCurrentScreen.PLAYER_LIST
         )
 
-    private val currentGameFlow =
-        runBlocking {
-            currentGameManager.restoreLastSavedGame()
-            currentGameManager.getCurrentGameFlow()
-        }
+    private val currentGameId: Int = savedStateHandle[GAME_ID_ARG] ?: 0
+    private val currentGameFlow = gamesRepository.getGame(currentGameId).filterNotNull()
+
     private val currentWinnerIDFlow =
         savedStateHandle.getStateFlow<Int?>(
             key = CURRENT_WINNER_ID,
@@ -207,11 +208,10 @@ class GameViewModel @Inject constructor(
     private suspend fun updatePlayerScores() {
         currentGameFlow.first().let { game ->
             game.players.forEach { player ->
-                currentGameManager.updatePlayer(
-                    player = player
-                        .copy(
-                            score = player.score + (currentRoundPlayerScoresFlow.value[player.id] ?: 0)
-                        )
+                val newScore = player.score + (currentRoundPlayerScoresFlow.value[player.id] ?: 0)
+                playersRepository.update(
+                    player = player.copy(score = newScore),
+                    gameID = currentGameId
                 )
             }
         }
@@ -235,13 +235,7 @@ class GameViewModel @Inject constructor(
     }
 
     private fun cancelGame(onNavigateCancel: () -> Unit) {
-        viewModelScope.launch {
-            if (currentGameManager.isGameInProgress().not()) {
-                return@launch
-            }
-            currentGameManager.stopGame()
-            onNavigateCancel()
-        }
+        onNavigateCancel()
     }
 
 

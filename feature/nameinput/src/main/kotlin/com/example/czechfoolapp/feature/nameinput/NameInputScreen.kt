@@ -36,7 +36,7 @@ import com.example.czechfoolapp.feature.nameinput.states.PlayerNameState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NameInputScreen(
-    onNavigateToNext: () -> Unit,
+    onNavigateToNext: (Int) -> Unit,
     onNavigateUp: () -> Unit,
     onEvent: (event: NameInputEvent) -> Unit,
     nameInputState: Map<Int, PlayerNameState>,

@@ -13,7 +13,7 @@ fun NavController.popBackStackUpToGamesHistory(inclusive: Boolean) =
 
 fun NavGraphBuilder.gamesHistoryRoute(
     onNavigateStartNewGame: () -> Unit,
-    onNavigateContinueNewGame: () -> Unit,
+    onNavigateContinueNewGame: (Int) -> Unit,
     windowWidth: WindowWidthSizeClass
 ) {
     composable(

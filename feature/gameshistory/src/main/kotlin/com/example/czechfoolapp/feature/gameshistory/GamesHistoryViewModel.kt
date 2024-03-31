@@ -3,7 +3,6 @@ package com.example.czechfoolapp.feature.gameshistory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.czechfoolapp.core.data.repository.CurrentGameManager
 import com.example.czechfoolapp.core.data.repository.GamesRepository
 import com.example.czechfoolapp.core.model.Game
 import com.example.czechfoolapp.feature.gameshistory.states.GamesHistoryUiState
@@ -15,7 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -25,7 +23,6 @@ private const val CURRENT_SCREEN = "currentScreen"
 @HiltViewModel
 class GamesHistoryViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val currentGameManager: CurrentGameManager,
     private val gamesRepository: GamesRepository
 ): ViewModel() {
     val gamesHistoryUiState: StateFlow<GamesHistoryUiState> =
@@ -76,14 +73,8 @@ class GamesHistoryViewModel @Inject constructor(
         }
     }
 
-    private fun continueGame(gameId: Int, onNavigateContinue: () -> Unit) {
-        if (currentGameManager.isGameInProgress()) {
-            return
-        }
-        viewModelScope.launch {
-            currentGameManager.continueGame(gameId)
-            onNavigateContinue()
-        }
+    private fun continueGame(gameId: Int, onNavigateContinue: (Int) -> Unit) {
+        onNavigateContinue(gameId)
     }
 
     private fun chooseGame(gameID: Int) {

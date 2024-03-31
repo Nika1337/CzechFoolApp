@@ -10,7 +10,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun NameInputRoute(
     onNavigateUp: () -> Unit,
-    onNavigateToNext: () -> Unit
+    onNavigateToNext: (Int) -> Unit
 ) {
     val viewModel: NameInputViewModel = hiltViewModel()
     val nameInputState by viewModel.playerNamesState.collectAsStateWithLifecycle()

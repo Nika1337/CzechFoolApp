@@ -14,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.HorizontalDivider
@@ -46,7 +45,7 @@ import java.time.Month
 fun GameDetailScreen(
     game: Game?,
     onEvent: (event: GamesHistoryEvent) -> Unit,
-    onNavigateContinueGame: () -> Unit,
+    onNavigateContinueGame: (Int) -> Unit,
     modifier: Modifier = Modifier,
     onNavigateUp: (() -> Unit)? = null
 ) {
@@ -79,8 +78,8 @@ fun GameDetailScreen(
                 onClick = {
                     onEvent(
                         GamesHistoryEvent.ContinueGame(
-                        gameId = game.id,
-                        onContinueGameNavigate = onNavigateContinueGame
+                            gameId = game.id,
+                            onContinueGameNavigate = onNavigateContinueGame
                         )
                     )
                           },

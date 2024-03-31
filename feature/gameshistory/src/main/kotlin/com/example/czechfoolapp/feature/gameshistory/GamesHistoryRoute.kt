@@ -14,7 +14,7 @@ import com.example.czechfoolapp.feature.gameshistory.util.GamesHistoryCurrentScr
 @Composable
 fun GamesHistoryRoute(
     onStartNewGame: () -> Unit,
-    onContinueGame: () -> Unit,
+    onContinueGame: (Int) -> Unit,
     windowWidth: WindowWidthSizeClass
 ) {
     val gamesHistoryContentType = when(windowWidth) {

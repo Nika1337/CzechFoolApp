@@ -19,7 +19,7 @@ fun NavController.navigateToNameInputRoute(
 
 fun NavGraphBuilder.nameInputRoute(
     onNavigateUp: () -> Unit,
-    onNavigateToNext: () -> Unit
+    onNavigateToNext: (Int) -> Unit
 ) {
     composable(
         route = "$NAME_INPUT_ROUTE/{$LOSING_SCORE_ARG}/{$NUMBER_OF_PLAYERS_ARG}",

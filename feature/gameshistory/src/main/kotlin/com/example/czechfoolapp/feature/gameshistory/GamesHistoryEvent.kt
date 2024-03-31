@@ -7,7 +7,7 @@ sealed interface GamesHistoryEvent {
     ) : GamesHistoryEvent
     data class ContinueGame(
         val gameId: Int,
-        val onContinueGameNavigate: () -> Unit
+        val onContinueGameNavigate: (Int) -> Unit
     ) : GamesHistoryEvent
     data object DetailScreenNavigateUp : GamesHistoryEvent
 }
