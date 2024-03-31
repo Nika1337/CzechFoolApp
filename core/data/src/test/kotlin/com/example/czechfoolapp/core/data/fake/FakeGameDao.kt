@@ -8,8 +8,18 @@ import kotlinx.coroutines.flow.flow
 
 class FakeGameDao: GameDao {
     private var games: MutableList<GameEntity> = mutableListOf()
-    override suspend fun insert(game: GameEntity) {
-        games.add(game)
+    private var maxGameId = 1
+    override suspend fun insert(game: GameEntity): Long {
+        return if (game.gameId == 0) {
+            games.add(game.copy(gameId = maxGameId++))
+            (maxGameId - 1).toLong()
+        } else {
+            games.add(game)
+            if (game.gameId > maxGameId) {
+                maxGameId = game.gameId
+            }
+            game.gameId.toLong()
+        }
     }
 
     override suspend fun delete(game: GameEntity) {
@@ -41,6 +51,6 @@ class FakeGameDao: GameDao {
         it.gameId == gameID
     }
 
-    override suspend fun getMaxGameID(): Int = FakeDataSource.maxGameID
+    override suspend fun getMaxGameID(): Int = maxGameId
 
 }

@@ -8,10 +8,11 @@ import kotlinx.coroutines.flow.flowOf
 class FakeGamesRepository() : GamesRepository {
     private var currentGames: MutableList<Game> = mutableListOf()
     private var maxGameID = 0
-    override suspend fun insertWithoutPlayers(game: Game) {
+    override suspend fun insertWithoutPlayers(game: Game): Int {
         maxGameID++
         val updatedGame = game.copy(id = maxGameID)
         currentGames.add(updatedGame)
+        return maxGameID
     }
 
     override suspend fun delete(game: Game) {
