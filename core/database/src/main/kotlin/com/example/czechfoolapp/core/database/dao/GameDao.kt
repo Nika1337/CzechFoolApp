@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface GameDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(game: GameEntity)
+    suspend fun insert(game: GameEntity): Long
 
     @Delete
     suspend fun delete(game: GameEntity)

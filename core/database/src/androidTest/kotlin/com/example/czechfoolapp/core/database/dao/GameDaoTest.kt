@@ -51,14 +51,14 @@ class GameDaoTest {
             date = LocalDateTime.now(),
         )
 
-    private suspend fun addOneGameToDb(gameEntity: GameEntity) {
-        gameDao.insert(gameEntity)
-    }
+    private suspend fun addOneGameToDb(gameEntity: GameEntity) = gameDao.insert(gameEntity)
 
     private suspend fun addTwoGamesToDb() {
         gameDao.insert(gameEntity1)
         gameDao.insert(gameEntity2)
     }
+
+
 
     @Test
     @Throws(Exception::class)
@@ -67,6 +67,34 @@ class GameDaoTest {
         val allGames = gameDao.getAllGames().first()
         assertEquals(allGames[0].gameEntity, gameEntity1)
     }
+
+    @Test
+    @Throws
+    fun daoInsertWithGameIdNotSet_returnsCorrectGameId() = runTest {
+        val testGame = GameEntity(
+            losingScore = 200,
+            date = LocalDateTime.now()
+        )
+        val gameId = addOneGameToDb(testGame)
+        val expectedValue = 1L
+        val actualValue = gameId
+        assertEquals(expectedValue, actualValue)
+    }
+
+    @Test
+    @Throws
+    fun daoInsertWithGameIdSet_returnsCorrectGameId() = runTest {
+        val testGame = GameEntity(
+            gameId = 167,
+            losingScore = 200,
+            date = LocalDateTime.now()
+        )
+        val gameId = addOneGameToDb(testGame).toInt()
+        val expectedValue = testGame.gameId
+        val actualValue = gameId
+        assertEquals(expectedValue, actualValue)
+    }
+
 
     @Test
     @Throws(Exception::class)
