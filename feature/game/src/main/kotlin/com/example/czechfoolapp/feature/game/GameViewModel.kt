@@ -178,9 +178,7 @@ class GameViewModel @Inject constructor(
     }
 
     private fun updatePlayerScore() {
-        if (currentChosenPlayerID == null) {
-            throw IllegalStateException("No player chosen")
-        }
+        checkNotNull(currentChosenPlayerID) { "No player chosen" }
         val score = cardChoiceState.value.sumOf { it.getScore() }
         val actualScore = if (isCandidateState()) -score else score
         savedStateHandle[CURRENT_ROUND_PLAYER_SCORES] = currentRoundPlayerScoresFlow.value.let { currentState ->
@@ -240,9 +238,7 @@ class GameViewModel @Inject constructor(
 
 
     private fun updateCardCount(index: Int, newCount: Int) {
-        if (currentChosenPlayerID == null) {
-            throw IllegalStateException("No player chosen")
-        }
+        checkNotNull(currentChosenPlayerID) { "No player chosen" }
         val gameUiModel = cardChoiceState.value[index]
         if (gameUiModel.suits.size < newCount ) {
             return
