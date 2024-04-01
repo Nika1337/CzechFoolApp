@@ -17,8 +17,6 @@ dependencyResolutionManagement {
 rootProject.name = "Czech Fool App"
 include(":app")
 include(":core:database")
-include(":core:datastore-proto")
-include(":core:datastore")
 include(":core:model")
 include(":core:data")
 include(":core:domain")
