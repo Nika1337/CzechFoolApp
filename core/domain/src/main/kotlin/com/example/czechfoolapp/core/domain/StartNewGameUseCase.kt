@@ -10,9 +10,7 @@ class StartNewGameUseCase @Inject constructor(
     private val playersRepository: PlayersRepository
 ) {
     suspend operator fun invoke(game: Game): Int {
-        if (game.id != 0) {
-            throw IllegalArgumentException("New Game ID should always be zero")
-        }
+        require(game.id == 0) { "New Game ID should always be zero" }
         val gameId = gamesRepository.insertWithoutPlayers(game)
         playersRepository.insertAll(
             players = game.players.toTypedArray(),
