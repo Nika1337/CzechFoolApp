@@ -159,8 +159,8 @@ private fun TextFieldError(textError: String) {
 @Composable
 fun NameInputScreenPreview() {
     NameInputScreen(
-        onNavigateToNext = { /*TODO*/ },
-        onNavigateUp = { /*TODO*/ },
+        onNavigateToNext = { },
+        onNavigateUp = {},
         onEvent = {},
         nameInputState = mapOf(1 to PlayerNameState("nika"), 2 to PlayerNameState("neka"), 3 to PlayerNameState("taso"))
     )
