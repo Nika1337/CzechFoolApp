@@ -27,9 +27,7 @@ data class Game(
         }
 
         fun build(): Game {
-            if (losingScore == null) {
-                throw IllegalStateException("Losing score not set")
-            }
+            checkNotNull(losingScore) { "Losing score not set" }
             return Game(
                 id = 0,
                 losingScore = losingScore!!,
