@@ -1,4 +1,4 @@
-package com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.composables
+package com.example.czechfoolapp.feature.game.cardchoiceroute.composables
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
@@ -81,17 +81,6 @@ fun Suits(
         modifier = modifier,
         maxLines = 1
     )
-//    Row(
-//        modifier = modifier,
-//    ) {
-//        suits.forEach {
-//            Spacer(modifier = Modifier.width(dimensionResource(R.dimen.padding_mini)))
-//            Text(
-//                text = it.symbol,
-//                style = MaterialTheme.typography.headlineMedium
-//            )
-//        }
-//    }
 }
 
 @Composable
@@ -108,7 +97,7 @@ fun Symbol(
 }
 
 
-@Preview()
+@Preview
 @Composable
 fun PlayingCardCardPreview() {
     PlayingCardCard(

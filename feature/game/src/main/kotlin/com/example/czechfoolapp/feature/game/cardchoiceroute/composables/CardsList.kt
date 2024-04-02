@@ -18,7 +18,6 @@ import com.example.czechfoolapp.feature.game.cardchoiceroute.CardUiModel
 import com.example.czechfoolapp.feature.game.cardchoiceroute.PlusMinusSelectionButtons
 import com.example.czechfoolapp.feature.game.cardchoiceroute.RadioSelectionButton
 import com.example.czechfoolapp.feature.game.cardchoiceroute.SelectionButtons
-import com.example.czechfoolapp.ui.routes.gameroute.cardchoiceroute.composables.PlayingCardCard
 
 
 @Composable
