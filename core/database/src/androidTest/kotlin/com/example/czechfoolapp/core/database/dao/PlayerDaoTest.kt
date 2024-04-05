@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.After
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,25 +23,9 @@ import kotlin.test.assertTrue
 class PlayerDaoTest {
     private lateinit var playerDao: PlayerDao
     private lateinit var czechFoolGameDatabase: CzechFoolGameDatabase
-    private val defaultGameId = 1
-
-
-
-    private val playerEntity1 =
-        PlayerEntity(
-            gameId = defaultGameId,
-            playerId = 1,
-            name = "Player1",
-            score = 0
-        )
-
-    private val playerEntity2 =
-        PlayerEntity(
-            gameId = defaultGameId,
-            playerId = 2,
-            name = "Player2",
-            score = 0
-        )
+    private val defaultGameId = FakeDataSource.game1.gameId
+    private val playerEntity1 = FakeDataSource.game1Players[0]
+    private val playerEntity2 = FakeDataSource.game1Players[1]
     @Before
     fun createDb() {
         val context: Context = ApplicationProvider.getApplicationContext()
@@ -67,8 +52,8 @@ class PlayerDaoTest {
         czechFoolGameDatabase.close()
     }
 
-    private suspend fun addOnePlayerToDb() {
-        playerDao.insertAll(playerEntity1)
+    private suspend fun addOnePlayerToDb(playerEntity: PlayerEntity = playerEntity1) {
+        playerDao.insertAll(playerEntity)
     }
 
     private suspend fun addTwoPlayersToDb() {
@@ -127,7 +112,17 @@ class PlayerDaoTest {
         assertTrue(allPlayers.isEmpty())
     }
 
-
+    @Test
+    @Throws(Exception::class)
+    fun daoAddPlayersWithSameNameToSameGame_throwsException() = runTest {
+        val name = "Nika"
+        addOnePlayerToDb(playerEntity1.copy(name = name))
+        assertThrows(Exception::class.java) {
+            runBlocking {
+                addOnePlayerToDb(playerEntity2.copy(name = name))
+            }
+        }
+    }
 }
 
 
