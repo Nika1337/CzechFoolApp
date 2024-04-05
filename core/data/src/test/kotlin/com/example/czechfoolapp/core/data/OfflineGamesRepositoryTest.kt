@@ -9,7 +9,6 @@ import com.example.czechfoolapp.core.model.Game
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -79,22 +78,7 @@ class OfflineGamesRepositoryTest {
         assertEquals(expectedValue, actualValues)
     }
 
-    @Test
-    fun offlineGamesRepository_getMaxGameId_returnsMaxGameID() = runTest {
-        insertAllGames()
 
-        val expectedValue = com.example.czechfoolapp.core.data.fake.FakeDataSource.maxGameID
-        val actualValue = gamesRepository.getMaxGameID()
-
-        assertEquals(expectedValue, actualValue)
-    }
-
-    @Test
-    fun offlineGamesRepository_doesGameExistByID_returnsTrue() = runTest {
-        val testGame = games[0].clearPlayers()
-        insertGame(testGame)
-        assertTrue(gamesRepository.doesGameExistByID(testGame.id))
-    }
 
     @Test
     fun offlineGamesRepository_getGame_returnsCorrectGame() = runTest {

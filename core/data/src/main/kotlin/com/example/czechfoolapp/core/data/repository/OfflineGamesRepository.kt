@@ -30,9 +30,6 @@ class OfflineGamesRepository @Inject constructor(
                 gameWithPlayers.toGame()
             }
         }
-
-    override suspend fun getMaxGameID() = gameDao.getMaxGameID()
-    override suspend fun doesGameExistByID(gameID: Int) = gameDao.doesGameExistByID(gameID)
 }
 
 

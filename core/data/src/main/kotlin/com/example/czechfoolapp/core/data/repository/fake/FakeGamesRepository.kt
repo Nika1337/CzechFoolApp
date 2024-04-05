@@ -5,7 +5,7 @@ import com.example.czechfoolapp.core.model.Game
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakeGamesRepository() : GamesRepository {
+class FakeGamesRepository : GamesRepository {
     private var currentGames: MutableList<Game> = mutableListOf()
     private var maxGameID = 0
     override suspend fun insertWithoutPlayers(game: Game): Int {
@@ -26,10 +26,4 @@ class FakeGamesRepository() : GamesRepository {
             currentGames
         )
     }
-
-    override suspend fun getMaxGameID(): Int = maxGameID
-    override suspend fun doesGameExistByID(gameID: Int): Boolean = currentGames.any {
-        it.id == gameID
-    }
-
 }
